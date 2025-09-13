@@ -13,7 +13,7 @@
     <div class="grid max-w-3xl mx-auto gap-10">
         <p class="text-lg text-center">{t("rest.description")}</p>
 
-        <div class="grid grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             {@render card(
                 t("rest.dynamic.title"),
                 t("rest.dynamic.description"),
