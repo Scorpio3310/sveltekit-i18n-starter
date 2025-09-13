@@ -21,6 +21,8 @@ URL‑driven localization for SvelteKit (v2.38+). Clean slugs, strict mapping un
 -   Multi‑segment placeholders with `{...rest}` in slug mappings
 -   Built‑in playground pages: `/playground/api` and `/playground/i18n`
 
+![Overview](static/img_github.jpg)
+
 ## ⚡ Quick Start
 
 ### 1. Install & run
