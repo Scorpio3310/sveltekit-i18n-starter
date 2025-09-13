@@ -12,7 +12,7 @@
     <h1 class="text-5xl font-bold my-5">{t("restBetween.h1")}</h1>
     <div class="grid max-w-3xl mx-auto gap-10">
         <p class="text-lg text-center">{t("restBetween.description")}</p>
-        <div class="bg-gray-100 rounded-2xl p-5 grid gap-0.5">
+        <div class="bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">
             <code><b>Rest:</b> {page?.params?.rest}</code>
             <code><b>URL:</b> {page?.url?.href}</code>
             <code><b>Page Route:</b> {JSON.stringify(page?.route?.id)}</code>

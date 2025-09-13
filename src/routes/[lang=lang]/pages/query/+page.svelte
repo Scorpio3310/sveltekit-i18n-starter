@@ -12,7 +12,7 @@
     <h1 class="text-5xl font-bold my-5">{t("pageQuery.h1")}</h1>
     <div class="grid max-w-3xl mx-auto gap-10">
         <p class="text-lg text-center">{t("pageQuery.description")}</p>
-        <div class="bg-gray-100 rounded-2xl p-5 grid gap-0.5">
+        <div class="bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">
             <code><b>Queries</b></code>
             {#if page?.url?.searchParams}
                 {#each [...page.url.searchParams.entries()] as [key, value]}

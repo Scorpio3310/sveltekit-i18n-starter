@@ -179,7 +179,7 @@
                 <code>{appState.results.simple.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
                     .results.simple.response}</pre>
         </div>
     {/if}
@@ -229,7 +229,7 @@
                 <code>{appState.results.echo.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
                     .results.echo.response}</pre>
         </div>
     {/if}
@@ -242,7 +242,7 @@
                 <code>{appState.results.post.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
                     .results.post.response}</pre>
         </div>
     {/if}
@@ -261,7 +261,7 @@
                 <code>{appState.results.translated.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
                     .results.translated.response}</pre>
         </div>
     {/if}
