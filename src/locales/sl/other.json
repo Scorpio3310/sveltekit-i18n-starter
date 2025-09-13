@@ -1,0 +1,179 @@
+{
+    "home": {
+        "head": {
+            "title": "SvelteKit i18n Starter",
+            "description": "To je robusten primer i18n internacionalizacije s SvelteKit-om."
+        },
+        "h1": "🏡 Domača stran",
+        "description": "To je robusten primer i18n internacionalizacije s SvelteKit-om. Primer prikazuje različne vzorce lokalizacije in pristope usmerjanja.",
+        "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊",
+        "madeWith": "Projekt je ustvarjen {WITH}"
+    },
+
+    "pages": {
+        "head": {
+            "title": "Strani",
+            "description": "Primer demonstracij usmerjanja strani."
+        },
+        "h1": "📄 Strani",
+        "description": "Tukaj so prikazani različni vzorci usmerjanja za različne tipe strani",
+        "simple": {
+            "title": "Preprosta stran",
+            "description": "Osnovna statična stran, ki prikazuje enostaven vzorcec usmerjanja"
+        },
+        "slug": {
+            "title": "Slug stran",
+            "description": "Dinamična stran z zamenljivim zadnjim segmentom URL (slug)"
+        },
+        "query": {
+            "title": "Parametri poizvedbe",
+            "description": "Interaktivna stran, ki sprejema in prikazuje URL parametre"
+        },
+        "slugBetween": {
+            "title": "Slug med potmi",
+            "description": "Kompleksno usmerjanje z dinamičnim slugom med lokaliziranimi segmenti"
+        },
+        "external": {
+            "title": "Zunanja pot 🔗",
+            "description": "Ta povezava deluje zunaj [lang=lang], zato ne dodaja jezikovnega prefiksa in bo vedno delovala konsistentno"
+        },
+        "viewMore": "Poglej več"
+    },
+
+    "pageSimple": {
+        "head": {
+            "title": "Preprosta stran",
+            "description": "To je osnovna stran, znotraj druge mape"
+        },
+        "h1": "📋 Preprosta stran",
+        "description": "To je osnovna stran, znotraj druge mape"
+    },
+
+    "pageSlug": {
+        "head": {
+            "title": "Slug stran",
+            "description": "Dinamična stran, kjer lahko zadnji segment URL zamenjaš po svoje"
+        },
+        "h1": "🔗 Slug stran",
+        "description": "To je slug stran, kjer lahko zadnji segment URL zamenjaš po svoje"
+    },
+
+    "pageQuery": {
+        "head": {
+            "title": "Stran s parametri poizvedbe",
+            "description": "Interaktivna stran, ki prikazuje obdelavo in prikaz parametrov URL"
+        },
+        "h1": "⚙️ Stran s parametri poizvedbe",
+        "description": "To je interaktivni primer strani, ki prikazuje obdelavo parametrov URL. Privzeti parametri so '?x=1&y=2', lahko pa jih spremeniš ali dodaš svoje"
+    },
+
+    "pageSlugBetween": {
+        "head": {
+            "title": "Stran s slugom med potmi",
+            "description": "Dinamično usmerjanje z lokaliziranimi potmi in slug parametri med njimi"
+        },
+        "h1": "🔗 Stran s slugom med potmi",
+        "description": "Tukaj vidiš, kako deluje lokalizacija s potmi pred in za dinamičnim slug parametrom, npr. 'URL/this-is-slug/URL'"
+    },
+
+    "server": {
+        "head": {
+            "title": "Strežniški API endpointi",
+            "description": "Demonstracija delovanja strežniških API endpointov"
+        },
+        "h1": "🔧 Strežniški API endpointi",
+        "description": "Tukaj vidiš, kako v praksi delujejo strežniški API endpointi",
+        "simple": {
+            "title": "Preprost",
+            "description": "Prikaz delovanja osnovnega GET API endpointa"
+        },
+        "rest": {
+            "title": "REST",
+            "description": "Prikaz pošiljanja več parametrov na endpoint"
+        },
+        "translated": {
+            "title": "Prevedeno",
+            "description": "Primer vračanja lokalizirane vsebine glede na izbrani jezik",
+            "translated": "To je prevedeno besedilo glede na trenutni jezik"
+        },
+        "viewMore": "Poglej več"
+    },
+
+    "rest": {
+        "head": {
+            "title": "REST strani",
+            "description": "Demonstracija REST parametričnih strani in usmerjanja"
+        },
+        "h1": "🔧 REST strani",
+        "description": "Tukaj je primer REST parametričnih strani",
+        "dynamic": {
+            "title": "Dinamična pot",
+            "description": "Dinamično usmerjanje glede na globino URL in parametre"
+        },
+        "restBetween": {
+            "title": "REST med potmi",
+            "description": "Kompleksno usmerjanje z dinamičnim REST med lokaliziranimi segmenti"
+        },
+        "viewMore": "Poglej več"
+    },
+
+    "restDynamic": {
+        "head": {
+            "title": "Dinamična pot",
+            "description": "Primer dinamičnega usmerjanja poti s strukturo 'dynamic/a/b/c'"
+        },
+        "h1": "🔗 Dinamična pot",
+        "description": "Primer dinamičnega usmerjanja poti s strukturo 'dynamic/a/b/c'. Poskusi dodati svoje segmente in preveri delovanje"
+    },
+
+    "restBetween": {
+        "head": {
+            "title": "Stran z REST med potmi",
+            "description": "Dinamično usmerjanje z lokaliziranimi potmi in REST parametri med njimi"
+        },
+        "h1": "🔗 Stran z REST med potmi",
+        "description": "Tukaj vidiš, kako deluje lokalizacija s potmi pred in za dinamičnim REST parametrom, npr. 'URL/rest/a/b/c/URL'"
+    },
+
+    "playground": {
+        "head": {
+            "title": "Igrišče",
+            "description": "Zbirka interaktivnih igrišč za preizkušanje različnih funkcij"
+        },
+        "h1": "🎮 Igrišče",
+        "description": "Tukaj je zbirka interaktivnih igrišč, kjer lahko preizkušaš različne funkcije",
+        "api": {
+            "title": "API",
+            "description": "Preizkušanje GET in POST zahtevkov"
+        },
+        "i18n": {
+            "title": "i18n",
+            "description": "Preizkušanje internacionalizacije z lokaliziranim usmerjanjem"
+        },
+        "notTranslated": "To besedilo strani ni prevedeno, URL pa je lokaliziran",
+        "viewMore": "Poglej več"
+    },
+
+    "external": {
+        "head": {
+            "title": "Zunanja stran",
+            "description": "Ta stran je zunaj poti [lang=lang] in ne dodaja jezikovnega prefiksa. Uporabno za API endpointov, robots.txt ali druge vire, ki naj bodo vedno dostopni ne glede na lokalizacijo."
+        },
+        "h1": "🔗 Zunanja stran",
+        "description": "Ta stran je zunaj poti [lang=lang] in ne dodaja jezikovnega prefiksa. Uporabno za ustvarjanje API endpoint-ov, robots.txt ali drugih virov, ki naj bodo vedno dostopni ne glede na lokalizacijo. Čeprav URL ni pod jezikovnim usmerjanjem, je vsebina lahko še vedno lokalizirana."
+    },
+
+    "footer": {
+        "description": "SvelteKit - i18n Starter",
+        "name": "Nik Klemenc",
+        "copy": "Avtorske pravice",
+        "made": "Narejeno z {what}"
+    },
+
+    "errors": {
+        "title": "Strani ni mogoče najti",
+        "description": "Zahtevane strani nismo našli.",
+        "error": "Prišlo je do napake",
+        "back": "Nazaj domov"
+    }
+}

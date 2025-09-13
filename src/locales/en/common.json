@@ -1,0 +1,32 @@
+{
+    "menu": {
+        "home": "Home",
+
+        "pages": "Pages",
+        "pagesChildren": {
+            "simple": "Simple page",
+            "slug": "Slug Page",
+            "query": "Page with Query Parameters",
+            "slugBetween": "Slug Between Paths"
+        },
+
+        "server": "Server",
+        "serverChildren": {
+            "simple": "Simple Endpoint",
+            "rest": "REST Endpoint",
+            "translated": "Translated Endpoint"
+        },
+
+        "playground": "Playground",
+        "playgroundChildren": {
+            "apiSandbox": "API Sandbox",
+            "i18nPlayground": "I18n Playground"
+        },
+
+        "rest": "REST Pages",
+        "restChildren": {
+            "dynamic": "Dynamic Path",
+            "restBetween": "REST Between Paths"
+        }
+    }
+}

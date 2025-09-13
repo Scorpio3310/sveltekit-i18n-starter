@@ -1,0 +1,32 @@
+{
+    "menu": {
+        "home": "Startseite",
+
+        "pages": "Seiten",
+        "pagesChildren": {
+            "simple": "Einfache Seite",
+            "slug": "Slug-Seite",
+            "query": "Seite mit Query-Parametern",
+            "slugBetween": "Slug zwischen Pfaden"
+        },
+
+        "server": "Server",
+        "serverChildren": {
+            "simple": "Einfacher Endpunkt",
+            "rest": "REST-Endpunkt",
+            "translated": "Übersetzter Endpunkt"
+        },
+
+        "playground": "Spielwiese",
+        "playgroundChildren": {
+            "apiSandbox": "API-Sandbox",
+            "i18nPlayground": "I18n-Spielwiese"
+        },
+
+        "rest": "REST-Seiten",
+        "restChildren": {
+            "dynamic": "Dynamischer Pfad",
+            "restBetween": "REST zwischen Pfaden"
+        }
+    }
+}

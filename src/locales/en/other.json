@@ -1,0 +1,179 @@
+{
+    "home": {
+        "head": {
+            "title": "SvelteKit i18n Starter",
+            "description": "This is a robust example of i18n internationalization with SvelteKit."
+        },
+        "h1": "🏡 Home Page",
+        "description": "This is a robust example of i18n internationalization with SvelteKit. This example demonstrates various internationalization patterns and routing approaches.",
+        "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊",
+        "madeWith": "Project was created {WITH}"
+    },
+
+    "pages": {
+        "head": {
+            "title": "Pages",
+            "description": "Example of page routing demonstrations."
+        },
+        "h1": "📄 Pages",
+        "description": "Here are various routing patterns for different page types",
+        "simple": {
+            "title": "Simple Page",
+            "description": "A basic static page demonstrating simple routing patterns"
+        },
+        "slug": {
+            "title": "Slug Page",
+            "description": "Dynamic page with modifiable URL slug parameter routing"
+        },
+        "query": {
+            "title": "Query Parameters",
+            "description": "Interactive page that accepts and displays URL parameters"
+        },
+        "slugBetween": {
+            "title": "Slug Between Paths",
+            "description": "Complex routing with dynamic slug between localized segments"
+        },
+        "external": {
+            "title": "External Path 🔗",
+            "description": "This link works outside [lang=lang] so it won't add language prefix and will always work consistently"
+        },
+        "viewMore": "View More"
+    },
+
+    "pageSimple": {
+        "head": {
+            "title": "Simple Page",
+            "description": "This is a basic page nested within another folder"
+        },
+        "h1": "📋 Simple Page",
+        "description": "This is a basic page nested within another folder"
+    },
+
+    "pageSlug": {
+        "head": {
+            "title": "Slug Page",
+            "description": "Dynamic page where you can replace the last URL segment with your own"
+        },
+        "h1": "🔗 Slug Page",
+        "description": "This is a slug page where you can replace the last URL segment with your own"
+    },
+
+    "pageQuery": {
+        "head": {
+            "title": "Page with Query Paremeters",
+            "description": "Interactive page demonstrating URL parameter handling and display"
+        },
+        "h1": "⚙️ Page with Query Paremeters",
+        "description": "This is an interactive example page demonstrating URL parameter handling. The default parameters are '?x=1&y=2', but you can modify or add your own custom parameters to see how they're processed and displayed."
+    },
+
+    "pageSlugBetween": {
+        "head": {
+            "title": "Page with Slug Between Paths",
+            "description": "Dynamic routing with localized paths and slug parameters between them"
+        },
+        "h1": "🔗 Page with Slug Between Paths",
+        "description": "Here you can see how localization works with paths before and after a dynamic slug parameter, like 'URL/this-is-slug/URL'"
+    },
+
+    "server": {
+        "head": {
+            "title": "Server API Endpoints",
+            "description": "Demonstration of server-side API endpoint functionality"
+        },
+        "h1": "🔧 Server API Endpoints",
+        "description": "Here you can see how server-side API endpoints work in practice",
+        "simple": {
+            "title": "Simple",
+            "description": "Demonstrates how a basic GET API endpoint works"
+        },
+        "rest": {
+            "title": "REST",
+            "description": "Shows how to send multiple query parameters to endpoints"
+        },
+        "translated": {
+            "title": "Translated",
+            "description": "Example of returning localized content based on selected language",
+            "translated": "This is a translated string based on the current language"
+        },
+        "viewMore": "View More"
+    },
+
+    "rest": {
+        "head": {
+            "title": "REST Pages",
+            "description": "Demonstration of REST parameter pages and routing"
+        },
+        "h1": "🔧 REST Pages",
+        "description": "Here is an example of REST parameter pages",
+        "dynamic": {
+            "title": "Dynamic Path",
+            "description": "Dynamic routing based on URL depth and parameters"
+        },
+        "restBetween": {
+            "title": "REST Between Paths",
+            "description": "Complex routing with dynamic REST between localized segments"
+        },
+        "viewMore": "View More"
+    },
+
+    "restDynamic": {
+        "head": {
+            "title": "Dynamic Path",
+            "description": "Example of dynamic path routing with 'dynamic/a/b/c' structure"
+        },
+        "h1": "🔗 Dynamic Path",
+        "description": "Example of dynamic path routing with 'dynamic/a/b/c' structure. You can try adding your own segments to see how it works"
+    },
+
+    "restBetween": {
+        "head": {
+            "title": "Page with REST Between Paths",
+            "description": "Dynamic routing with localized paths and REST parameters between them"
+        },
+        "h1": "🔗 Page with REST Between Paths",
+        "description": "Here you can see how localization works with paths before and after a dynamic REST parameter, like 'URL/rest/a/b/c/URL'"
+    },
+
+    "playground": {
+        "head": {
+            "title": "Playground",
+            "description": "Collection of interactive playgrounds to test various features"
+        },
+        "h1": "🎮 Playground",
+        "description": "Here is a collection of interactive playgrounds where you can test different features",
+        "api": {
+            "title": "API",
+            "description": "Testing GET and POST requests"
+        },
+        "i18n": {
+            "title": "i18n",
+            "description": "Internationalization testing with localized routing"
+        },
+        "notTranslated": "This page text is not translated, but the URL is localized",
+        "viewMore": "View More"
+    },
+
+    "external": {
+        "head": {
+            "title": "External Page",
+            "description": "This page is located outside the [lang=lang] route and doesn't add a language prefix. This is useful for API endpoints, robots.txt, or other resources that should always be accessible regardless of localization."
+        },
+        "h1": "🔗 External Page",
+        "description": "This page is located outside the [lang=lang] route and doesn't add a language prefix. This is useful for creating API endpoints, robots.txt, or other resources that should always be accessible regardless of localization. Note that while the URL is outside the language routing, the content itself can still be localized."
+    },
+
+    "footer": {
+        "description": "SvelteKit - i18n Starter",
+        "name": "Nik Klemenc",
+        "copy": "Copyright",
+        "made": "Made with {what}"
+    },
+
+    "errors": {
+        "title": "Page not found",
+        "description": "We couldn’t find the page you requested.",
+        "error": "Something went wrong",
+        "back": "Go home"
+    }
+}

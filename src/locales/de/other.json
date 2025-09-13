@@ -1,0 +1,179 @@
+{
+    "home": {
+        "head": {
+            "title": "SvelteKit i18n Starter",
+            "description": "Dies ist ein robustes Beispiel für i18n‑Internationalisierung mit SvelteKit."
+        },
+        "h1": "🏡 Startseite",
+        "description": "Dies ist ein robustes Beispiel für i18n‑Internationalisierung mit SvelteKit. Dieses Beispiel demonstriert verschiedene Internationalisierungsmuster und Routing‑Ansätze.",
+        "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊",
+        "madeWith": "Projekt wurde mit {WITH} erstellt"
+    },
+
+    "pages": {
+        "head": {
+            "title": "Seiten",
+            "description": "Beispiel für Seiten‑Routing‑Demonstrationen."
+        },
+        "h1": "📄 Seiten",
+        "description": "Hier sind verschiedene Routing‑Muster für unterschiedliche Seitentypen",
+        "simple": {
+            "title": "Einfache Seite",
+            "description": "Eine grundlegende statische Seite, die einfache Routing‑Muster zeigt"
+        },
+        "slug": {
+            "title": "Slug‑Seite",
+            "description": "Dynamische Seite mit änderbarem URL‑Slug"
+        },
+        "query": {
+            "title": "Query‑Parameter",
+            "description": "Interaktive Seite, die URL‑Parameter annimmt und anzeigt"
+        },
+        "slugBetween": {
+            "title": "Slug zwischen Pfaden",
+            "description": "Komplexes Routing mit dynamischem Slug zwischen lokalisierten Segmenten"
+        },
+        "external": {
+            "title": "Externer Pfad 🔗",
+            "description": "Dieser Link funktioniert außerhalb von [lang=lang], daher wird kein Sprachpräfix hinzugefügt und er funktioniert immer konsistent"
+        },
+        "viewMore": "Mehr anzeigen"
+    },
+
+    "pageSimple": {
+        "head": {
+            "title": "Einfache Seite",
+            "description": "Dies ist eine grundlegende Seite, die in einem anderen Ordner liegt"
+        },
+        "h1": "📋 Einfache Seite",
+        "description": "Dies ist eine grundlegende Seite, die in einem anderen Ordner liegt"
+    },
+
+    "pageSlug": {
+        "head": {
+            "title": "Slug‑Seite",
+            "description": "Dynamische Seite, bei der du das letzte URL‑Segment selbst ersetzen kannst"
+        },
+        "h1": "🔗 Slug‑Seite",
+        "description": "Dies ist eine Slug‑Seite, bei der du das letzte URL‑Segment selbst ersetzen kannst"
+    },
+
+    "pageQuery": {
+        "head": {
+            "title": "Seite mit Query‑Parametern",
+        "description": "Interaktive Seite, die die Verarbeitung und Anzeige von URL‑Parametern demonstriert."
+        },
+        "h1": "⚙️ Seite mit Query‑Parametern",
+        "description": "Dies ist eine interaktive Beispielseite zur Demonstration der Verarbeitung von URL‑Parametern. Die Standardparameter sind '?x=1&y=2', du kannst sie ändern oder eigene hinzufügen."
+    },
+
+    "pageSlugBetween": {
+        "head": {
+            "title": "Seite mit Slug zwischen Pfaden",
+            "description": "Dynamisches Routing mit lokalisierten Pfaden und Slug‑Parametern dazwischen"
+        },
+        "h1": "🔗 Seite mit Slug zwischen Pfaden",
+        "description": "Hier siehst du, wie die Lokalisierung mit Pfaden vor und nach einem dynamischen Slug‑Parameter funktioniert, z. B. 'URL/this-is-slug/URL'"
+    },
+
+    "server": {
+        "head": {
+            "title": "Server‑API‑Endpunkte",
+            "description": "Demonstration der Funktionalität von serverseitigen API‑Endpunkten"
+        },
+        "h1": "🔧 Server‑API‑Endpunkte",
+        "description": "Hier siehst du, wie serverseitige API‑Endpunkte in der Praxis funktionieren",
+        "simple": {
+            "title": "Einfach",
+            "description": "Demonstriert, wie ein einfacher GET‑Endpunkt funktioniert"
+        },
+        "rest": {
+            "title": "REST",
+            "description": "Zeigt, wie mehrere Parameter an Endpunkte gesendet werden"
+        },
+        "translated": {
+            "title": "Übersetzt",
+            "description": "Beispiel für die Rückgabe lokalisierter Inhalte basierend auf der gewählten Sprache",
+            "translated": "Dies ist ein übersetzter Text basierend auf der aktuellen Sprache"
+        },
+        "viewMore": "Mehr anzeigen"
+    },
+
+    "rest": {
+        "head": {
+            "title": "REST‑Seiten",
+            "description": "Demonstration von REST‑Parameter‑Seiten und Routing"
+        },
+        "h1": "🔧 REST‑Seiten",
+        "description": "Hier ist ein Beispiel für REST‑Parameter‑Seiten",
+        "dynamic": {
+            "title": "Dynamischer Pfad",
+            "description": "Dynamisches Routing basierend auf URL‑Tiefe und Parametern"
+        },
+        "restBetween": {
+            "title": "REST zwischen Pfaden",
+            "description": "Komplexes Routing mit dynamischem REST zwischen lokalisierten Segmenten"
+        },
+        "viewMore": "Mehr anzeigen"
+    },
+
+    "restDynamic": {
+        "head": {
+            "title": "Dynamischer Pfad",
+            "description": "Beispiel für dynamisches Pfad‑Routing mit der Struktur 'dynamic/a/b/c'"
+        },
+        "h1": "🔗 Dynamischer Pfad",
+        "description": "Beispiel für dynamisches Pfad‑Routing mit der Struktur 'dynamic/a/b/c'. Du kannst eigene Segmente hinzufügen, um es auszuprobieren"
+    },
+
+    "restBetween": {
+        "head": {
+            "title": "Seite mit REST zwischen Pfaden",
+            "description": "Dynamisches Routing mit lokalisierten Pfaden und REST‑Parametern dazwischen"
+        },
+        "h1": "🔗 Seite mit REST zwischen Pfaden",
+        "description": "Hier siehst du, wie die Lokalisierung mit Pfaden vor und nach einem dynamischen REST‑Parameter funktioniert, z. B. 'URL/rest/a/b/c/URL'"
+    },
+
+    "playground": {
+        "head": {
+            "title": "Spielwiese",
+            "description": "Sammlung interaktiver Spielwiesen zum Testen verschiedener Funktionen"
+        },
+        "h1": "🎮 Spielwiese",
+        "description": "Hier findest du eine Sammlung interaktiver Spielwiesen, auf denen du verschiedene Funktionen testen kannst",
+        "api": {
+            "title": "API",
+            "description": "Tests für GET‑ und POST‑Anfragen"
+        },
+        "i18n": {
+            "title": "i18n",
+            "description": "Internationalisierungstests mit lokalisiertem Routing"
+        },
+        "notTranslated": "Dieser Seitentext ist nicht übersetzt, die URL ist jedoch lokalisiert.",
+        "viewMore": "Mehr anzeigen"
+    },
+
+    "external": {
+        "head": {
+            "title": "Externe Seite",
+            "description": "Diese Seite befindet sich außerhalb der Route [lang=lang] und fügt keinen Sprachpräfix hinzu. Nützlich für API‑Endpunkte, robots.txt oder andere Ressourcen, die stets erreichbar sein sollen."
+        },
+        "h1": "🔗 Externe Seite",
+        "description": "Diese Seite befindet sich außerhalb der Route [lang=lang] und fügt keinen Sprachpräfix hinzu. Nützlich für die Erstellung von API‑Endpunkten, robots.txt oder anderen Ressourcen, die stets erreichbar sein sollen. Obwohl die URL außerhalb des Sprachroutings liegt, kann der Inhalt dennoch lokalisiert sein."
+    },
+
+    "footer": {
+        "description": "SvelteKit - i18n Starter",
+        "name": "Nik Klemenc",
+        "copy": "Urheberrecht",
+        "made": "Erstellt mit {what}"
+    },
+
+    "errors": {
+        "title": "Seite nicht gefunden",
+        "description": "Wir konnten die angeforderte Seite nicht finden.",
+        "error": "Es ist ein Fehler aufgetreten",
+        "back": "Zur Startseite"
+    }
+}

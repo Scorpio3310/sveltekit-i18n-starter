@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+body {
+    @apply px-4 min-h-dvh flex flex-col;
+}
+
+header {
+    @apply border-b border-b-black/10 fixed lg:sticky top-0 lg:w-full flex flex-col lg:flex-row lg:justify-between py-6 max-w-7xl px-4 lg:px-0 lg:mx-auto bg-white/60 backdrop-blur-xl z-10 left-0 right-0;
+
+    .nav-header {
+        @apply flex justify-between items-center p-4 relative z-10 w-full;
+    }
+
+    .logo {
+        @apply contents;
+
+        img {
+            @apply hover:opacity-50;
+        }
+    }
+
+    /* Mobile menu checkbox (hidden) */
+    .mobile-menu-checkbox {
+        @apply hidden;
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-toggle {
+        @apply flex flex-col justify-center items-center w-8 h-8 space-y-1 cursor-pointer lg:hidden;
+
+        span {
+            @apply block w-6 h-0.5 bg-current transition-all duration-300;
+        }
+    }
+
+    /* Hamburger → X animation when checked */
+    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(1) {
+        @apply transform rotate-45 translate-y-1.5;
+    }
+
+    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(2) {
+        @apply opacity-0;
+    }
+
+    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(3) {
+        @apply transform -rotate-45 -translate-y-1.5;
+    }
+
+    /* Mobile navigation */
+    .nav-main {
+        @apply hidden w-full lg:flex lg:items-center lg:gap-8 lg:justify-end overflow-auto md:overflow-visible pb-6 lg:pb-0 h-[calc(100vh-82px)] lg:h-auto;
+    }
+
+    /* Show nav when checkbox is checked */
+    .mobile-menu-checkbox:checked ~ .nav-main {
+        @apply flex flex-col lg:flex-row mt-4;
+    }
+
+    .nav-list {
+        @apply flex flex-col lg:flex-row list-none m-0 p-0 gap-4 lg:gap-8 items-center;
+    }
+
+    .nav-item {
+        @apply relative text-center space-y-4 lg:space-y-0;
+    }
+
+    .nav-link {
+        @apply py-2 lg:py-0 cursor-pointer no-underline hover:opacity-50;
+    }
+
+    .nav-dropdown {
+        @apply lg:hidden lg:absolute lg:top-full lg:left-0 lg:bg-white lg:border lg:border-gray-300 lg:p-2 lg:min-w-32 lg:shadow-md space-y-4 lg:space-y-0 text-left;
+    }
+
+    .nav-dropdown-link {
+        @apply block lg:p-2 no-underline whitespace-nowrap lg:hover:bg-gray-100 py-2;
+    }
+
+    .nav-actions {
+        @apply flex flex-col lg:flex-row items-center mt-4 lg:mt-0 gap-4 lg:gap-6;
+    }
+
+    /* Custom hover za dropdown */
+    .nav-item:hover .nav-dropdown {
+        @apply block;
+    }
+}
+
+h1 {
+    @apply text-4xl md:text-5xl font-bold text-center mb-8 wrap-anywhere;
+}
+
+.button {
+    @apply py-2 px-4 rounded-4xl border border-black/25 hover:opacity-50 block cursor-pointer;
+
+    &.disabled {
+        @apply opacity-30 cursor-not-allowed hover:opacity-30;
+    }
+}
