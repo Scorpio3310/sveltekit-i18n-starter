@@ -73,7 +73,7 @@ header {
     }
 
     .nav-dropdown-link {
-        @apply block lg:p-2 no-underline whitespace-nowrap lg:hover:bg-gray-100 py-2;
+        @apply block lg:p-2 no-underline whitespace-nowrap lg:hover:bg-gray-100 py-2 text-center lg:text-left;
     }
 
     .nav-actions {

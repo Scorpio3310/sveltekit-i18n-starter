@@ -8,19 +8,28 @@
 
     const _links = navigationData;
     const currentLocale = page.data.lang;
+
+    // Mobile menu state
+    let mobileMenuOpen = $state(false);
+
+    // Function to close mobile menu
+    function closeMobileMenu() {
+        mobileMenuOpen = false;
+    }
 </script>
 
 <header class="nav-header" role="banner">
-    <!-- Mobile menu toggle (CSS only) -->
+    <!-- Mobile menu toggle -->
     <input
         type="checkbox"
         id="mobile-menu-toggle"
         class="mobile-menu-checkbox"
         aria-label="Toggle mobile menu"
+        bind:checked={mobileMenuOpen}
     />
 
     <div class="flex items-center justify-between">
-        <a href={translatePath("/")} aria-label="Home">
+        <a href={translatePath("/")} aria-label="Home" onclick={closeMobileMenu}>
             <svg
                 height="20"
                 viewBox="0 0 348 81"
@@ -82,6 +91,7 @@
                             : ''}"
                         role="menuitem"
                         aria-label={t(label)}
+                        onclick={closeMobileMenu}
                     >
                         {t(label)}
                     </a>
@@ -105,6 +115,7 @@
                                             : ''}"
                                         role="menuitem"
                                         aria-label={t(clabel)}
+                                        onclick={closeMobileMenu}
                                     >
                                         {t(clabel)}
                                     </a>
@@ -128,6 +139,7 @@
                             `${page.url?.pathname}${page.url?.search}${page.url?.hash}`
                         )}
                         data-sveltekit-reload
+                        onclick={closeMobileMenu}
                     >
                         <!-- {language_names[language].toUpperCase()} -->
                         {language}
