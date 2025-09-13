@@ -3,7 +3,7 @@
     "private": true,
     "version": "1.0.0",
     "type": "module",
-    "description": "This is a robust example of i18n internationalization with SvelteKit",
+    "description": "SvelteKit i18n starter with URL localization and SEO optimization",
     "author": {
         "name": "Nik Klemenc",
         "url": "https://klemenc.si"

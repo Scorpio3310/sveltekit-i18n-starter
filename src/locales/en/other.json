@@ -2,10 +2,10 @@
     "home": {
         "head": {
             "title": "SvelteKit i18n Starter",
-            "description": "This is a robust example of i18n internationalization with SvelteKit."
+            "description": "SvelteKit i18n starter with URL localization and SEO optimization."
         },
         "h1": "🏡 Home Page",
-        "description": "This is a robust example of i18n internationalization with SvelteKit. This example demonstrates various internationalization patterns and routing approaches.",
+        "description": "SvelteKit i18n starter with URL localization and SEO optimization. This example demonstrates various internationalization patterns and routing approaches.",
         "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊",
         "madeWith": "Project was created {WITH}"
     },
