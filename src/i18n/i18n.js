@@ -96,16 +96,18 @@ function getDot(obj, key) {
 /**
  * Create a translator for a language.
  * Supports dot-notation keys and {var} interpolation.
+ * Returns non-string values (arrays, objects, numbers, booleans) as-is.
  * @param {string} lang
- * @returns {(key: string, vars?: Record<string, string | number>) => string}
+ * @returns {(key: string, vars?: Record<string, string | number>) => any}
  */
 export function makeT(lang) {
     const base = DICTS[lang] || {};
     return (key, vars) => {
         const raw = getDot(base, key);
-        const str = typeof raw === "string" ? raw : key;
-        if (!vars) return str;
-        return str.replace(/\{([^}]+)\}/g, (_, name) => {
+        if (raw === undefined) return key;
+        if (typeof raw !== "string") return jsonClone(raw);
+        if (!vars) return raw;
+        return raw.replace(/\{([^}]+)\}/g, (_, name) => {
             const v = vars[name];
             return v == null ? "" : String(v);
         });
@@ -140,6 +142,7 @@ export function useT() {
  * Convenience: direct translator using current context.
  * @param {string} key
  * @param {Record<string, string|number>=} vars
+ * @returns {any}
  */
 export function t(key, vars) {
     return useT()(key, vars);
