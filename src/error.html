@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>%sveltekit.error.message%</title>
+        <style>
+            body {
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                display: grid;
+                place-items: center;
+                min-height: 100vh;
+                margin: 0;
+                text-align: center;
+            }
+            .status {
+                font-family: ui-monospace, monospace;
+                background: #f3f4f6;
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Last-resort fallback: rendered only when the app itself fails
+             to render the translated +error.svelte page. -->
+        <main>
+            <h1>%sveltekit.error.message%</h1>
+            <p class="status">%sveltekit.status%</p>
+            <p><a href="/">← Home</a></p>
+        </main>
+    </body>
+</html>

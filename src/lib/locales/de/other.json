@@ -9,7 +9,6 @@
         "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊",
         "madeWith": "Projekt wurde mit {WITH} erstellt"
     },
-
     "pages": {
         "head": {
             "title": "Seiten",
@@ -39,7 +38,6 @@
         },
         "viewMore": "Mehr anzeigen"
     },
-
     "pageSimple": {
         "head": {
             "title": "Einfache Seite",
@@ -48,7 +46,6 @@
         "h1": "📋 Einfache Seite",
         "description": "Dies ist eine grundlegende Seite, die in einem anderen Ordner liegt"
     },
-
     "pageSlug": {
         "head": {
             "title": "Slug‑Seite",
@@ -57,16 +54,14 @@
         "h1": "🔗 Slug‑Seite",
         "description": "Dies ist eine Slug‑Seite, bei der du das letzte URL‑Segment selbst ersetzen kannst"
     },
-
     "pageQuery": {
         "head": {
             "title": "Seite mit Query‑Parametern",
-        "description": "Interaktive Seite, die die Verarbeitung und Anzeige von URL‑Parametern demonstriert."
+            "description": "Interaktive Seite, die die Verarbeitung und Anzeige von URL‑Parametern demonstriert."
         },
         "h1": "⚙️ Seite mit Query‑Parametern",
         "description": "Dies ist eine interaktive Beispielseite zur Demonstration der Verarbeitung von URL‑Parametern. Die Standardparameter sind '?x=1&y=2', du kannst sie ändern oder eigene hinzufügen."
     },
-
     "pageSlugBetween": {
         "head": {
             "title": "Seite mit Slug zwischen Pfaden",
@@ -75,7 +70,6 @@
         "h1": "🔗 Seite mit Slug zwischen Pfaden",
         "description": "Hier siehst du, wie die Lokalisierung mit Pfaden vor und nach einem dynamischen Slug‑Parameter funktioniert, z. B. 'URL/this-is-slug/URL'"
     },
-
     "server": {
         "head": {
             "title": "Server‑API‑Endpunkte",
@@ -98,7 +92,6 @@
         },
         "viewMore": "Mehr anzeigen"
     },
-
     "rest": {
         "head": {
             "title": "REST‑Seiten",
@@ -116,7 +109,6 @@
         },
         "viewMore": "Mehr anzeigen"
     },
-
     "restDynamic": {
         "head": {
             "title": "Dynamischer Pfad",
@@ -125,7 +117,6 @@
         "h1": "🔗 Dynamischer Pfad",
         "description": "Beispiel für dynamisches Pfad‑Routing mit der Struktur 'dynamic/a/b/c'. Du kannst eigene Segmente hinzufügen, um es auszuprobieren"
     },
-
     "restBetween": {
         "head": {
             "title": "Seite mit REST zwischen Pfaden",
@@ -134,7 +125,6 @@
         "h1": "🔗 Seite mit REST zwischen Pfaden",
         "description": "Hier siehst du, wie die Lokalisierung mit Pfaden vor und nach einem dynamischen REST‑Parameter funktioniert, z. B. 'URL/rest/a/b/c/URL'"
     },
-
     "playground": {
         "head": {
             "title": "Spielwiese",
@@ -153,7 +143,18 @@
         "notTranslated": "Dieser Seitentext ist nicht übersetzt, die URL ist jedoch lokalisiert.",
         "viewMore": "Mehr anzeigen"
     },
-
+    "playgroundApi": {
+        "head": {
+            "title": "API-Sandbox",
+            "description": "Interaktive Sandbox zum Aufrufen der Demo-Server-Endpunkte"
+        }
+    },
+    "playgroundI18n": {
+        "head": {
+            "title": "i18n-Spielwiese",
+            "description": "Interaktive Spielwiese für die Helfer des lokalisierten Routings"
+        }
+    },
     "external": {
         "head": {
             "title": "Externe Seite",
@@ -162,14 +163,12 @@
         "h1": "🔗 Externe Seite",
         "description": "Diese Seite befindet sich außerhalb der Route [lang=lang] und fügt keinen Sprachpräfix hinzu. Nützlich für die Erstellung von API‑Endpunkten, robots.txt oder anderen Ressourcen, die stets erreichbar sein sollen. Obwohl die URL außerhalb des Sprachroutings liegt, kann der Inhalt dennoch lokalisiert sein."
     },
-
     "footer": {
         "description": "SvelteKit - i18n Starter",
         "name": "Nik Klemenc",
         "copy": "Urheberrecht",
         "made": "Erstellt mit {what}"
     },
-
     "errors": {
         "title": "Seite nicht gefunden",
         "description": "Wir konnten die angeforderte Seite nicht finden.",

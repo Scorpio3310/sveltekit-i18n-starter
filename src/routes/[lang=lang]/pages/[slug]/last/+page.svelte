@@ -4,11 +4,6 @@
     const t = useT();
 </script>
 
-<svelte:head>
-    <title>{t("pageSlugBetween.head.title")}</title>
-    <meta name="description" content={t("pageSlugBetween.head.description")} />
-</svelte:head>
-
 <section class="grid gap-4">
     <h1 class="text-5xl font-bold my-5">{t("pageSlugBetween.h1")}</h1>
     <div class="grid max-w-3xl mx-auto gap-10">

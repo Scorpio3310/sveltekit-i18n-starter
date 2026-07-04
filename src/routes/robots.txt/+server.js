@@ -23,7 +23,11 @@ export async function GET({ url }) {
     const prodHost = env.PRODUCTION_DOMAIN ? hostOf(env.PRODUCTION_DOMAIN) : "";
     const isProd = !!prodHost && url.host === prodHost;
 
-    return new Response(isProd ? PRODUCTION_ROBOTS_TXT : DEV_ROBOTS_TXT, {
+    const body = isProd
+        ? `${PRODUCTION_ROBOTS_TXT.trimEnd()}\n\nSitemap: ${url.origin}/sitemap.xml\n`
+        : DEV_ROBOTS_TXT;
+
+    return new Response(body, {
         headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
 }

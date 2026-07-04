@@ -16,9 +16,7 @@ const pageFiles = import.meta.glob(
  * @param {string} file
  */
 function fileToRegex(file) {
-    let path = file
-        .replace(/^\.\/routes\/[^[\]]*\[lang=lang\]/, "")
-        .replace(/\/\+(?:page|server)\.[a-z]+$/, "");
+    const path = fileToCanonicalDir(file);
     if (path === "") return /^\/$/; // home
 
     const segs = path.split("/").filter(Boolean);
@@ -34,7 +32,38 @@ function fileToRegex(file) {
     return new RegExp(`^/${pattern}(?:$|/)`);
 }
 
+/** @param {string} file */
+function fileToCanonicalDir(file) {
+    return file
+        .replace(/^\.\/routes\/[^[\]]*\[lang=lang\]/, "")
+        .replace(/\/\+(?:page|server)\.[a-z]+$/, "");
+}
+
 const CANONICAL_REGEXES = Object.keys(pageFiles).map(fileToRegex);
+
+/**
+ * Canonical paths of all static (parameter-free) [lang=lang] pages.
+ * Used by the sitemap endpoint; parameterised routes can't be enumerated
+ * without data and are omitted.
+ * @type {string[]}
+ */
+export const STATIC_CANONICAL_PAGES = [
+    ...new Set(
+        Object.keys(pageFiles)
+            .filter((f) => /\/\+page\.(svelte|js|ts)$/.test(f))
+            .map(fileToCanonicalDir)
+            .filter((p) => !p.includes("["))
+            .map((p) => p || "/")
+    ),
+].sort();
+
+/**
+ * Whether a canonical path belongs to a page/endpoint under [lang=lang].
+ * @param {string} canonicalPath
+ */
+export function isKnownCanonicalPath(canonicalPath) {
+    return CANONICAL_REGEXES.some((rx) => rx.test(canonicalPath));
+}
 
 /** Normalize path */
 function normalize(p) {
@@ -48,16 +77,11 @@ function normalize(p) {
 export function reroute({ url }) {
     let pathname = normalize(url.pathname);
 
-    // Skip files with extension (e.g., /robots.txt, /favicon.ico)
-    const last = pathname.split("/").pop();
-    if (last && /\.[\w.-]+$/.test(last)) return;
-
     const seg = pathname.split("/").filter(Boolean)[0];
     if (seg && SUPPORTED_LANGS.includes(seg)) {
         const rest = normalize(pathname.slice(("/" + seg).length) || "/");
         const canonical = toCanonical(rest, seg);
-        const isKnown = CANONICAL_REGEXES.some((rx) => rx.test(canonical));
-        if (!isKnown) return; // let it 404 naturally
+        if (!isKnownCanonicalPath(canonical)) return; // let it 404 naturally
         // Normalize internal path to the canonical page within the lang branch
         return `/${seg}${canonical === "/" ? "" : canonical}`;
     }
@@ -72,10 +96,7 @@ export function reroute({ url }) {
     ) {
         return; // cause normal 404 at root for canonical when a localized slug exists
     }
-    const matchesCanonical = CANONICAL_REGEXES.some((rx) =>
-        rx.test(canonicalFromDefault)
-    );
-    if (!matchesCanonical) return; // not a known [lang=lang] page; leave as-is
+    if (!isKnownCanonicalPath(canonicalFromDefault)) return; // not a known [lang=lang] page; leave as-is
 
     // Internally resolve to the default language branch
     return `/${DEFAULT_LANG}${

@@ -13,11 +13,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>{tLocal("external.head.title")}</title>
-    <meta name="description" content={tLocal("external.head.description")} />
-</svelte:head>
-
 <div class="grid gap-4">
     <h1 class="text-5xl font-bold my-5">{tLocal("external.h1")}</h1>
     <div class="grid text-center max-w-3xl mx-auto gap-4">

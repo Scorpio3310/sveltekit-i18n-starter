@@ -5,10 +5,6 @@
     const translatePath = useTranslatePath();
 </script>
 
-<svelte:head>
-    <title>{t("errors.title")}</title>
-</svelte:head>
-
 <section class="grid gap-2">
     <h1 class="text-5xl font-bold my-5">{t("errors.title")}</h1>
     <div class="grid text-center max-w-3xl mx-auto gap-4">

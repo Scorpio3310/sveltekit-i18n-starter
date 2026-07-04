@@ -3,11 +3,6 @@
     const t = useT();
 </script>
 
-<svelte:head>
-    <title>{t("home.head.title")}</title>
-    <meta name="description" content={t("home.head.description")} />
-</svelte:head>
-
 <div class="grid gap-4">
     <h1 class="text-5xl font-bold my-5">{t("home.h1")}</h1>
     <div class="grid text-center max-w-2xl mx-auto gap-4">

@@ -1,15 +1,17 @@
-import { error, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { SUPPORTED_LANGS } from "$i18n/languages.js";
 import {
     DEFAULT_LANG,
-    isValidLocalizedPath,
     PREFIX_DEFAULT,
+    toCanonical,
 } from "$i18n/routing.js";
 import { translatorFor, localeForIntl } from "$i18n/i18n.js";
+import { isKnownCanonicalPath } from "./hooks.js";
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
     const pathname = event.url.pathname;
+    const search = event.url.search || "";
     const seg = pathname.split("/").filter(Boolean)[0];
     const isPrefixed = !!seg && SUPPORTED_LANGS.includes(seg);
 
@@ -18,34 +20,33 @@ export async function handle({ event, resolve }) {
         ? pathname.slice((`/` + seg).length) || "/"
         : pathname;
 
-    // Redirect root to '/<DEFAULT_LANG>' when prefix mode is enabled
-    if (!isPrefixed && pathname === "/" && PREFIX_DEFAULT) {
-        redirect(307, `/${DEFAULT_LANG}`);
-    }
-
-    // Default language prefix handling
-    if (isPrefixed && lang === DEFAULT_LANG) {
-        if (!PREFIX_DEFAULT) {
-            // strip default prefix in non-prefixed mode
-            const target = `${pathWithoutPrefix}${event.url.search || ""}${
-                event.url.hash || ""
-            }`;
-            redirect(307, target);
+    if (!isPrefixed && PREFIX_DEFAULT) {
+        // Prefix mode: canonicalize unprefixed URLs to '/<DEFAULT_LANG>/...'
+        // (308 = permanent, method-preserving). Without this, the reroute
+        // hook would serve the same page on both URLs (duplicate content).
+        if (pathname === "/") {
+            redirect(308, `/${DEFAULT_LANG}${search}`);
         }
-        // else: allow prefixed default language
+        if (isKnownCanonicalPath(toCanonical(pathname, DEFAULT_LANG))) {
+            redirect(308, `/${DEFAULT_LANG}${pathname}${search}`);
+        }
     }
 
-    // Validate only under '/<lang>/...'
-    if (isPrefixed) {
-        const ok = isValidLocalizedPath(pathWithoutPrefix, lang);
-        if (!ok) error(404, "Not found");
+    if (isPrefixed && lang === DEFAULT_LANG && !PREFIX_DEFAULT) {
+        // Non-prefix mode: strip the default-language prefix
+        // (the URL fragment never reaches the server, so only search survives)
+        redirect(308, `${pathWithoutPrefix}${search}`);
     }
+
+    // Note: localized-path validation lives in
+    // src/routes/[lang=lang]/+layout.server.js — an error() thrown there
+    // renders the translated +error.svelte, while errors thrown in handle
+    // would only render the bare fallback error page.
 
     // Expose helpers
     event.locals.lang = lang;
     event.locals.intlLocale = localeForIntl(lang);
     event.locals.t = translatorFor(lang);
-    event.locals.i18n = { lang, intlLocale: event.locals.intlLocale };
 
     return resolve(event, {
         transformPageChunk: ({ html }) =>

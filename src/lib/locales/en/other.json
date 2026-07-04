@@ -9,7 +9,6 @@
         "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊",
         "madeWith": "Project was created {WITH}"
     },
-
     "pages": {
         "head": {
             "title": "Pages",
@@ -39,7 +38,6 @@
         },
         "viewMore": "View More"
     },
-
     "pageSimple": {
         "head": {
             "title": "Simple Page",
@@ -48,7 +46,6 @@
         "h1": "📋 Simple Page",
         "description": "This is a basic page nested within another folder"
     },
-
     "pageSlug": {
         "head": {
             "title": "Slug Page",
@@ -57,7 +54,6 @@
         "h1": "🔗 Slug Page",
         "description": "This is a slug page where you can replace the last URL segment with your own"
     },
-
     "pageQuery": {
         "head": {
             "title": "Page with Query Paremeters",
@@ -66,7 +62,6 @@
         "h1": "⚙️ Page with Query Paremeters",
         "description": "This is an interactive example page demonstrating URL parameter handling. The default parameters are '?x=1&y=2', but you can modify or add your own custom parameters to see how they're processed and displayed."
     },
-
     "pageSlugBetween": {
         "head": {
             "title": "Page with Slug Between Paths",
@@ -75,7 +70,6 @@
         "h1": "🔗 Page with Slug Between Paths",
         "description": "Here you can see how localization works with paths before and after a dynamic slug parameter, like 'URL/this-is-slug/URL'"
     },
-
     "server": {
         "head": {
             "title": "Server API Endpoints",
@@ -98,7 +92,6 @@
         },
         "viewMore": "View More"
     },
-
     "rest": {
         "head": {
             "title": "REST Pages",
@@ -116,7 +109,6 @@
         },
         "viewMore": "View More"
     },
-
     "restDynamic": {
         "head": {
             "title": "Dynamic Path",
@@ -125,7 +117,6 @@
         "h1": "🔗 Dynamic Path",
         "description": "Example of dynamic path routing with 'dynamic/a/b/c' structure. You can try adding your own segments to see how it works"
     },
-
     "restBetween": {
         "head": {
             "title": "Page with REST Between Paths",
@@ -134,7 +125,6 @@
         "h1": "🔗 Page with REST Between Paths",
         "description": "Here you can see how localization works with paths before and after a dynamic REST parameter, like 'URL/rest/a/b/c/URL'"
     },
-
     "playground": {
         "head": {
             "title": "Playground",
@@ -153,7 +143,18 @@
         "notTranslated": "This page text is not translated, but the URL is localized",
         "viewMore": "View More"
     },
-
+    "playgroundApi": {
+        "head": {
+            "title": "API Sandbox",
+            "description": "Interactive sandbox for calling the demo server endpoints"
+        }
+    },
+    "playgroundI18n": {
+        "head": {
+            "title": "i18n Playground",
+            "description": "Interactive playground for the localized routing helpers"
+        }
+    },
     "external": {
         "head": {
             "title": "External Page",
@@ -162,14 +163,12 @@
         "h1": "🔗 External Page",
         "description": "This page is located outside the [lang=lang] route and doesn't add a language prefix. This is useful for creating API endpoints, robots.txt, or other resources that should always be accessible regardless of localization. Note that while the URL is outside the language routing, the content itself can still be localized."
     },
-
     "footer": {
         "description": "SvelteKit - i18n Starter",
         "name": "Nik Klemenc",
         "copy": "Copyright",
         "made": "Made with {what}"
     },
-
     "errors": {
         "title": "Page not found",
         "description": "We couldn’t find the page you requested.",

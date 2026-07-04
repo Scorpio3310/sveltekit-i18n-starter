@@ -9,7 +9,6 @@
         "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊",
         "madeWith": "Projekt je ustvarjen {WITH}"
     },
-
     "pages": {
         "head": {
             "title": "Strani",
@@ -39,7 +38,6 @@
         },
         "viewMore": "Poglej več"
     },
-
     "pageSimple": {
         "head": {
             "title": "Preprosta stran",
@@ -48,7 +46,6 @@
         "h1": "📋 Preprosta stran",
         "description": "To je osnovna stran, znotraj druge mape"
     },
-
     "pageSlug": {
         "head": {
             "title": "Slug stran",
@@ -57,7 +54,6 @@
         "h1": "🔗 Slug stran",
         "description": "To je slug stran, kjer lahko zadnji segment URL zamenjaš po svoje"
     },
-
     "pageQuery": {
         "head": {
             "title": "Stran s parametri poizvedbe",
@@ -66,7 +62,6 @@
         "h1": "⚙️ Stran s parametri poizvedbe",
         "description": "To je interaktivni primer strani, ki prikazuje obdelavo parametrov URL. Privzeti parametri so '?x=1&y=2', lahko pa jih spremeniš ali dodaš svoje"
     },
-
     "pageSlugBetween": {
         "head": {
             "title": "Stran s slugom med potmi",
@@ -75,7 +70,6 @@
         "h1": "🔗 Stran s slugom med potmi",
         "description": "Tukaj vidiš, kako deluje lokalizacija s potmi pred in za dinamičnim slug parametrom, npr. 'URL/this-is-slug/URL'"
     },
-
     "server": {
         "head": {
             "title": "Strežniški API endpointi",
@@ -98,7 +92,6 @@
         },
         "viewMore": "Poglej več"
     },
-
     "rest": {
         "head": {
             "title": "REST strani",
@@ -116,7 +109,6 @@
         },
         "viewMore": "Poglej več"
     },
-
     "restDynamic": {
         "head": {
             "title": "Dinamična pot",
@@ -125,7 +117,6 @@
         "h1": "🔗 Dinamična pot",
         "description": "Primer dinamičnega usmerjanja poti s strukturo 'dynamic/a/b/c'. Poskusi dodati svoje segmente in preveri delovanje"
     },
-
     "restBetween": {
         "head": {
             "title": "Stran z REST med potmi",
@@ -134,7 +125,6 @@
         "h1": "🔗 Stran z REST med potmi",
         "description": "Tukaj vidiš, kako deluje lokalizacija s potmi pred in za dinamičnim REST parametrom, npr. 'URL/rest/a/b/c/URL'"
     },
-
     "playground": {
         "head": {
             "title": "Igrišče",
@@ -153,7 +143,18 @@
         "notTranslated": "To besedilo strani ni prevedeno, URL pa je lokaliziran",
         "viewMore": "Poglej več"
     },
-
+    "playgroundApi": {
+        "head": {
+            "title": "API peskovnik",
+            "description": "Interaktivni peskovnik za klicanje demo strežniških končnih točk"
+        }
+    },
+    "playgroundI18n": {
+        "head": {
+            "title": "i18n igrišče",
+            "description": "Interaktivno igrišče za pomočnike lokaliziranega usmerjanja"
+        }
+    },
     "external": {
         "head": {
             "title": "Zunanja stran",
@@ -162,14 +163,12 @@
         "h1": "🔗 Zunanja stran",
         "description": "Ta stran je zunaj poti [lang=lang] in ne dodaja jezikovnega prefiksa. Uporabno za ustvarjanje API endpoint-ov, robots.txt ali drugih virov, ki naj bodo vedno dostopni ne glede na lokalizacijo. Čeprav URL ni pod jezikovnim usmerjanjem, je vsebina lahko še vedno lokalizirana."
     },
-
     "footer": {
         "description": "SvelteKit - i18n Starter",
         "name": "Nik Klemenc",
         "copy": "Avtorske pravice",
         "made": "Narejeno z {what}"
     },
-
     "errors": {
         "title": "Strani ni mogoče najti",
         "description": "Zahtevane strani nismo našli.",

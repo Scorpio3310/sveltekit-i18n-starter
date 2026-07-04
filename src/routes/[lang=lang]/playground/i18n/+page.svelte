@@ -50,11 +50,6 @@
     });
 </script>
 
-<svelte:head>
-    <title>I18n Playground</title>
-    <meta name="robots" content="noindex" />
-</svelte:head>
-
 <section class="grid gap-5 max-w-4xl justify-self-center">
     <h1 class="text-5xl font-bold my-5">🌐 I18n Playground</h1>
 

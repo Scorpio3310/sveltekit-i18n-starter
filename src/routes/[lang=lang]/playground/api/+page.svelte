@@ -117,10 +117,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>API Sandbox</title>
-</svelte:head>
-
 <section class="grid gap-4">
     <h1 class="text-5xl font-bold my-5">🚀 API Sandbox (Server)</h1>
     <div

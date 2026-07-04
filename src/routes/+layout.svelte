@@ -1,7 +1,9 @@
 <script>
     import "../app.css";
     import { page } from "$app/state";
-    import { setI18nContext } from "$i18n/i18n";
+    import { setI18nContext, switchLanguageUrl, localeForIntl } from "$i18n/i18n";
+    import { normalizePath, DEFAULT_LANG } from "$i18n/routing";
+    import { SUPPORTED_LANGS } from "$i18n/languages";
     import Navbar from "$components/Navbar.svelte";
     import Footer from "$components/Footer.svelte";
 
@@ -18,27 +20,85 @@
     $effect(() => {
         if (data.lang) document.documentElement.lang = data.lang;
     });
+
+    // Pages declare their SEO metadata via `seoKey` (and optional `noindex`)
+    // in +page.js; the layout renders a single set of head tags from it.
+    const seoKey = $derived(page.data.seoKey ?? "home");
+    const title = $derived(
+        page.error ? t("errors.title") : t(`${seoKey}.head.title`)
+    );
+    const description = $derived(t(`${seoKey}.head.description`));
+
+    // Canonical: current origin + normalized pathname, no query/hash.
+    const canonicalUrl = $derived(
+        page.url.origin + normalizePath(page.url.pathname)
+    );
+
+    // hreflang alternates only make sense for pages under [lang=lang].
+    const isLocalized = $derived(
+        page.route.id?.includes("[lang=lang]") ?? false
+    );
+    const alternates = $derived(
+        isLocalized && !page.error
+            ? SUPPORTED_LANGS.map((lang) => ({
+                  lang,
+                  href:
+                      page.url.origin +
+                      switchLanguageUrl(page.url.pathname, undefined, lang),
+              }))
+            : []
+    );
+    const xDefaultHref = $derived(
+        alternates.find((a) => a.lang === DEFAULT_LANG)?.href
+    );
+
+    const ogLocale = $derived(
+        (page.data.intlLocale ?? localeForIntl(data.lang)).replace("-", "_")
+    );
+    const ogImage = $derived(`${page.url.origin}/og_image.jpg`);
 </script>
 
 <svelte:head>
-    <title>{t('home.head.title')}</title>
-    <meta name="description" content={t('home.head.description')} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {#if page.data.noindex}
+        <meta name="robots" content="noindex" />
+    {/if}
+    <link rel="canonical" href={canonicalUrl} />
+    {#each alternates as alternate (alternate.lang)}
+        <link
+            rel="alternate"
+            hreflang={alternate.lang}
+            href={alternate.href}
+        />
+    {/each}
+    {#if xDefaultHref}
+        <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+    {/if}
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={page?.url?.href} />
-    <meta property="og:title" content={t('home.head.title')} />
-    <meta property="og:description" content={t('home.head.description')} />
-    <meta property="og:image" content="{page?.url?.origin}/og_image.jpg" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={t("home.head.title")} />
+    <meta property="og:locale" content={ogLocale} />
+    {#each alternates.filter((a) => a.lang !== data.lang) as alternate (alternate.lang)}
+        <meta
+            property="og:locale:alternate"
+            content={localeForIntl(alternate.lang).replace("-", "_")}
+        />
+    {/each}
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content={t('home.head.title')} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={page?.url?.href} />
-    <meta property="twitter:title" content={t('home.head.title')} />
-    <meta property="twitter:description" content={t('home.head.description')} />
-    <meta property="twitter:image" content="{page?.url?.origin}/og_image.jpg" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
 </svelte:head>
 
 <Navbar />
