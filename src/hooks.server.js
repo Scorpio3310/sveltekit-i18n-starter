@@ -9,6 +9,18 @@ import { isKnownCanonicalPath } from "./hooks.js";
 const LANG_COOKIE = "lang";
 const LANG_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
+/**
+ * Coerce an internal redirect target to a same-origin path. `event.url`
+ * properties are attacker-controlled, and a value like "//evil.com" would be
+ * treated by the browser as a protocol-relative URL (open redirect). Collapse
+ * leading slashes so the target is always rooted at this origin.
+ * @param {string} path
+ * @returns {string}
+ */
+function safeLocalPath(path) {
+    return "/" + path.replace(/^\/+/, "");
+}
+
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
     const pathname = event.url.pathname;
@@ -52,13 +64,17 @@ export async function handle({ event, resolve }) {
     if (isPrefixed && lang === DEFAULT_LANG && !PREFIX_DEFAULT) {
         // Non-prefix mode: strip the default-language prefix
         // (the URL fragment never reaches the server, so only search survives)
-        redirect(308, `${pathWithoutPrefix}${search}`);
+        redirect(308, safeLocalPath(`${pathWithoutPrefix}${search}`));
     }
 
     // Remember the visited language so the next visit to "/" honours it
     // (switching languages in the navbar lands on a localized URL, which
-    // refreshes the cookie — an explicit choice).
-    if (event.cookies.get(LANG_COOKIE) !== lang) {
+    // refreshes the cookie — an explicit choice). Only localized PAGES set
+    // the cookie: endpoints and assets (/robots.txt, /sitemap.xml, /external)
+    // resolve to DEFAULT_LANG and must not overwrite the visitor's choice.
+    const isLocalizedPage =
+        isPrefixed || isKnownCanonicalPath(toCanonical(pathname, lang));
+    if (isLocalizedPage && event.cookies.get(LANG_COOKIE) !== lang) {
         event.cookies.set(LANG_COOKIE, lang, {
             path: "/",
             maxAge: LANG_COOKIE_MAX_AGE,

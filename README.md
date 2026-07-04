@@ -94,8 +94,9 @@ languages in the navbar is remembered on the next visit to `/`.
 - `src/lib/i18n/routing.js` — pure routing helpers, precompiled per
   language:
     - `toLocalized(path, lang)` / `toCanonical(path, lang)` — preserve
-      placeholder values, remainder segments and query/hash; decode
-      percent-encoded paths (non-ASCII slugs like `/über-uns` work)
+      placeholder values, remainder segments and query/hash; match on the
+      raw encoded path so `%`-containing dynamic slugs survive untouched
+      (localized slug _mappings_ are ASCII by contract — see `routes.js`)
     - `isValidLocalizedPath(path, lang)` — round-trip validation +
       foreign-slug rejection
     - `switchLanguageUrl(currentHref, fromLang, toLang)` — language

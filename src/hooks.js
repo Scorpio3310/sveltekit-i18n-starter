@@ -4,10 +4,27 @@
 import { DEFAULT_LANG, toCanonical, toLocalized } from "$i18n/routing";
 import { SUPPORTED_LANGS } from "$i18n/languages";
 
-/** Build canonical regexes from the [lang=lang] pages on disk. */
-const pageFiles = import.meta.glob(
-    "./routes/[lang=lang]/**/+{page,server}.{svelte,js,ts}",
+// Discover the [lang=lang] pages on disk. The glob pattern must NOT contain
+// the literal "[lang=lang]" brackets: Vite treats "[...]" as a glob
+// character class, which matches nothing in the production build (dev uses a
+// different resolver and happens to work). So glob every route file and
+// filter to the localized branch in JS.
+//
+// hooks.js is universal (also runs in the browser), so root endpoints that
+// import server-only modules ($env/dynamic/private) must be excluded from
+// this module's graph — otherwise the browser build fails. They are not
+// under [lang=lang] anyway.
+const allPageFiles = import.meta.glob(
+    [
+        "./routes/**/+{page,server}.{svelte,js,ts}",
+        "!./routes/robots.txt/**",
+        "!./routes/sitemap.xml/**",
+    ],
     { eager: false }
+);
+/** @type {Record<string, unknown>} */
+const pageFiles = Object.fromEntries(
+    Object.entries(allPageFiles).filter(([f]) => f.includes("[lang=lang]"))
 );
 
 /**

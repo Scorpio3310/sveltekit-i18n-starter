@@ -24,11 +24,22 @@
     const t = useT();
 
     let inputPath = $state("/pages");
+
+    // The select lets you try any language; it defaults to — and re-syncs
+    // with — the current route's language. SvelteKit reuses this component on
+    // param-only navigation, so without the effect the select would stay on
+    // the old language after a navbar switch. (This syncs editable state to an
+    // external change — navigation — which is a valid use of $effect, unlike
+    // computing derived values.)
     let lang = $state(
         languages.includes(page.params.lang ?? "")
             ? /** @type {string} */ (page.params.lang)
             : DEFAULT_LANG
     );
+    $effect(() => {
+        const routeLang = page.params.lang;
+        if (routeLang && languages.includes(routeLang)) lang = routeLang;
+    });
 
     /** @param {unknown} v */
     function fmt(v) {
@@ -68,7 +79,7 @@
             <li>
                 <b>toCanonical</b> converts a localized path (without language
                 prefix) to its canonical form using mappings from
-                <code>src/i18n/routes.js</code>. Supports placeholders like
+                <code>src/lib/i18n/routes.js</code>. Supports placeholders like
                 <code>{`{slug}`}</code> and multi‑segment
                 <code>{`{...rest}`}</code>.
             </li>
@@ -168,7 +179,7 @@
         {@render card(
             "toCanonical(input, lang)",
             canonical,
-            "Converts a localized path (slugs in the chosen language) to the canonical English path using mappings from <code>src/i18n/routes.js</code>. Works with placeholders like <code>{`{slug}`}</code> and <code>{`{...rest}`}</code>."
+            "Converts a localized path (slugs in the chosen language) to the canonical English path using mappings from <code>src/lib/i18n/routes.js</code>. Works with placeholders like <code>{`{slug}`}</code> and <code>{`{...rest}`}</code>."
         )}
 
         {@render card(

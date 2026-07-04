@@ -61,9 +61,15 @@ export function pathnameOf(href) {
 }
 
 /**
- * Split a path into its pathname and query/hash suffix, decode the pathname
- * (URLs arrive percent-encoded, mappings are written decoded) and normalize.
- * The suffix is re-appended verbatim by callers after mapping.
+ * Split a path into its pathname and query/hash suffix, then normalize.
+ *
+ * The pathname is matched in its raw, percent-encoded form (ROUTE_SLUGS
+ * templates are ASCII by contract, so they match encoded ASCII paths). We
+ * deliberately do NOT decode: matching decoded would force us to re-encode
+ * dynamic {slug}/{...rest} captures on output, and getting that wrong
+ * double-decodes them — e.g. a slug "50%" (/pages/50%25) would break, and
+ * "%2F" would be mistaken for a real separator. Preserving the encoded form
+ * keeps reroute output byte-identical to what SvelteKit expects.
  * @param {string} path
  * @returns {{ pathname: string, suffix: string }}
  */
@@ -75,13 +81,7 @@ function splitPath(path) {
     const pathnameRaw =
         queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
     const suffix = raw.slice(pathnameRaw.length);
-    let pathname = pathnameRaw;
-    try {
-        pathname = decodeURIComponent(pathnameRaw);
-    } catch {
-        // malformed escape sequence — match against the raw path
-    }
-    return { pathname: normalizePath(pathname), suffix };
+    return { pathname: normalizePath(pathnameRaw), suffix };
 }
 
 /**

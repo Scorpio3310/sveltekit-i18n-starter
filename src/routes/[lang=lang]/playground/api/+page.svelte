@@ -21,7 +21,7 @@
      *
      * This sandbox uses translatePathFor() so paths automatically localize and
      * add/remove language prefixes based on the active language and mappings
-     * from src/i18n/routes.js (e.g., '/server/simple' → '/sl/streznik/enostaven').
+     * from src/lib/i18n/routes.js (e.g., '/server/simple' → '/sl/streznik/enostaven').
      */
 
     let appState = $state({

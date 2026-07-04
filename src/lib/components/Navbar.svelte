@@ -3,7 +3,7 @@
     import navigationData from "$lib/navigation-links";
     import { page } from "$app/state";
     import { isCurrentRoute } from "$lib/helpers";
-    import { switchLanguageUrl, useI18n } from "$i18n/i18n";
+    import { switchLanguageUrl, translatePathFor, useI18n } from "$i18n/i18n";
     import { SUPPORTED_LANGS as languages } from "$i18n/languages";
 
     const i18n = useI18n();
@@ -11,6 +11,24 @@
     const translatePath = i18n.translatePath;
 
     const _links = navigationData;
+
+    // Only pages under [lang=lang] have a per-language equivalent. On other
+    // routes (e.g. /external) switching language would build dead links like
+    // /sl/external, so send the switcher to each language's home instead.
+    const isLocalizedRoute = $derived(
+        page.route.id?.includes("[lang=lang]") ?? false
+    );
+
+    /**
+     * Target URL when switching to `language` from the current page.
+     * @param {string} language
+     */
+    function languageHref(language) {
+        const current = `${page.url.pathname}${page.url.search}${page.url.hash}`;
+        return isLocalizedRoute
+            ? switchLanguageUrl(current, undefined, language)
+            : translatePathFor("/", language);
+    }
 
     // Mobile menu state
     let mobileMenuOpen = $state(false);
@@ -136,11 +154,7 @@
                         i18n.lang
                             ? 'text-blue-400'
                             : ''}"
-                        href={switchLanguageUrl(
-                            `${page.url?.pathname}${page.url?.search}${page.url?.hash}`,
-                            undefined,
-                            language
-                        )}
+                        href={languageHref(language)}
                         onclick={closeMobileMenu}
                     >
                         {language}

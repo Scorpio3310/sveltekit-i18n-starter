@@ -126,10 +126,17 @@ describe("query strings, hashes and encoded paths", () => {
         );
     });
 
-    it("matches percent-encoded pathnames", () => {
-        // %70 = "p" — an encoded URL must resolve like its decoded form
-        expect(routing.toCanonical("/strani/%70oizvedba", "sl")).toBe(
-            "/pages/query"
+    it("preserves percent-encoding in dynamic slugs (no decode)", () => {
+        // Matching is done on the raw encoded path and captures are emitted
+        // verbatim, so SvelteKit's own decode pipeline handles them. A "%" or
+        // "%2F" in a slug must survive untouched — decoding here would produce
+        // "Malformed URI" (400) or a spurious segment split.
+        expect(routing.toLocalized("/pages/50%25", "sl")).toBe("/strani/50%25");
+        expect(routing.toCanonical("/strani/50%25", "sl")).toBe("/pages/50%25");
+        expect(routing.toLocalized("/pages/a%2Fb", "sl")).toBe("/strani/a%2Fb");
+        // encoded non-ASCII slug value round-trips byte-for-byte
+        expect(routing.toCanonical("/strani/caf%C3%A9", "sl")).toBe(
+            "/pages/caf%C3%A9"
         );
     });
 });
