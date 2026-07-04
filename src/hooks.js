@@ -25,8 +25,8 @@ function fileToRegex(file) {
             s === "[...rest]"
                 ? ".+"
                 : s.startsWith("[") && s.endsWith("]")
-                ? "[^/]+"
-                : s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+                  ? "[^/]+"
+                  : s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
         )
         .join("/");
     return new RegExp(`^/${pattern}(?:$|/)`);

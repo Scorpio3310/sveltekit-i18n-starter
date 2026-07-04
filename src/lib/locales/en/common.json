@@ -26,5 +26,8 @@
         },
         "toggle": "Toggle menu",
         "main": "Main navigation"
+    },
+    "actions": {
+        "viewMore": "View More"
     }
 }

@@ -26,5 +26,8 @@
         },
         "toggle": "Menü umschalten",
         "main": "Hauptnavigation"
+    },
+    "actions": {
+        "viewMore": "Mehr anzeigen"
     }
 }

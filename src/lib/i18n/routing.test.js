@@ -137,16 +137,28 @@ describe("query strings, hashes and encoded paths", () => {
 describe("switchLanguageUrl", () => {
     it("switches localized paths across languages, preserving query/hash", () => {
         expect(
-            routing.switchLanguageUrl("/sl/strani/poizvedba?x=1#f", undefined, "de")
+            routing.switchLanguageUrl(
+                "/sl/strani/poizvedba?x=1#f",
+                undefined,
+                "de"
+            )
         ).toBe("/de/seiten/abfrage?x=1#f");
         expect(
-            routing.switchLanguageUrl("/sl/strani/poizvedba?x=1#f", undefined, "en")
+            routing.switchLanguageUrl(
+                "/sl/strani/poizvedba?x=1#f",
+                undefined,
+                "en"
+            )
         ).toBe("/pages/query?x=1#f");
         expect(
             routing.switchLanguageUrl("/pages/query?x=1", undefined, "sl")
         ).toBe("/sl/strani/poizvedba?x=1");
         expect(
-            routing.switchLanguageUrl("/sl/poljubno/a/b/zadnje", undefined, "de")
+            routing.switchLanguageUrl(
+                "/sl/poljubno/a/b/zadnje",
+                undefined,
+                "de"
+            )
         ).toBe("/de/beliebig/a/b/letzte");
     });
 });

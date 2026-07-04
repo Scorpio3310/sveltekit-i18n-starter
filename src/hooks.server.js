@@ -1,10 +1,6 @@
 import { redirect } from "@sveltejs/kit";
 import { SUPPORTED_LANGS } from "$i18n/languages.js";
-import {
-    DEFAULT_LANG,
-    PREFIX_DEFAULT,
-    toCanonical,
-} from "$i18n/routing.js";
+import { DEFAULT_LANG, PREFIX_DEFAULT, toCanonical } from "$i18n/routing.js";
 import { translatorFor, localeForIntl } from "$i18n/i18n.js";
 import { isKnownCanonicalPath } from "./hooks.js";
 

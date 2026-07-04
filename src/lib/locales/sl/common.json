@@ -26,5 +26,8 @@
         },
         "toggle": "Preklopi meni",
         "main": "Glavna navigacija"
+    },
+    "actions": {
+        "viewMore": "Poglej več"
     }
 }

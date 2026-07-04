@@ -28,7 +28,11 @@ describe("prefixed default language mode", () => {
 
     it("switchLanguageUrl targets the prefixed default", () => {
         expect(
-            routing.switchLanguageUrl("/sl/strani/poizvedba?x=1", undefined, "en")
+            routing.switchLanguageUrl(
+                "/sl/strani/poizvedba?x=1",
+                undefined,
+                "en"
+            )
         ).toBe("/en/pages/query?x=1");
         expect(
             routing.switchLanguageUrl("/en/pages/query", undefined, "sl")

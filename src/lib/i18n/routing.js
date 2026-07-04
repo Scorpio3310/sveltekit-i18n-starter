@@ -51,6 +51,16 @@ export function normalizePath(path) {
 }
 
 /**
+ * Normalized, decoded pathname of a path/href (query and hash stripped).
+ * Single source of truth for path comparison — see isCurrentRoute().
+ * @param {string | undefined | null} href
+ * @returns {string}
+ */
+export function pathnameOf(href) {
+    return splitPath(href || "/").pathname;
+}
+
+/**
  * Split a path into its pathname and query/hash suffix, decode the pathname
  * (URLs arrive percent-encoded, mappings are written decoded) and normalize.
  * The suffix is re-appended verbatim by callers after mapping.
@@ -62,7 +72,8 @@ function splitPath(path) {
     const hashIndex = raw.indexOf("#");
     const beforeHash = hashIndex === -1 ? raw : raw.slice(0, hashIndex);
     const queryIndex = beforeHash.indexOf("?");
-    const pathnameRaw = queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
+    const pathnameRaw =
+        queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
     const suffix = raw.slice(pathnameRaw.length);
     let pathname = pathnameRaw;
     try {
@@ -222,7 +233,10 @@ export function toLocalized(canonicalPath, lang) {
         return normalizePath(map[pathname]) + suffix;
     }
 
-    const match = matchAgainst(compiledFor(lang || DEFAULT_LANG).byCanonical, pathname);
+    const match = matchAgainst(
+        compiledFor(lang || DEFAULT_LANG).byCanonical,
+        pathname
+    );
     if (!match) return pathname + suffix; // no mapping -> canonical equals localized
 
     const rest = pathname.slice(match.matchedLength);
@@ -239,7 +253,10 @@ export function toLocalized(canonicalPath, lang) {
 export function toCanonical(localizedPath, lang) {
     const { pathname, suffix } = splitPath(localizedPath);
 
-    const match = matchAgainst(compiledFor(lang || DEFAULT_LANG).byLocalized, pathname);
+    const match = matchAgainst(
+        compiledFor(lang || DEFAULT_LANG).byLocalized,
+        pathname
+    );
     if (!match) return pathname + suffix; // no mapping -> already canonical
 
     const rest = pathname.slice(match.matchedLength);

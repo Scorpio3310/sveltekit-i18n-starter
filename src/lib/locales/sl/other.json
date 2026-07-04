@@ -34,8 +34,7 @@
         "external": {
             "title": "Zunanja pot 🔗",
             "description": "Ta povezava deluje zunaj [lang=lang], zato ne dodaja jezikovnega prefiksa in bo vedno delovala konsistentno"
-        },
-        "viewMore": "Poglej več"
+        }
     },
     "pageSimple": {
         "head": {
@@ -88,8 +87,7 @@
             "title": "Prevedeno",
             "description": "Primer vračanja lokalizirane vsebine glede na izbrani jezik",
             "translated": "To je prevedeno besedilo glede na trenutni jezik"
-        },
-        "viewMore": "Poglej več"
+        }
     },
     "rest": {
         "head": {
@@ -105,8 +103,7 @@
         "restBetween": {
             "title": "REST med potmi",
             "description": "Kompleksno usmerjanje z dinamičnim REST med lokaliziranimi segmenti"
-        },
-        "viewMore": "Poglej več"
+        }
     },
     "restDynamic": {
         "head": {
@@ -139,8 +136,7 @@
             "title": "i18n",
             "description": "Preizkušanje internacionalizacije z lokaliziranim usmerjanjem"
         },
-        "notTranslated": "To besedilo strani ni prevedeno, URL pa je lokaliziran",
-        "viewMore": "Poglej več"
+        "notTranslated": "To besedilo strani ni prevedeno, URL pa je lokaliziran"
     },
     "playgroundApi": {
         "head": {

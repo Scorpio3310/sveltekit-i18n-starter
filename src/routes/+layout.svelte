@@ -1,7 +1,11 @@
 <script>
     import "../app.css";
     import { page } from "$app/state";
-    import { setI18nContext, switchLanguageUrl, localeForIntl } from "$i18n/i18n";
+    import {
+        setI18nContext,
+        switchLanguageUrl,
+        localeForIntl,
+    } from "$i18n/i18n";
     import { normalizePath, DEFAULT_LANG } from "$i18n/routing";
     import { SUPPORTED_LANGS } from "$i18n/languages";
     import Navbar from "$components/Navbar.svelte";
@@ -70,11 +74,7 @@
     {/if}
     <link rel="canonical" href={canonicalUrl} />
     {#each alternates as alternate (alternate.lang)}
-        <link
-            rel="alternate"
-            hreflang={alternate.lang}
-            href={alternate.href}
-        />
+        <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
     {/each}
     {#if xDefaultHref}
         <link rel="alternate" hreflang="x-default" href={xDefaultHref} />

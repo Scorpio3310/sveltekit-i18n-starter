@@ -98,8 +98,7 @@ export function makeT(lang) {
     const fallback = DICTS[DEFAULT_LANG] || {};
     return (key, vars) => {
         let raw = getDot(base, key);
-        if (raw === undefined && base !== fallback)
-            raw = getDot(fallback, key);
+        if (raw === undefined && base !== fallback) raw = getDot(fallback, key);
         if (raw === undefined) return key;
         if (typeof raw !== "string") return structuredClone(raw);
         if (!vars) return raw;

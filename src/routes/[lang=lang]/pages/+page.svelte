@@ -1,8 +1,8 @@
 <script>
     import { useT } from "$i18n/i18n";
-    import { useTranslatePath } from "$i18n/i18n";
+    import Card from "$components/Card.svelte";
+
     const t = useT();
-    const translatePath = useTranslatePath();
 </script>
 
 <section class="grid gap-4">
@@ -11,51 +11,32 @@
         <p class="text-lg text-center">{t("pages.description")}</p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {@render card(
-                t("pages.simple.title"),
-                t("pages.simple.description"),
-                "/pages/simple"
-            )}
-
-            {@render card(
-                t("pages.query.title"),
-                t("pages.query.description"),
-                "/pages/query?x=1&y=2"
-            )}
-            {@render card(
-                t("pages.slug.title"),
-                t("pages.slug.description"),
-                "/pages/this-is-slug"
-            )}
-            {@render card(
-                t("pages.slugBetween.title"),
-                t("pages.slugBetween.description"),
-                "/pages/this-is-slug/last"
-            )}
-            {@render card(
-                t("pages.external.title"),
-                t("pages.external.description"),
-                "/external",
-                true
-            )}
+            <Card
+                title={t("pages.simple.title")}
+                description={t("pages.simple.description")}
+                link="/pages/simple"
+            />
+            <Card
+                title={t("pages.query.title")}
+                description={t("pages.query.description")}
+                link="/pages/query?x=1&y=2"
+            />
+            <Card
+                title={t("pages.slug.title")}
+                description={t("pages.slug.description")}
+                link="/pages/this-is-slug"
+            />
+            <Card
+                title={t("pages.slugBetween.title")}
+                description={t("pages.slugBetween.description")}
+                link="/pages/this-is-slug/last"
+            />
+            <Card
+                title={t("pages.external.title")}
+                description={t("pages.external.description")}
+                link="/external"
+                external
+            />
         </div>
     </div>
 </section>
-
-{#snippet card(title, description, link, external = false)}
-    <div class="border border-black/10 p-5 rounded-4xl flex flex-col gap-2">
-        <h2 class="text-xl font-bold">
-            {title}
-        </h2>
-        <p class="text-sm opacity-70">{description}</p>
-        {#if external}
-            <a href={link} class="button w-fit mt-2">
-                {t("pages.viewMore")} →
-            </a>
-        {:else}
-            <a href={translatePath(link)} class="button w-fit mt-2">
-                {t("pages.viewMore")} →
-            </a>
-        {/if}
-    </div>
-{/snippet}

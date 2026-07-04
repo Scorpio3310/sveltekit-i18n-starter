@@ -1,8 +1,8 @@
 <script>
     import { useT } from "$i18n/i18n";
-    import { useTranslatePath } from "$i18n/i18n";
+    import Card from "$components/Card.svelte";
+
     const t = useT();
-    const translatePath = useTranslatePath();
 </script>
 
 <section class="grid gap-4">
@@ -11,29 +11,16 @@
         <p class="text-lg text-center">{t("playground.description")}</p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {@render card(
-                t("playground.api.title"),
-                t("playground.api.description"),
-                "/playground/api"
-            )}
-
-            {@render card(
-                t("playground.i18n.title"),
-                t("playground.i18n.description"),
-                "/playground/i18n"
-            )}
+            <Card
+                title={t("playground.api.title")}
+                description={t("playground.api.description")}
+                link="/playground/api"
+            />
+            <Card
+                title={t("playground.i18n.title")}
+                description={t("playground.i18n.description")}
+                link="/playground/i18n"
+            />
         </div>
     </div>
 </section>
-
-{#snippet card(title, description, link)}
-    <div class="border border-black/10 p-5 rounded-4xl flex flex-col gap-2">
-        <h2 class="text-xl font-bold">
-            {title}
-        </h2>
-        <p class="text-sm opacity-70">{description}</p>
-        <a href={translatePath(link)} class="button w-fit mt-2">
-            {t("playground.viewMore")} →
-        </a>
-    </div>
-{/snippet}

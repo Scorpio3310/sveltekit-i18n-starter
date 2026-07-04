@@ -31,7 +31,8 @@ export function GET({ url }) {
                 }"/>`,
             ].join("\n            ");
             return alternates.map(
-                (a) => `    <url>\n        <loc>${a.href}</loc>\n            ${links}\n    </url>`
+                (a) =>
+                    `    <url>\n        <loc>${a.href}</loc>\n            ${links}\n    </url>`
             );
         })
         .join("\n");

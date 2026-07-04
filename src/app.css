@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 body {
-    @apply px-4 min-h-dvh flex flex-col;
+    @apply flex min-h-dvh flex-col px-4;
 }
 
 header {
-    @apply border-b border-b-black/10 fixed lg:sticky top-0 lg:w-full flex flex-col lg:flex-row lg:justify-between py-6 max-w-7xl px-4 lg:px-0 lg:mx-auto bg-white/60 backdrop-blur-xl z-10 left-0 right-0;
+    @apply fixed top-0 right-0 left-0 z-10 flex max-w-7xl flex-col border-b border-b-black/10 bg-white/60 px-4 py-6 backdrop-blur-xl lg:sticky lg:mx-auto lg:w-full lg:flex-row lg:justify-between lg:px-0;
 
     /* Mobile menu button (real <button> with aria-expanded, keyboard accessible) */
     .mobile-menu-toggle {
-        @apply flex flex-col justify-center items-center w-8 h-8 space-y-1 cursor-pointer lg:hidden bg-transparent border-0 p-0;
+        @apply flex h-8 w-8 cursor-pointer flex-col items-center justify-center space-y-1 border-0 bg-transparent p-0 lg:hidden;
 
         span {
-            @apply block w-6 h-0.5 bg-current transition-all duration-300;
+            @apply block h-0.5 w-6 bg-current transition-all duration-300;
         }
     }
 
     /* Hamburger → X animation when expanded */
     .mobile-menu-toggle[aria-expanded="true"] span:nth-child(1) {
-        @apply transform rotate-45 translate-y-1.5;
+        @apply translate-y-1.5 rotate-45 transform;
     }
 
     .mobile-menu-toggle[aria-expanded="true"] span:nth-child(2) {
@@ -26,41 +26,41 @@ header {
     }
 
     .mobile-menu-toggle[aria-expanded="true"] span:nth-child(3) {
-        @apply transform -rotate-45 -translate-y-1.5;
+        @apply -translate-y-1.5 -rotate-45 transform;
     }
 
     /* Mobile navigation */
     .nav-main {
-        @apply hidden w-full lg:flex lg:items-center lg:gap-8 lg:justify-end overflow-auto md:overflow-visible pb-6 lg:pb-0 h-[calc(100vh-82px)] lg:h-auto;
+        @apply hidden h-[calc(100vh-82px)] w-full overflow-auto pb-6 md:overflow-visible lg:flex lg:h-auto lg:items-center lg:justify-end lg:gap-8 lg:pb-0;
     }
 
     /* Show nav when the toggle is expanded */
     .nav-main.open {
-        @apply flex flex-col lg:flex-row mt-4;
+        @apply mt-4 flex flex-col lg:flex-row;
     }
 
     .nav-list {
-        @apply flex flex-col lg:flex-row list-none m-0 p-0 gap-4 lg:gap-8 items-center;
+        @apply m-0 flex list-none flex-col items-center gap-4 p-0 lg:flex-row lg:gap-8;
     }
 
     .nav-item {
-        @apply relative text-center space-y-4 lg:space-y-0;
+        @apply relative space-y-4 text-center lg:space-y-0;
     }
 
     .nav-link {
-        @apply py-2 lg:py-0 cursor-pointer no-underline hover:opacity-50;
+        @apply cursor-pointer py-2 no-underline hover:opacity-50 lg:py-0;
     }
 
     .nav-dropdown {
-        @apply lg:hidden lg:absolute lg:top-full lg:left-0 lg:bg-white lg:border lg:border-gray-300 lg:p-2 lg:min-w-32 lg:shadow-md space-y-4 lg:space-y-0 text-left;
+        @apply space-y-4 text-left lg:absolute lg:top-full lg:left-0 lg:hidden lg:min-w-32 lg:space-y-0 lg:border lg:border-gray-300 lg:bg-white lg:p-2 lg:shadow-md;
     }
 
     .nav-dropdown-link {
-        @apply block lg:p-2 no-underline whitespace-nowrap lg:hover:bg-gray-100 py-2 text-center lg:text-left;
+        @apply block py-2 text-center whitespace-nowrap no-underline lg:p-2 lg:text-left lg:hover:bg-gray-100;
     }
 
     .nav-actions {
-        @apply flex flex-col lg:flex-row items-center mt-4 lg:mt-0 gap-4 lg:gap-6;
+        @apply mt-4 flex flex-col items-center gap-4 lg:mt-0 lg:flex-row lg:gap-6;
     }
 
     /* Dropdown opens on hover and on keyboard focus within the item */
@@ -71,13 +71,13 @@ header {
 }
 
 h1 {
-    @apply text-4xl md:text-5xl font-bold text-center mb-8 wrap-anywhere;
+    @apply mb-8 text-center text-4xl font-bold wrap-anywhere md:text-5xl;
 }
 
 .button {
-    @apply py-2 px-4 rounded-4xl border border-black/25 hover:opacity-50 block cursor-pointer;
+    @apply block cursor-pointer rounded-4xl border border-black/25 px-4 py-2 hover:opacity-50;
 
     &.disabled {
-        @apply opacity-30 cursor-not-allowed hover:opacity-30;
+        @apply cursor-not-allowed opacity-30 hover:opacity-30;
     }
 }

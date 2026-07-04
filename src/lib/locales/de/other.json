@@ -34,8 +34,7 @@
         "external": {
             "title": "Externer Pfad 🔗",
             "description": "Dieser Link funktioniert außerhalb von [lang=lang], daher wird kein Sprachpräfix hinzugefügt und er funktioniert immer konsistent"
-        },
-        "viewMore": "Mehr anzeigen"
+        }
     },
     "pageSimple": {
         "head": {
@@ -88,8 +87,7 @@
             "title": "Übersetzt",
             "description": "Beispiel für die Rückgabe lokalisierter Inhalte basierend auf der gewählten Sprache",
             "translated": "Dies ist ein übersetzter Text basierend auf der aktuellen Sprache"
-        },
-        "viewMore": "Mehr anzeigen"
+        }
     },
     "rest": {
         "head": {
@@ -105,8 +103,7 @@
         "restBetween": {
             "title": "REST zwischen Pfaden",
             "description": "Komplexes Routing mit dynamischem REST zwischen lokalisierten Segmenten"
-        },
-        "viewMore": "Mehr anzeigen"
+        }
     },
     "restDynamic": {
         "head": {
@@ -139,8 +136,7 @@
             "title": "i18n",
             "description": "Internationalisierungstests mit lokalisiertem Routing"
         },
-        "notTranslated": "Dieser Seitentext ist nicht übersetzt, die URL ist jedoch lokalisiert.",
-        "viewMore": "Mehr anzeigen"
+        "notTranslated": "Dieser Seitentext ist nicht übersetzt, die URL ist jedoch lokalisiert."
     },
     "playgroundApi": {
         "head": {

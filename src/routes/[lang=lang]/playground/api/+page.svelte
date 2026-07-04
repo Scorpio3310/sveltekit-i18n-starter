@@ -126,7 +126,7 @@
         let body;
         try {
             body = JSON.parse(appState.inputs.jsonBody);
-        } catch (e) {
+        } catch {
             body = { raw: appState.inputs.jsonBody };
         }
 
@@ -186,7 +186,10 @@
         <h2 class="text-xl font-bold">
             {title}
         </h2>
-        <p class="text-sm opacity-70">{@html description}</p>
+        <p class="text-sm opacity-70">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -- static literals only -->
+            {@html description}
+        </p>
         {@render content()}
     </div>
 {/snippet}
@@ -241,8 +244,7 @@
         <textarea
             class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:mt-1"
             rows="2"
-            bind:value={appState.inputs.jsonBody}
-        ></textarea>
+            bind:value={appState.inputs.jsonBody}></textarea>
     </label>
 
     <div class="flex flex-wrap gap-2">

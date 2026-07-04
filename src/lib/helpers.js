@@ -1,19 +1,4 @@
-/**
- * Normalize a path by removing trailing slashes (except for root).
- * Keeps the path as-is otherwise; assumes inputs are already absolute (start with '/').
- *
- * @param {string | undefined | null} p Path to normalize
- * @returns {string} Normalized path
- */
-export function normalizePath(p) {
-    if (typeof p !== "string" || !p) return "/";
-    // strip hash and query parts if present
-    const noHash = p.split("#")[0] || "";
-    const noQuery = noHash.split("?")[0] || "";
-    const s = noQuery || "/";
-    if (s === "/") return "/";
-    return s.replace(/\/+$/, "");
-}
+import { pathnameOf } from "$i18n/routing";
 
 /**
  * Safely read current pathname from the browser (no SSR crash).
@@ -25,7 +10,7 @@ function currentPathnameSafe() {
         // use globalThis to avoid reference errors in SSR
         const loc = /** @type {any} */ (globalThis)?.location;
         const path = typeof loc?.pathname === "string" ? loc.pathname : "/";
-        return normalizePath(path);
+        return pathnameOf(path);
     } catch {
         return "/";
     }
@@ -45,10 +30,11 @@ function currentPathnameSafe() {
  * @returns {boolean}
  */
 export function isCurrentRoute(targetPath, currentPath, exactMatch = true) {
-    const a = normalizePath(targetPath);
-    const b = normalizePath(
-        typeof currentPath === "string" ? currentPath : currentPathnameSafe()
-    );
+    const a = pathnameOf(targetPath);
+    const b =
+        typeof currentPath === "string"
+            ? pathnameOf(currentPath)
+            : currentPathnameSafe();
     if (exactMatch) return a === b;
     // ensure we only match as a full segment prefix (avoid '/pages' matching '/pages-xyz')
     if (b === a) return true;

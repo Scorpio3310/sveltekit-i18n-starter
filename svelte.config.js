@@ -12,12 +12,6 @@ const config = {
             $i18n: "src/lib/i18n",
         },
     },
-    vitePlugin: {
-        inspector: {
-            showToggleButton: "always",
-            toggleButtonPos: "bottom-right",
-        },
-    },
 };
 
 export default config;

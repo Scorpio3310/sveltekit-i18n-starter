@@ -80,9 +80,9 @@
                 <b>isValidLocalizedPath</b> checks that a localized path is
                 correct for the chosen language: paths claimed by this
                 language's mappings must round-trip exactly through
-                <code>toLocalized(toCanonical(path, lang), lang)</code>,
-                other languages' slugs are rejected, and canonical paths are
-                rejected when the language localizes them elsewhere.
+                <code>toLocalized(toCanonical(path, lang), lang)</code>, other
+                languages' slugs are rejected, and canonical paths are rejected
+                when the language localizes them elsewhere.
             </li>
             <li>
                 <b>PREFIX_RULE.apply</b> adds the language prefix if required: non‑default
@@ -134,7 +134,7 @@
                     class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit h-10"
                     bind:value={lang}
                 >
-                    {#each languages as l}
+                    {#each languages as l (l)}
                         <option value={l}>{l}</option>
                     {/each}
                 </select>
@@ -200,6 +200,9 @@
         <div class="bg-gray-100 p-3 rounded-xl font-mono text-sm">
             {input}
         </div>
-        <p class="text-sm opacity-70 italic">{@html description}</p>
+        <p class="text-sm opacity-70 italic">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -- static literals only -->
+            {@html description}
+        </p>
     </div>
 {/snippet}
