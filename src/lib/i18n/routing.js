@@ -11,7 +11,7 @@ import { SUPPORTED_LANGS } from "./languages.js";
 
 /**
  * Default language (language subtag only, e.g. "en" from "en" or "en-US").
- * @type {"en"|"sl"|"de"}
+ * @type {string}
  */
 export const DEFAULT_LANG = (env.PUBLIC_DEFAULT_LOCALE || "en").split("-")[0];
 
@@ -293,7 +293,7 @@ export function isValidLocalizedPath(localizedPath, lang) {
  * - Preserve query string and hash
  *
  * @param {string} currentHref Full current path (pathname + optional query/hash) or just pathname.
- * @param {string=} fromLang Optional explicit source language; if omitted, detect from prefix.
+ * @param {string | undefined} fromLang Explicit source language; pass undefined to detect from prefix.
  * @param {string} toLang Target language
  * @returns {string}
  */

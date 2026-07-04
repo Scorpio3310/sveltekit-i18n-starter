@@ -21,18 +21,13 @@
     }
 </script>
 
-<header class="nav-header" role="banner">
-    <!-- Mobile menu toggle -->
-    <input
-        type="checkbox"
-        id="mobile-menu-toggle"
-        class="mobile-menu-checkbox"
-        aria-label="Toggle mobile menu"
-        bind:checked={mobileMenuOpen}
-    />
-
+<header>
     <div class="flex items-center justify-between">
-        <a href={translatePath("/")} aria-label="Home" onclick={closeMobileMenu}>
+        <a
+            href={translatePath("/")}
+            aria-label={t("menu.home")}
+            onclick={closeMobileMenu}
+        >
             <svg
                 height="20"
                 viewBox="0 0 348 81"
@@ -72,18 +67,30 @@
             </svg>
         </a>
 
-        <label for="mobile-menu-toggle" class="mobile-menu-toggle">
+        <button
+            type="button"
+            class="mobile-menu-toggle"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="main-nav"
+            aria-label={t("menu.toggle")}
+            onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+        >
             <span></span>
             <span></span>
             <span></span>
-        </label>
+        </button>
     </div>
 
-    <nav class="nav-main" role="navigation" aria-label="Main navigation">
-        <ul class="nav-list" role="menubar">
-            {#each _links as { label, href, children }, i}
+    <nav
+        id="main-nav"
+        class="nav-main"
+        class:open={mobileMenuOpen}
+        aria-label={t("menu.main")}
+    >
+        <ul class="nav-list">
+            {#each _links as { label, href, children } (href)}
                 {@const target = translatePath(href)}
-                <li class="nav-item lg:relative" role="none">
+                <li class="nav-item lg:relative">
                     <a
                         href={target}
                         class="nav-link block {isCurrentRoute(
@@ -92,22 +99,16 @@
                         )
                             ? 'text-blue-500'
                             : ''}"
-                        role="menuitem"
-                        aria-label={t(label)}
                         onclick={closeMobileMenu}
                     >
                         {t(label)}
                     </a>
 
                     {#if children && children.length > 0}
-                        <ul
-                            class="nav-dropdown"
-                            role="menu"
-                            aria-label={t(label)}
-                        >
-                            {#each children as { label: clabel, href: chref }}
+                        <ul class="nav-dropdown">
+                            {#each children as { label: clabel, href: chref } (chref)}
                                 {@const childTarget = translatePath(chref)}
-                                <li role="none">
+                                <li>
                                     <a
                                         href={childTarget}
                                         class="nav-dropdown-link {isCurrentRoute(
@@ -116,8 +117,6 @@
                                         )
                                             ? 'text-blue-500'
                                             : ''}"
-                                        role="menuitem"
-                                        aria-label={t(clabel)}
                                         onclick={closeMobileMenu}
                                     >
                                         {t(clabel)}
@@ -130,7 +129,7 @@
             {/each}
         </ul>
         <div class="nav-actions">
-            {#each languages as language}
+            {#each languages as language (language)}
                 <div class="relative flex gap-x-2">
                     <a
                         class="hover:opacity-50 uppercase {language ===

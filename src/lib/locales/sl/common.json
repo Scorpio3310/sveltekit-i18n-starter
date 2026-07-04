@@ -1,7 +1,6 @@
 {
     "menu": {
         "home": "Domov",
-
         "pages": "Strani",
         "pagesChildren": {
             "simple": "Preprosta stran",
@@ -9,24 +8,23 @@
             "query": "Stran s parametri poizvedbe",
             "slugBetween": "Slug med potmi"
         },
-
         "server": "Strežnik",
         "serverChildren": {
             "simple": "Preprost endpoint",
             "rest": "REST endpoint",
             "translated": "Preveden endpoint"
         },
-
         "playground": "Igrišče",
         "playgroundChildren": {
             "apiSandbox": "API peskovnik",
             "i18nPlayground": "I18n igrišče"
         },
-
         "rest": "REST strani",
         "restChildren": {
             "dynamic": "Dinamična pot",
             "restBetween": "REST med potmi"
-        }
+        },
+        "toggle": "Preklopi meni",
+        "main": "Glavna navigacija"
     }
 }

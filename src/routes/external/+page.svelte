@@ -3,13 +3,15 @@
     import { SUPPORTED_LANGS as languages } from "$i18n/languages";
     import { page } from "$app/state";
 
+    // Deliberately context-free demo: this page lives outside [lang=lang]
+    // and drives its own translator with makeT + local state.
     let selected = $state(page?.data?.lang || "en");
-    let tLocal = $state(makeT(selected));
+    const tLocal = $derived(makeT(selected));
 
+    /** @param {string} lang */
     function choose(lang) {
         if (!languages.includes(lang)) return;
         selected = lang;
-        tLocal = makeT(lang);
     }
 </script>
 
@@ -19,15 +21,15 @@
         <p class="text-lg">{tLocal("external.description")}</p>
     </div>
     <div class="flex gap-4 flex-wrap justify-center">
-        {#each languages as l}
-            <a
-                href={page.url.pathname}
+        {#each languages as l (l)}
+            <button
+                type="button"
                 class="button"
-                onclick={(e) => {
-                    e.preventDefault();
-                    choose(l);
-                }}>{l.toUpperCase()}</a
+                aria-pressed={selected === l}
+                onclick={() => choose(l)}
             >
+                {l.toUpperCase()}
+            </button>
         {/each}
     </div>
 </div>

@@ -33,7 +33,7 @@
         </h2>
         <p class="text-sm opacity-70">{description}</p>
         <a href={translatePath(link)} class="button w-fit mt-2">
-            {t("server.viewMore")} →
+            {t("rest.viewMore")} →
         </a>
     </div>
 {/snippet}

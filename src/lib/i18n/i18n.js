@@ -18,10 +18,7 @@ import { LANGUAGES } from "./languages.js";
 // Re-exported metadata from a single source
 export { LANGUAGES };
 
-/**
- * Default language (language subtag only).
- * @type {"en"|"sl"|"de"}
- */
+/** Default language (language subtag only). */
 export { DEFAULT_LANG };
 
 /** Re-export: builds a language-switch URL. Pure, safe in event handlers. */
@@ -75,6 +72,7 @@ const DICTS = (() => {
  * Retrieve a nested value from an object using dot-notation.
  * @param {Record<string, any>} obj
  * @param {string} key
+ * @returns {any}
  */
 function getDot(obj, key) {
     const parts = key.split(".");
@@ -140,7 +138,7 @@ export function translatorFor(lang) {
  * Translate a canonical path to a localized, prefixed path for a given
  * language. Pure — safe to use in event handlers and on the server.
  * @param {string} canonicalPath
- * @param {string} lang
+ * @param {string} [lang] Defaults to DEFAULT_LANG.
  * @returns {string}
  */
 export function translatePathFor(canonicalPath, lang) {

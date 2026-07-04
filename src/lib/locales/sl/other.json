@@ -6,8 +6,7 @@
         },
         "h1": "🏡 Domača stran",
         "description": "To je robusten primer i18n internacionalizacije s SvelteKit-om. Primer prikazuje različne vzorce lokalizacije in pristope usmerjanja.",
-        "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊",
-        "madeWith": "Projekt je ustvarjen {WITH}"
+        "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊"
     },
     "pages": {
         "head": {

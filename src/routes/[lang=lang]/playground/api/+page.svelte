@@ -39,35 +39,66 @@
         },
     });
 
-    /** Build a full localized URL with optional query string. */
+    /**
+     * Build a full localized URL with optional query string.
+     * @param {string} canonicalPath
+     * @param {string=} queryString
+     */
     function buildLocalizedUrl(canonicalPath, queryString) {
         const base = translatePathFor(canonicalPath, page.params.lang);
         const qs = queryString?.trim() ? `?${queryString}` : "";
         return `${base}${qs}`;
     }
 
-    /** Clean path by removing leading/trailing slashes. */
+    /**
+     * Clean path by removing leading/trailing slashes.
+     * @param {string} path
+     */
     function cleanPath(path) {
         return path.replace(/^\/+|\/+$/g, "");
     }
 
-    /** Pretty-print JSON for display. */
+    /**
+     * Pretty-print JSON for display.
+     * @param {unknown} obj
+     */
     function formatJson(obj) {
         try {
             return JSON.stringify(obj, null, 2);
-        } catch (e) {
+        } catch {
             return String(obj);
         }
     }
 
-    /** Generic API call helper. */
+    /**
+     * Generic API call helper. Failures (network, non-2xx, non-JSON body)
+     * are rendered into the result panel instead of rejecting silently.
+     * @param {"simple"|"echo"|"post"|"translated"} resultKey
+     * @param {string} path
+     * @param {string=} queryParams
+     * @param {RequestInit=} options
+     */
     async function callApi(resultKey, path, queryParams, options = {}) {
         const url = buildLocalizedUrl(path, queryParams);
         appState.results[resultKey].url = url;
 
-        const res = await fetch(url, options);
-        const data = await res.json();
-        appState.results[resultKey].response = formatJson(data);
+        try {
+            const res = await fetch(url, options);
+            const text = await res.text();
+            let pretty = text;
+            try {
+                pretty = formatJson(JSON.parse(text));
+            } catch {
+                // non-JSON body — show it as-is
+            }
+            appState.results[resultKey].response = res.ok
+                ? pretty
+                : `⚠️ HTTP ${res.status} ${res.statusText}\n\n${pretty}`;
+        } catch (err) {
+            appState.results[resultKey].response = `⚠️ Request failed: ${
+                err instanceof Error ? err.message : String(err)
+            }`;
+        }
     }
 
     /** Call GET /server/simple with current query string. */
@@ -145,7 +176,12 @@
 
 <!-- SNIPPETS -->
 
-{#snippet card(title, description, content)}
+<!-- note: description is rendered with {@html} — static literals only -->
+{#snippet card(
+    /** @type {string} */ title,
+    /** @type {string} */ description,
+    /** @type {import('svelte').Snippet} */ content
+)}
     <div class="border border-black/10 p-5 rounded-4xl flex flex-col gap-2">
         <h2 class="text-xl font-bold">
             {title}
@@ -176,7 +212,7 @@
                 <code>{appState.results.simple.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
                     .results.simple.response}</pre>
         </div>
     {/if}
@@ -226,7 +262,7 @@
                 <code>{appState.results.echo.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
                     .results.echo.response}</pre>
         </div>
     {/if}
@@ -239,7 +275,7 @@
                 <code>{appState.results.post.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
                     .results.post.response}</pre>
         </div>
     {/if}
@@ -258,7 +294,7 @@
                 <code>{appState.results.translated.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto overflow-auto">{appState
+                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
                     .results.translated.response}</pre>
         </div>
     {/if}

@@ -1,7 +1,13 @@
 // Language-specific slug overrides for localized URLs.
 // Keys are base paths (English slugs), values are localized slugs per language.
 // Omit languages where slugs are identical to base paths (e.g., en).
+//
+// Contract: both sides of an entry use the same placeholder names, and
+// placeholders always span a full segment ("/pages/{slug}", not "/p{slug}").
+// Static segments always win over placeholders when matching, more specific
+// (longer) templates win over their prefixes.
 
+/** @type {Record<string, Record<string, string>>} */
 export const ROUTE_SLUGS = {
     sl: {
         // Rest section

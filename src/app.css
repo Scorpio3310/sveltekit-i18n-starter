@@ -7,42 +7,25 @@ body {
 header {
     @apply border-b border-b-black/10 fixed lg:sticky top-0 lg:w-full flex flex-col lg:flex-row lg:justify-between py-6 max-w-7xl px-4 lg:px-0 lg:mx-auto bg-white/60 backdrop-blur-xl z-10 left-0 right-0;
 
-    .nav-header {
-        @apply flex justify-between items-center p-4 relative z-10 w-full;
-    }
-
-    .logo {
-        @apply contents;
-
-        img {
-            @apply hover:opacity-50;
-        }
-    }
-
-    /* Mobile menu checkbox (hidden) */
-    .mobile-menu-checkbox {
-        @apply hidden;
-    }
-
-    /* Mobile menu button */
+    /* Mobile menu button (real <button> with aria-expanded, keyboard accessible) */
     .mobile-menu-toggle {
-        @apply flex flex-col justify-center items-center w-8 h-8 space-y-1 cursor-pointer lg:hidden;
+        @apply flex flex-col justify-center items-center w-8 h-8 space-y-1 cursor-pointer lg:hidden bg-transparent border-0 p-0;
 
         span {
             @apply block w-6 h-0.5 bg-current transition-all duration-300;
         }
     }
 
-    /* Hamburger → X animation when checked */
-    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(1) {
+    /* Hamburger → X animation when expanded */
+    .mobile-menu-toggle[aria-expanded="true"] span:nth-child(1) {
         @apply transform rotate-45 translate-y-1.5;
     }
 
-    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(2) {
+    .mobile-menu-toggle[aria-expanded="true"] span:nth-child(2) {
         @apply opacity-0;
     }
 
-    .mobile-menu-checkbox:checked ~ div .mobile-menu-toggle span:nth-child(3) {
+    .mobile-menu-toggle[aria-expanded="true"] span:nth-child(3) {
         @apply transform -rotate-45 -translate-y-1.5;
     }
 
@@ -51,8 +34,8 @@ header {
         @apply hidden w-full lg:flex lg:items-center lg:gap-8 lg:justify-end overflow-auto md:overflow-visible pb-6 lg:pb-0 h-[calc(100vh-82px)] lg:h-auto;
     }
 
-    /* Show nav when checkbox is checked */
-    .mobile-menu-checkbox:checked ~ .nav-main {
+    /* Show nav when the toggle is expanded */
+    .nav-main.open {
         @apply flex flex-col lg:flex-row mt-4;
     }
 
@@ -80,8 +63,9 @@ header {
         @apply flex flex-col lg:flex-row items-center mt-4 lg:mt-0 gap-4 lg:gap-6;
     }
 
-    /* Custom hover za dropdown */
-    .nav-item:hover .nav-dropdown {
+    /* Dropdown opens on hover and on keyboard focus within the item */
+    .nav-item:hover .nav-dropdown,
+    .nav-item:focus-within .nav-dropdown {
         @apply block;
     }
 }

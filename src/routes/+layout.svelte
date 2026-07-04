@@ -25,7 +25,11 @@
     // in +page.js; the layout renders a single set of head tags from it.
     const seoKey = $derived(page.data.seoKey ?? "home");
     const title = $derived(
-        page.error ? t("errors.title") : t(`${seoKey}.head.title`)
+        page.error
+            ? page.status === 404
+                ? t("errors.title")
+                : t("errors.error")
+            : t(`${seoKey}.head.title`)
     );
     const description = $derived(t(`${seoKey}.head.description`));
 

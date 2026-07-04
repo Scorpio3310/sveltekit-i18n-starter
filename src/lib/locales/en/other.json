@@ -6,8 +6,7 @@
         },
         "h1": "🏡 Home Page",
         "description": "SvelteKit i18n starter with URL localization and SEO optimization. This example demonstrates various internationalization patterns and routing approaches.",
-        "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊",
-        "madeWith": "Project was created {WITH}"
+        "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊"
     },
     "pages": {
         "head": {

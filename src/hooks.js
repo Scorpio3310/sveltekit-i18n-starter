@@ -65,7 +65,10 @@ export function isKnownCanonicalPath(canonicalPath) {
     return CANONICAL_REGEXES.some((rx) => rx.test(canonicalPath));
 }
 
-/** Normalize path */
+/**
+ * Normalize path
+ * @param {string} p
+ */
 function normalize(p) {
     if (!p) return "/";
     let s = p.startsWith("/") ? p : "/" + p;

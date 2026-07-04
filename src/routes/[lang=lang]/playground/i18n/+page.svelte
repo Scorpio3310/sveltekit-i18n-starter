@@ -2,7 +2,6 @@
     import { page } from "$app/state";
     import { useT } from "$i18n/i18n";
     import { SUPPORTED_LANGS as languages } from "$i18n/languages";
-    const t = useT();
     import {
         toCanonical,
         toLocalized,
@@ -22,13 +21,16 @@
      * - Type a path and choose a language; see live results below.
      */
 
+    const t = useT();
+
     let inputPath = $state("/pages");
-    let lang = $state(page.params.lang);
+    let lang = $state(
+        languages.includes(page.params.lang ?? "")
+            ? /** @type {string} */ (page.params.lang)
+            : DEFAULT_LANG
+    );
 
-    $effect.pre(() => {
-        if (!languages.includes(lang)) lang = DEFAULT_LANG;
-    });
-
+    /** @param {unknown} v */
     function fmt(v) {
         return typeof v === "boolean"
             ? v
@@ -37,17 +39,11 @@
             : String(v ?? "");
     }
 
-    let canonical = $state("");
-    let localized = $state("");
-    let valid = $state(false);
-    let prefixed = $state("");
-
-    $effect(() => {
-        canonical = toCanonical(inputPath, lang);
-        localized = toLocalized(canonical, lang);
-        valid = isValidLocalizedPath(inputPath, lang);
-        prefixed = PREFIX_RULE.apply(localized, lang);
-    });
+    // Derived values — computed from inputPath/lang, no $effect needed
+    const canonical = $derived(toCanonical(inputPath, lang));
+    const localized = $derived(toLocalized(canonical, lang));
+    const valid = $derived(isValidLocalizedPath(inputPath, lang));
+    const prefixed = $derived(PREFIX_RULE.apply(localized, lang));
 </script>
 
 <section class="grid gap-5 max-w-4xl justify-self-center">
@@ -82,12 +78,11 @@
             </li>
             <li>
                 <b>isValidLocalizedPath</b> checks that a localized path is
-                correct for the chosen language. For non‑default languages (and
-                when the default is prefixed), the path must equal
-                <code>toLocalized(toCanonical(path, lang), lang)</code>. When
-                the default language is not prefixed, canonical slugs are
-                allowed under <code>/</code>, but slugs for other languages are
-                rejected.
+                correct for the chosen language: paths claimed by this
+                language's mappings must round-trip exactly through
+                <code>toLocalized(toCanonical(path, lang), lang)</code>,
+                other languages' slugs are rejected, and canonical paths are
+                rejected when the language localizes them elsewhere.
             </li>
             <li>
                 <b>PREFIX_RULE.apply</b> adds the language prefix if required: non‑default
@@ -151,7 +146,8 @@
                 card shows the fully prefixed URL.
             </div>
             <div class="text-xs opacity-70">
-                Examples: /team, /terms/nest, /news/slug, /rest/a/b/c/last
+                Examples: /pages/query, /rest/dynamic, /rest/a/b/c/last,
+                /strani/poizvedba
             </div>
         </div>
     </div>
@@ -178,7 +174,7 @@
         {@render card(
             "isValidLocalizedPath(input, lang)",
             fmt(valid),
-            "Returns <code>true</code> only if the path equals <code>toLocalized(toCanonical(path, lang), lang)</code> for this language. When the default language has no prefix, canonical slugs are permitted at <code>/</code>, but other languages’ slugs are rejected there."
+            "Returns <code>true</code> when the path round-trips through <code>toLocalized(toCanonical(path, lang), lang)</code>, is not another language’s slug, and is not a canonical path that this language localizes elsewhere."
         )}
 
         {@render card(
@@ -191,7 +187,12 @@
 
 <!-- SNIPPETS -->
 
-{#snippet card(title, input, description)}
+<!-- note: description is rendered with {@html} — static literals only -->
+{#snippet card(
+    /** @type {string} */ title,
+    /** @type {string} */ input,
+    /** @type {string} */ description
+)}
     <div class="border border-black/10 p-5 rounded-2xl flex flex-col gap-2">
         <h2 class="text-lg font-bold">
             {title}

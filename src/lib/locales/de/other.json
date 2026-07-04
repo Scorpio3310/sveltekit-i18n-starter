@@ -6,8 +6,7 @@
         },
         "h1": "🏡 Startseite",
         "description": "Dies ist ein robustes Beispiel für i18n‑Internationalisierung mit SvelteKit. Dieses Beispiel demonstriert verschiedene Internationalisierungsmuster und Routing‑Ansätze.",
-        "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊",
-        "madeWith": "Projekt wurde mit {WITH} erstellt"
+        "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊"
     },
     "pages": {
         "head": {
