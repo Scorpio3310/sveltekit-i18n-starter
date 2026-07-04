@@ -1,222 +1,245 @@
 # 🌍 SvelteKit i18n Starter
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Astro](https://img.shields.io/badge/Svelte-5.38.10-orange.svg)
-![Astro](https://img.shields.io/badge/SvelteKit-2.39.1-orange.svg)
+![Svelte](https://img.shields.io/badge/Svelte-5-orange.svg)
+![SvelteKit](https://img.shields.io/badge/SvelteKit-2-orange.svg)
 
 **Keywords:** `sveltekit` • `svelte` • `i18n` • `internationalization` • `multilingual` • `url localization` • `seo` • `tailwind css`
 
 ## 🌐 [Live Demo](https://sveltekit-i18n-starter.klemenc.dev)
 
-URL‑driven localization for SvelteKit (v2.38+). Clean slugs, strict mapping under `routes/[lang=lang]`, zero cookies, and a single source of truth for languages.
+URL-driven localization for SvelteKit 2 + Svelte 5. Localized slugs, strict
+mapping under `routes/[lang=lang]`, lazy-loaded dictionaries, SEO built in
+(hreflang, canonical, sitemap), and a single source of truth for languages —
+no i18n runtime dependency.
 
 ## 🚀 Features
 
-- Data‑only slug mapping in `src/i18n/routes.js`
-- Pure JS routing helpers in `src/i18n/routing.js`
-- Auto‑loaded JSON translations + Svelte context in `src/i18n/i18n.js`
-- Languages registry in `src/i18n/languages.js` (single source of truth)
-- Default language at root (no prefix) by default, with optional prefix mode
-- Strict validation only inside `routes/[lang=lang]` (root endpoints untouched)
-- Multi‑segment placeholders with `{...rest}` in slug mappings
-- Built‑in playground pages: `/playground/api` and `/playground/i18n`
+- **Localized slugs** — data-only mapping in `src/lib/i18n/routes.js`
+  (`/pages/query` ↔ `/strani/poizvedba` ↔ `/seiten/abfrage`), with
+  `{slug}` and multi-segment `{...rest}` placeholders and
+  specificity-aware matching (unit-tested)
+- **Reactive translations** — the documented Svelte 5 context-getter
+  pattern: language switches update the whole page client-side, no reload
+- **Lazy dictionaries** — each language's JSON is its own chunk; visitors
+  download only the active language (+ default as missing-key fallback)
+- **Language detection** — on `/` only: `lang` cookie → `Accept-Language`
+  → default; deep URLs never redirect, so localized URLs stay stable
+- **SEO suite** — per-page `<title>`/description via `+page.js`, hreflang
+  alternates + `x-default`, canonical URLs, OG/Twitter tags, per-language
+  `sitemap.xml`, environment-aware `robots.txt`, 308 canonicalization
+  redirects, translated 404 pages
+- **Accessible navigation** — keyboard-operable mobile menu
+  (`aria-expanded`), focus-visible dropdowns, semantic markup
+- **Tooling** — vitest unit tests (routing, negotiation), eslint,
+  prettier, GitHub Actions CI
+- Playground pages: `/playground/api` and `/playground/i18n`
 
 ![Overview](static/img_github.jpg)
 
 ## ⚡ Quick Start
-
-### 1. Install & run
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-### 2. Configure env (optional)
+That's it — the starter runs without any configuration.
 
-Create `.env` (or use `.env.example`):
+### Configure env (optional)
+
+Environment variables are read via `$env/dynamic/*` with safe defaults, so
+`.env` is genuinely optional:
 
 ```bash
-# Copy environment file
 cp .env.example .env
-
-# Edit .env
-PUBLIC_DEFAULT_LOCALE=en          # en | sl | de (language only, e.g. en from en-US)
-PUBLIC_PREFIX_DEFAULT_LOCALE=false# true → default language uses URL prefix
 ```
+
+| Variable                       | Default | Purpose                                                      |
+| ------------------------------ | ------- | ------------------------------------------------------------ |
+| `PUBLIC_DEFAULT_LOCALE`        | `en`    | Language served at `/`                                       |
+| `PUBLIC_PREFIX_DEFAULT_LOCALE` | `false` | `true` → default language also lives under `/<lang>`         |
+| `PRODUCTION_DOMAIN`            | —       | Exact host that gets the production (allow-all) `robots.txt` |
 
 ## 🌐 URL Model
 
-- Default language (from `PUBLIC_DEFAULT_LOCALE`) lives at root (`/`) by default.
-- Other languages live under `/<lang>/…` (e.g., `/sl/…`, `/de/…`).
-- Optional prefix mode: set `PUBLIC_PREFIX_DEFAULT_LOCALE=true` to put the default language under a prefix as well (`/<DEFAULT_LANG>/…`).
-- Only the `routes/[lang=lang]` branch is localized. Root‑level endpoints (e.g., `/robots.txt`, `/favicon.ico`) are never redirected or blocked by i18n logic.
+- Default language lives at root (`/`) by default; other languages under
+  `/<lang>/…` (`/sl/…`, `/de/…`).
+- Prefix mode (`PUBLIC_PREFIX_DEFAULT_LOCALE=true`) puts the default
+  language under `/<lang>` too.
+- Only the `routes/[lang=lang]` branch is localized. Root-level endpoints
+  (`/robots.txt`, `/sitemap.xml`, `/external`, `/favicon.ico`) are never
+  redirected or blocked by i18n logic.
 
-Redirects/canonicalization:
+Redirects & detection:
 
-- When prefix mode is OFF (default):
-    - `/<DEFAULT_LANG>/…` → redirects to unprefixed (`/…`).
-- When prefix mode is ON:
-    - `/` → redirects to `/<DEFAULT_LANG>`.
+| Request                         | Behavior                                                             |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `/` (first visit)               | 302 to the negotiated language (`lang` cookie → `Accept-Language`)   |
+| `/en/pages` (prefix mode OFF)   | 308 to `/pages` (query preserved)                                    |
+| `/pages` (prefix mode ON)       | 308 to `/en/pages`                                                   |
+| `/sl/pages/query`               | 404 — canonical slugs are invalid where a localized mapping exists   |
+| `/strani/poizvedba` (under `/`) | 404 — foreign localized slugs are invalid under the default language |
+
+The `lang` cookie is refreshed on every localized page view, so switching
+languages in the navbar is remembered on the next visit to `/`.
 
 ## 📁 Files & Responsibilities
 
-- `src/i18n/languages.js`
-
-    - `LANGUAGES`: metadata (`code → { label, locales }`).
-    - `SUPPORTED_LANGS`: derived list of supported codes. Edit here to add/remove languages.
-
-- `src/i18n/routes.js`
-
-    - `ROUTE_SLUGS`: data‑only slug map.
-    - Keys are canonical EN base paths (e.g., `/team`, `/news/{slug}`, `/terms/nest`).
-    - Values are per‑language localized paths; omit languages where the slug equals the canonical (e.g., `en`).
-
-- `src/i18n/routing.js`
-
-    - `DEFAULT_LANG`, `PREFIX_DEFAULT`, `PREFIX_RULE` (no prefix for default unless env says so).
-    - `normalizePath(path)`: `"/"` root, strips trailing slash, ensures leading slash.
-    - `toLocalized(canonicalPath, lang)`: canonical → localized, preserves `{slug}` values and remainders.
-    - `toCanonical(localizedPath, lang)`: localized → canonical, preserves placeholders.
-    - `isValidLocalizedPath(localizedPath, lang)`: strict validation inside prefixed branch.
-    - `switchLanguageUrl(currentHref, fromLang?, toLang)`: language switcher preserving query/hash.
-
-- `src/i18n/i18n.js`
-
-    - Auto‑loads and deep‑merges all JSON files under `src/locales/<lang>/*.json` into `DICTS`.
-    - `makeT(lang) → t(key, vars?)` with dot‑notation and `{var}` interpolation.
-    - `setTContext(lang)`, `useT()`, and `t()` convenience (reads context).
-    - `translatePath(canonicalPath)`: localized + prefixed path using context lang.
-    - `translatePathFor(path, lang)`: same as above, but explicit lang (safe in event handlers).
-    - Re‑exports: `languages` (array) for UI (Navbar).
-
-- `src/hooks.server.js`
-
-    - Determines `lang` from the first path segment only if the URL starts with `/ <supportedLang> /`.
-    - Applies strict validation only inside `/ <lang> / …` using `isValidLocalizedPath`.
-    - Handles default prefix mode redirects (see URL Model above).
-    - Exposes `locals.lang`, `locals.intlLocale`, `locals.t`, and `locals.i18n`.
-    - Sets `%html-lang%` in `app.html` via `transformPageChunk`.
-
-- `src/hooks.js`
-
-    - Internal reroute so the default language at root resolves to the correct `[lang=lang]` pages.
-    - Never touches root endpoints or non‑localized routes.
-
-- `src/routes/+layout.server.js`
-
-    - Exposes `{ lang }` to the client.
-
-- `src/routes/+layout.svelte`
-
-    - Calls `setTContext(data.lang)` so `t()` works across the app.
-
-- `src/routes/+error.svelte`
-    - Global, localized error page rendered inside your layout (uses `t()` and `translatePath("/")`).
+- `src/lib/i18n/languages.js` — `LANGUAGES` metadata and derived
+  `SUPPORTED_LANGS`. **Single place to add/remove languages.**
+- `src/lib/i18n/routes.js` — `ROUTE_SLUGS`, the data-only slug map. Keys
+  are canonical (EN) paths, values are localized paths per language; omit
+  languages whose slug equals the canonical.
+- `src/lib/i18n/routing.js` — pure routing helpers, precompiled per
+  language:
+    - `toLocalized(path, lang)` / `toCanonical(path, lang)` — preserve
+      placeholder values, remainder segments and query/hash; decode
+      percent-encoded paths (non-ASCII slugs like `/über-uns` work)
+    - `isValidLocalizedPath(path, lang)` — round-trip validation +
+      foreign-slug rejection
+    - `switchLanguageUrl(currentHref, fromLang, toLang)` — language
+      switcher preserving query/hash
+    - `compareRouteSpecificity(a, b)` — static > `{slug}` > `{...rest}`,
+      longer shapes first (see Route Mapping Rules)
+- `src/lib/i18n/i18n.js` — dictionaries and the reactive context:
+    - `loadDict(lang)` — lazy per-language dictionary (own Vite chunk),
+      deep-merged over the default language as fallback
+    - `setI18nContext(getLang, getDict)` — called once in the root layout
+    - `useT()` / `useTranslatePath()` / `useI18n()` — component APIs
+      (fetch at init, call in templates; reactive to language changes)
+    - `translatePathFor(path, lang)` / `makeT(dict)` — explicit-language
+      variants, safe in event handlers and on the server
+- `src/lib/i18n/negotiate.js` — `negotiateLanguage(header, supported)`,
+  pure `Accept-Language` parsing (q-values, region collapse)
+- `src/hooks.js` — universal `reroute`: maps localized URLs onto the
+  canonical `[lang=lang]` pages; exports the known-page helpers reused by
+  the redirects and the sitemap
+- `src/hooks.server.js` — language resolution, detection on `/`,
+  canonicalization redirects, `lang` cookie, `locals.{lang,intlLocale,t}`,
+  `<html lang>` via `transformPageChunk`
+- `src/routes/+layout.server.js` → `{ lang, intlLocale }`;
+  `src/routes/+layout.js` → attaches the lazy `dict`
+- `src/routes/+layout.svelte` — installs the i18n context and renders the
+  single SEO head (title/description from each page's `seoKey`, hreflang,
+  canonical, OG/Twitter)
+- `src/routes/[lang=lang]/+layout.server.js` — localized-path validation
+  (a 404 here renders the translated `+error.svelte`, unlike errors
+  thrown in `handle`)
+- `src/routes/sitemap.xml/+server.js` — per-language sitemap with
+  hreflang alternates; `src/routes/robots.txt/+server.js` — serves the
+  allow-all file only on the exact `PRODUCTION_DOMAIN` host
 
 ## 🧭 Route Mapping Rules
 
-- Canonical vs localized:
+- Placeholders are in braces and always span a full segment:
+    - single segment: `/pages/{slug}` ↔ `/strani/{slug}`
+    - multi-segment: `/rest/{...rest}/last` ↔ `/poljubno/{...rest}/zadnje`
+- **Matching precedence is by specificity, not string length**: static
+  segments beat `{slug}`, `{slug}` beats `{...rest}`, and longer shapes
+  beat their prefixes. So `/pages/query` → `/strani/poizvedba` even
+  though `/pages/{slug}` also matches, and `/rest/dynamic` overrides
+  `/rest/{...rest}`.
+- Both sides of an entry must use the same placeholder names.
+- Default language (prefix OFF) lives at root with canonical slugs;
+  foreign localized slugs 404 there. Non-default languages are served
+  only under `/<lang>/…`; canonical forms 404 wherever a localized
+  mapping exists.
 
-    - Canonical (EN) keys live in `ROUTE_SLUGS` keys; mapping is per language.
-    - Placeholders are in braces:
-        - Single segment: `/news/{slug}` ↔ `/sl/novice/{slug}`
-        - Multi‑segment: `/rest/{...rest}/last` ↔ `/sl/poljubno/{...rest}/zadnje`
-    - Nested paths work: `/terms/nest` ↔ `/sl/pogoji-uporabe-storitev/gnezdo`.
+## 🔗 Usage
 
-- Matching precedence:
+Translating text and building links in components:
 
-    - Longest canonical key wins (longest‑first matching). This lets specific rules like `/rest/dynamic` or `/rest/dynamic/{...rest}` override generic `/rest/{...rest}`.
-
-- Default language (prefix OFF):
-
-    - Lives at root (no prefix) and uses canonical slugs.
-    - If a foreign localized slug is used under default (e.g., `/en/strani` or `/strani` with `en` default), it 404s.
-
-- Non‑default languages:
-    - Served only under `/<lang>/…`.
-    - If a mapping exists, the canonical form under that prefix 404s (e.g., `/de/strani/enostavna` → 404 when a localized mapping exists for German).
-    - If no mapping exists, canonical is allowed.
-
-## 🔗 Components & Helpers
-
-- Translating text
-
-```js
+```svelte
 <script>
-  import { t } from '$i18n/i18n';
+    import { useT, useTranslatePath } from "$i18n/i18n";
+
+    const t = useT();
+    const translatePath = useTranslatePath();
 </script>
 
-<h1>{t('home.h1')}</h1>
-{@html t('home.title', { NAME: 'Nik' })}
+<h1>{t("home.h1")}</h1>
+<p>{t("footer.made", { what: "SvelteKit" })}</p>
+
+<a href={translatePath("/pages/query")}>Query demo</a>
 ```
 
-- Building localized links
+`useT()`/`useTranslatePath()` must be called during component init (they
+read Svelte context); the returned functions are stable and reactive — call
+them anywhere, including event handlers.
 
-```js
+Explicit language (no context needed):
+
+```svelte
 <script>
-  import { translatePath, translatePathFor, switchLanguageUrl } from '$i18n/i18n';
-  import { page } from '$app/state'; // already used in this project
+    import { goto } from "$app/navigation";
+    import { translatePathFor, switchLanguageUrl } from "$i18n/i18n";
+    import { page } from "$app/state";
 </script>
 
-<!-- use context language -->
-<a href={translatePath('/terms/nest')}>Terms</a>
-
-<!-- explicit language (safe in event handlers) -->
-<a onclick={() => goto(translatePathFor('/news/abc', 'sl'))}>SL article</a>
+<button onclick={() => goto(translatePathFor("/pages/simple", "sl"))}>
+    Open Slovenian page
+</button>
 
 <!-- language switcher (preserves query + hash) -->
-<a href={switchLanguageUrl('sl', `${page.url.pathname}${page.url.search}${page.url.hash}`)}>SL</a>
+<a
+    href={switchLanguageUrl(
+        page.url.pathname + page.url.search,
+        undefined,
+        "sl"
+    )}
+>
+    SL
+</a>
 ```
 
-### Svelte layout integration (context)
-
-Make `t()` available during SSR and keep it in sync on navigation:
+Server-side (`locals` is set for all endpoints and server loads):
 
 ```js
-<script>
-  import { page } from '$app/state';
-  import { setTContext } from '$i18n/i18n';
-
-  // SSR / first render
-  setTContext(page.data.lang);
-
-  // Keep in sync (Svelte 5 runes)
-  $effect(() => {
-    const lang = page.data.lang;
-    if (lang) setTContext(lang);
-  });
-</script>
-```
-
-### Server‑side usage (locals)
-
-The language hook sets helpers on `locals` for all endpoints and server loads:
-
-```ts
-// types are declared in src/app.d.ts (App.Locals)
-// { lang: string; intlLocale: string; t: (key,vars?) => string; i18n: { lang, intlLocale } }
-
 import { json } from "@sveltejs/kit";
 
 /** @type {import('./$types').RequestHandler} */
-export function GET({ locals, params }) {
-    const title = locals.t("blog_h1");
-    return json({ lang: locals.lang, intlLocale: locals.intlLocale, title });
+export function GET({ locals }) {
+    return json({
+        lang: locals.lang,
+        intlLocale: locals.intlLocale,
+        title: locals.t("home.head.title"),
+    });
 }
 ```
 
+## 🔍 SEO
+
+Each page declares its metadata in a tiny `+page.js`:
+
+```js
+/** @type {import('./$types').PageLoad} */
+export function load() {
+    return { seoKey: "pageSimple" }; // add `noindex: true` to opt out
+}
+```
+
+The root layout renders one `<title>`/description pair from
+`<seoKey>.head.*` in the active language, plus canonical, hreflang
+alternates (`en`/`sl`/`de` + `x-default`), OG and Twitter tags.
+`sitemap.xml` lists every static localized page with hreflang alternates,
+and `robots.txt` only allows crawling on the configured production host —
+previews and staging stay unindexed.
+
 ## ➕ Add a Language
 
-1. Edit `src/i18n/languages.js` and add your language code, label and locales.
-2. Add translations under `src/locales/<lang>/*.json` (any number of JSON files; they are deep‑merged).
-3. Optional: add localized slugs in `src/i18n/routes.js` (only where they differ from canonical).
-4. Create pages under `src/routes/[lang=lang]/…` as needed.
+1. Add the code, label and locales in `src/lib/i18n/languages.js`.
+2. Add translations under `src/lib/locales/<lang>/*.json` (any number of
+   files; they are deep-merged, and missing keys fall back to the default
+   language).
+3. Optional: add localized slugs in `src/lib/i18n/routes.js`.
 
 ## 📄 Add a Localized Page
 
-1. Create the page under `src/routes/[lang=lang]/…` (e.g., `/team`, `/news/[slug]`).
-2. If you want different slugs per language, add entries to `ROUTE_SLUGS`:
+1. Create the page under `src/routes/[lang=lang]/…` with a `+page.js`
+   declaring its `seoKey`, and add the matching `<seoKey>.head.*` keys to
+   the locale files.
+2. If the slugs should differ per language, add entries to `ROUTE_SLUGS`:
 
 ```js
 export const ROUTE_SLUGS = {
@@ -224,20 +247,29 @@ export const ROUTE_SLUGS = {
         "/pages": "/strani",
         "/pages/{slug}": "/strani/{slug}",
     },
-    // de: { … }
 };
 ```
 
-3. Use `translatePath('/team')` in your links; language prefix and localized slugs are applied automatically.
+3. Link it with `translatePath("/pages")` — prefixes and localized slugs
+   are applied automatically.
 
-## 🧪 Test & Debug Helpers
+## 🧪 Tests, Lint & Playgrounds
 
-- Header menu links cover common cases (static, nested, dynamic, rest).
-- API Sandbox: `/playground/api` (under any language)
-    - Tests GET `/server/simple`, GET/POST `/server/rest/[...rest]`, and GET `/server/translated`.
-- I18n Playground: `/playground/i18n` (under any language)
-    - Inspect `normalizePath`, `toCanonical`, `toLocalized`, `isValidLocalizedPath`, and prefixed output live.
-    - Also exposes `DEFAULT_LANG` and `PREFIX_DEFAULT` for quick checks.
+```bash
+pnpm test     # vitest — slug matching, validation, Accept-Language parsing
+pnpm check    # svelte-check (strict, checkJs)
+pnpm lint     # prettier --check + eslint
+pnpm format   # prettier --write
+```
+
+CI (GitHub Actions) runs lint → check → test → build on every push/PR.
+
+Interactive helpers:
+
+- **API Sandbox** `/playground/api` — call the localized `+server.js`
+  endpoints (GET/POST, translated responses via `locals.t`)
+- **i18n Playground** `/playground/i18n` — inspect `toCanonical`,
+  `toLocalized`, `isValidLocalizedPath` and prefixing live
 
 ## 🛠️ Development & Build
 
@@ -247,11 +279,25 @@ pnpm build          # build for production
 pnpm preview        # preview built app
 ```
 
-Adapter: the project uses `@sveltejs/adapter-auto` by default.
+Adapter: `@sveltejs/adapter-auto` (serverless — Vercel/Netlify/Cloudflare
+etc.). The i18n redirects, validation, detection and dynamic
+robots/sitemap run at request time, so this starter needs a server
+runtime — it is **not** a static-site generator. If you must prerender,
+you'll need to rethink the redirect/validation layer.
 
-## ℹ️ Notes
+## ℹ️ Design Notes
 
-- `src/i18n/routes.js` is data‑only: do not import Svelte or add logic there.
-- No cookies, no `Accept-Language` detection — language comes from the URL only.
-- Only routes under `routes/[lang=lang]` are localized; root endpoints remain reachable.
-- Placeholders in braces (e.g., `{slug}`) are preserved across canonical/localized conversion.
+- `src/lib/i18n/routes.js` is data-only: no Svelte imports, no logic.
+- Language detection happens **only** on `/`; every other URL is stable
+  and crawler-friendly. Delete the detection block in
+  `src/hooks.server.js` if you want pure URL-driven language selection.
+- Links are built by the i18n helpers rather than SvelteKit's `resolve()`
+  — this starter doesn't use a base path. Re-enable the
+  `svelte/no-navigation-without-resolve` eslint rule if yours does.
+- The `/external` route demonstrates a page outside `[lang=lang]` driving
+  its own translator with `loadDict`/`makeT`.
+- Looking for a batteries-included alternative? The official
+  [`sv add paraglide`](https://svelte.dev/docs/cli/paraglide) integration
+  offers compiled, type-safe messages. This starter exists for the
+  opposite trade-off: fully transparent, dependency-free localized
+  routing you can read end-to-end.
