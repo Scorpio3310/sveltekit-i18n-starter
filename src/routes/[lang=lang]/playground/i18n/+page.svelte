@@ -1,6 +1,8 @@
 <script>
     import { page } from "$app/state";
-    import { t, languages } from "$i18n/i18n";
+    import { useT } from "$i18n/i18n";
+    import { SUPPORTED_LANGS as languages } from "$i18n/languages";
+    const t = useT();
     import {
         toCanonical,
         toLocalized,

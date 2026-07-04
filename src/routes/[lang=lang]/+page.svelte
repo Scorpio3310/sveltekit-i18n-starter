@@ -1,5 +1,6 @@
 <script>
-    import { t } from "$i18n/i18n";
+    import { useT } from "$i18n/i18n";
+    const t = useT();
 </script>
 
 <svelte:head>

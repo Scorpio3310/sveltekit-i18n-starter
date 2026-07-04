@@ -3,11 +3,14 @@
     import navigationData from "$lib/navigation-links";
     import { page } from "$app/state";
     import { isCurrentRoute } from "$lib/helpers";
-    import { languages, switchLanguageUrl, translatePath } from "$i18n/i18n";
-    import { t } from "$i18n/i18n";
+    import { switchLanguageUrl, useI18n } from "$i18n/i18n";
+    import { SUPPORTED_LANGS as languages } from "$i18n/languages";
+
+    const i18n = useI18n();
+    const t = i18n.t;
+    const translatePath = i18n.translatePath;
 
     const _links = navigationData;
-    const currentLocale = page.data.lang;
 
     // Mobile menu state
     let mobileMenuOpen = $state(false);
@@ -131,17 +134,16 @@
                 <div class="relative flex gap-x-2">
                     <a
                         class="hover:opacity-50 uppercase {language ===
-                        currentLocale
+                        i18n.lang
                             ? 'text-blue-400'
                             : ''}"
                         href={switchLanguageUrl(
-                            language,
-                            `${page.url?.pathname}${page.url?.search}${page.url?.hash}`
+                            `${page.url?.pathname}${page.url?.search}${page.url?.hash}`,
+                            undefined,
+                            language
                         )}
-                        data-sveltekit-reload
                         onclick={closeMobileMenu}
                     >
-                        <!-- {language_names[language].toUpperCase()} -->
                         {language}
                     </a>
                 </div>

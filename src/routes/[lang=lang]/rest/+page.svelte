@@ -1,6 +1,8 @@
 <script>
-    import { t } from "$i18n/i18n";
-    import { translatePath } from "$i18n/i18n";
+    import { useT } from "$i18n/i18n";
+    import { useTranslatePath } from "$i18n/i18n";
+    const t = useT();
+    const translatePath = useTranslatePath();
 </script>
 
 <svelte:head>

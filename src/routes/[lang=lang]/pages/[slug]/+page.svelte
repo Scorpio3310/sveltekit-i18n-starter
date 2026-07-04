@@ -1,6 +1,7 @@
 <script>
-    import { t } from "$i18n/i18n";
+    import { useT } from "$i18n/i18n";
     import { page } from "$app/state";
+    const t = useT();
 </script>
 
 <svelte:head>

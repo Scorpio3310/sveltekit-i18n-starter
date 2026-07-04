@@ -1,18 +1,22 @@
 <script>
     import "../app.css";
     import { page } from "$app/state";
-    import { setTContext, t } from "$i18n/i18n";
+    import { setI18nContext } from "$i18n/i18n";
     import Navbar from "$components/Navbar.svelte";
     import Footer from "$components/Footer.svelte";
 
-    let { children } = $props();
-    // SSR / first render: make t() available before children render
-    setTContext(page.data.lang);
+    let { children, data } = $props();
 
-    // Keep in sync on client navigation (no reactive $: label in Svelte 5)
+    // Set once at init (setContext is only valid here). Members read
+    // data.lang at call time, so every t()/translatePath() call in any
+    // descendant re-evaluates when the language changes on client-side
+    // navigation.
+    const { t } = setI18nContext(() => data.lang);
+
+    // <html lang> for client-side language switches; SSR is handled by
+    // transformPageChunk in hooks.server.js ($effect never runs on the server).
     $effect(() => {
-        const lang = page.data.lang;
-        if (lang) setTContext(lang);
+        if (data.lang) document.documentElement.lang = data.lang;
     });
 </script>
 

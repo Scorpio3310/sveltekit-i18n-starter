@@ -5,7 +5,7 @@ import {
     isValidLocalizedPath,
     PREFIX_DEFAULT,
 } from "$i18n/routing.js";
-import { makeT, localeForIntl } from "$i18n/i18n.js";
+import { translatorFor, localeForIntl } from "$i18n/i18n.js";
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
@@ -44,7 +44,7 @@ export async function handle({ event, resolve }) {
     // Expose helpers
     event.locals.lang = lang;
     event.locals.intlLocale = localeForIntl(lang);
-    event.locals.t = makeT(lang);
+    event.locals.t = translatorFor(lang);
     event.locals.i18n = { lang, intlLocale: event.locals.intlLocale };
 
     return resolve(event, {

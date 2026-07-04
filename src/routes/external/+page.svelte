@@ -1,5 +1,6 @@
 <script>
-    import { makeT, languages } from "$i18n/i18n";
+    import { makeT } from "$i18n/i18n";
+    import { SUPPORTED_LANGS as languages } from "$i18n/languages";
     import { page } from "$app/state";
 
     let selected = $state(page?.data?.lang || "en");

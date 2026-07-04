@@ -1,6 +1,7 @@
 <script>
     import { page } from "$app/state";
-    import { t, translatePathFor } from "$i18n/i18n";
+    import { useT, translatePathFor } from "$i18n/i18n";
+    const t = useT();
 
     /**
      * API Sandbox usage (Server endpoints)
