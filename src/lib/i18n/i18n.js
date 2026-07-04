@@ -1,13 +1,21 @@
-// Translations API: dictionaries, translators and the reactive i18n context.
+// Translations API: lazy dictionaries, translators and the reactive i18n
+// context.
+//
+// Dictionaries are loaded per language via dynamic import (Vite code-splits
+// each locale JSON into its own chunk), so the client only downloads the
+// active language — plus the default language, which is deep-merged
+// underneath as the fallback for missing keys. The bundle no longer grows
+// with every language you add.
 //
 // The context follows the documented SvelteKit pattern (see "Using state and
-// stores with context"): it is set ONCE during root layout init with a getter
+// stores with context"): it is set ONCE during root layout init with getters
 // over reactive state. Components fetch stable functions at init
 // (`const t = useT()`) and call them in templates; every call re-reads the
 // current language, so client-side language switches update all translations
 // without a full reload.
 
 import { setContext, getContext } from "svelte";
+import { dev } from "$app/environment";
 import {
     DEFAULT_LANG,
     toLocalized as _toLocalized,
@@ -24,9 +32,11 @@ export { DEFAULT_LANG };
 /** Re-export: builds a language-switch URL. Pure, safe in event handlers. */
 export { switchLanguageUrl } from "./routing.js";
 
-// Load and deep-merge all JSON files under src/lib/locales/<lang>/*.json
+/**
+ * Lazy loaders for all JSON files under src/lib/locales/<lang>/*.json.
+ * @type {Record<string, () => Promise<any>>}
+ */
 const localeModules = import.meta.glob("../locales/*/*.json", {
-    eager: true,
     import: "default",
 });
 
@@ -53,20 +63,49 @@ function deepMerge(target, source) {
 }
 
 /**
- * Load dictionaries per language.
- * @type {Record<string, Record<string, any>>}
+ * Load and merge the raw dictionary files of one language.
+ * @param {string} lang
+ * @returns {Promise<Record<string, any>>}
  */
-const DICTS = (() => {
-    /** @type {Record<string, Record<string, any>>} */
-    const dicts = {};
-    for (const [path, data] of Object.entries(localeModules)) {
+async function loadRawDict(lang) {
+    /** @type {Record<string, any>} */
+    let dict = {};
+    for (const [path, loader] of Object.entries(localeModules)) {
         const m = path.match(/..\/locales\/([^/]+)\//);
-        if (!m) continue;
-        const lang = m[1];
-        dicts[lang] = deepMerge(dicts[lang] || {}, /** @type {any} */ (data));
+        if (!m || m[1] !== lang) continue;
+        dict = deepMerge(dict, await loader());
     }
-    return dicts;
-})();
+    return dict;
+}
+
+/**
+ * Cache: lang -> merged dictionary (with the DEFAULT_LANG fallback baked
+ * in). Dictionaries are static module data, so caching across requests is
+ * safe; the cache is bounded by the number of languages.
+ * @type {Map<string, Promise<Record<string, any>>>}
+ */
+const DICT_CACHE = new Map();
+
+/**
+ * Dictionary for a language, deep-merged over the DEFAULT_LANG dictionary
+ * so missing keys fall back to the default language.
+ * @param {string} [lang]
+ * @returns {Promise<Record<string, any>>}
+ */
+export function loadDict(lang) {
+    const l = lang || DEFAULT_LANG;
+    let cached = DICT_CACHE.get(l);
+    if (!cached) {
+        cached =
+            l === DEFAULT_LANG
+                ? loadRawDict(l)
+                : Promise.all([loadRawDict(DEFAULT_LANG), loadRawDict(l)]).then(
+                      ([fallback, own]) => deepMerge(fallback, own)
+                  );
+        DICT_CACHE.set(l, cached);
+    }
+    return cached;
+}
 
 /**
  * Retrieve a nested value from an object using dot-notation.
@@ -85,52 +124,42 @@ function getDot(obj, key) {
 }
 
 /**
- * Create a translator for a language.
- * Supports dot-notation keys and {var} interpolation.
- * Returns non-string values (arrays, objects, numbers, booleans) as-is.
- * Missing keys fall back to the DEFAULT_LANG dictionary before returning
- * the raw key.
- * @param {string} lang
- * @returns {(key: string, vars?: Record<string, string | number>) => any}
+ * Translate a key against a dictionary. Supports dot-notation keys and
+ * {var} interpolation; returns non-string values (arrays, objects, numbers,
+ * booleans) as-is and the raw key when nothing matches.
+ * @param {Record<string, any>} dict
+ * @param {string} key
+ * @param {Record<string, string | number>} [vars]
+ * @returns {any}
  */
-export function makeT(lang) {
-    const base = DICTS[lang] || {};
-    const fallback = DICTS[DEFAULT_LANG] || {};
-    return (key, vars) => {
-        let raw = getDot(base, key);
-        if (raw === undefined && base !== fallback) raw = getDot(fallback, key);
-        if (raw === undefined) return key;
-        if (typeof raw !== "string") return structuredClone(raw);
-        if (!vars) return raw;
-        return raw.replace(/\{([^}]+)\}/g, (_, name) => {
-            const v = vars[name];
-            return v == null ? "" : String(v);
-        });
-    };
+function translate(dict, key, vars) {
+    const raw = getDot(dict, key);
+    if (raw === undefined) return key;
+    if (typeof raw !== "string") return structuredClone(raw);
+    if (!vars) return raw;
+    return raw.replace(/\{([^}]+)\}/g, (_, name) => {
+        const v = vars[name];
+        return v == null ? "" : String(v);
+    });
 }
 
 /**
- * Cache: lang -> translator. DICTS is immutable module data, so translator
- * instances are pure and safe to share process-wide, including across SSR
- * requests. Bounded by the number of languages.
- * @type {Map<string, ReturnType<typeof makeT>>}
- */
-const TRANSLATORS = new Map();
-
-/**
- * Cached translator for a language; unknown languages fall back to
- * DEFAULT_LANG dictionaries.
- * @param {string} lang
+ * Create a translator over a loaded dictionary.
+ * @param {Record<string, any>} dict
  * @returns {(key: string, vars?: Record<string, string | number>) => any}
  */
+export function makeT(dict) {
+    return (key, vars) => translate(dict, key, vars);
+}
+
+/**
+ * Cached translator for a language (async — loads the dictionary on first
+ * use). Used by hooks.server.js for `locals.t`.
+ * @param {string} [lang]
+ * @returns {Promise<(key: string, vars?: Record<string, string | number>) => any>}
+ */
 export function translatorFor(lang) {
-    const l = lang && DICTS[lang] ? lang : DEFAULT_LANG;
-    let fn = TRANSLATORS.get(l);
-    if (!fn) {
-        fn = makeT(l);
-        TRANSLATORS.set(l, fn);
-    }
-    return fn;
+    return loadDict(lang).then(makeT);
 }
 
 /**
@@ -172,7 +201,7 @@ const CTX_I18N = "i18n";
  * @property {string} lang Current language. Reactive when read during render.
  * @property {(key: string, vars?: Record<string, string | number>) => any} t
  *   Translate a key. Stable function identity; the result tracks the current
- *   language.
+ *   language and dictionary.
  * @property {(canonicalPath: string) => string} translatePath
  *   Canonical path -> localized, prefixed path for the current language.
  */
@@ -182,18 +211,20 @@ const CTX_I18N = "i18n";
  * component init (Svelte only allows setContext there). Returns the context
  * object so the layout itself can use `t` directly.
  * @param {() => string | undefined} getLang Reactive getter, e.g. `() => data.lang`.
+ * @param {() => Record<string, any> | undefined} getDict Reactive getter over
+ *   the active dictionary, e.g. `() => data.dict` (loaded in +layout.js).
  * @returns {I18nContext}
  */
-export function setI18nContext(getLang) {
-    const read = () => getLang() || DEFAULT_LANG;
+export function setI18nContext(getLang, getDict) {
+    const readLang = () => getLang() || DEFAULT_LANG;
     /** @type {I18nContext} */
     const ctx = {
         get lang() {
-            return read();
+            return readLang();
         },
-        t: (key, vars) => translatorFor(read())(key, vars),
+        t: (key, vars) => translate(getDict() ?? {}, key, vars),
         translatePath: (canonicalPath) =>
-            translatePathFor(canonicalPath, read()),
+            translatePathFor(canonicalPath, readLang()),
     };
     setContext(CTX_I18N, ctx);
     return ctx;
@@ -203,16 +234,22 @@ export function setI18nContext(getLang) {
  * Read the i18n context. MUST be called during component init.
  * Falls back to a DEFAULT_LANG-bound object when no context exists — the
  * root +error.svelte renders without the root layout when the layout itself
- * fails, and must not crash.
+ * fails, and must not crash. Without a dictionary the fallback returns raw
+ * keys (src/error.html is the styled last resort for that case).
  * @returns {I18nContext}
  */
 export function useI18n() {
     /** @type {I18nContext | undefined} */
     const ctx = getContext(CTX_I18N);
     if (ctx) return ctx;
+    if (dev) {
+        console.warn(
+            "[i18n] useI18n() called without an i18n context — did the root layout call setI18nContext()?"
+        );
+    }
     return {
         lang: DEFAULT_LANG,
-        t: (key, vars) => translatorFor(DEFAULT_LANG)(key, vars),
+        t: (key) => key,
         translatePath: (p) => translatePathFor(p, DEFAULT_LANG),
     };
 }

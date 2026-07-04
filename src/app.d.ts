@@ -20,6 +20,8 @@ declare global {
             lang?: string;
             /** BCP‑47 locale for Intl.* on the client */
             intlLocale?: string;
+            /** Active language's dictionary (loaded lazily in +layout.js) */
+            dict?: Record<string, any>;
             /** Locale-key prefix for <title>/description (see +page.js files) */
             seoKey?: string;
             /** Render a robots noindex meta tag for this page */

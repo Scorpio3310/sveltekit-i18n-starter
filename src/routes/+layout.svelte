@@ -14,10 +14,13 @@
     let { children, data } = $props();
 
     // Set once at init (setContext is only valid here). Members read
-    // data.lang at call time, so every t()/translatePath() call in any
-    // descendant re-evaluates when the language changes on client-side
+    // data.lang/data.dict at call time, so every t()/translatePath() call in
+    // any descendant re-evaluates when the language changes on client-side
     // navigation.
-    const { t } = setI18nContext(() => data.lang);
+    const { t } = setI18nContext(
+        () => data.lang,
+        () => data.dict
+    );
 
     // <html lang> for client-side language switches; SSR is handled by
     // transformPageChunk in hooks.server.js ($effect never runs on the server).
