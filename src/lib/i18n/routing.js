@@ -1,20 +1,19 @@
 // Routing utilities for localized slugs and URL switching.
 // Consumes ROUTE_SLUGS from routes.js (data-only).
 
-import {
-    PUBLIC_DEFAULT_LOCALE,
-    PUBLIC_PREFIX_DEFAULT_LOCALE,
-} from "$env/static/public";
+import { env } from "$env/dynamic/public";
 import { ROUTE_SLUGS } from "./routes.js";
 import { SUPPORTED_LANGS } from "./languages.js";
 
 // SUPPORTED_LANGS is sourced from languages.js
+// Env is read via $env/dynamic/public so a fresh clone runs without a .env
+// file (a missing $env/static/* import is a hard build error).
 
 /**
  * Default language (language subtag only, e.g. "en" from "en" or "en-US").
  * @type {"en"|"sl"|"de"}
  */
-export const DEFAULT_LANG = (PUBLIC_DEFAULT_LOCALE || "en").split("-")[0];
+export const DEFAULT_LANG = (env.PUBLIC_DEFAULT_LOCALE || "en").split("-")[0];
 
 /**
  * Whether the default language should be prefixed in URLs.
@@ -22,7 +21,8 @@ export const DEFAULT_LANG = (PUBLIC_DEFAULT_LOCALE || "en").split("-")[0];
  * @type {boolean}
  */
 export const PREFIX_DEFAULT =
-    String(PUBLIC_PREFIX_DEFAULT_LOCALE || "false").toLowerCase() === "true";
+    String(env.PUBLIC_PREFIX_DEFAULT_LOCALE || "false").toLowerCase() ===
+    "true";
 
 /**
  * Prefix rule: default language has no prefix, others use "/<lang>".
@@ -51,14 +51,39 @@ export function normalizePath(path) {
 }
 
 /**
- * Build a regex for a canonical key with optional placeholders in braces, e.g. "/news/{slug}".
- * Returns the regex and the placeholder names order.
- * The regex matches from start and ends at a segment boundary.
+ * Split a path into its pathname and query/hash suffix, decode the pathname
+ * (URLs arrive percent-encoded, mappings are written decoded) and normalize.
+ * The suffix is re-appended verbatim by callers after mapping.
+ * @param {string} path
+ * @returns {{ pathname: string, suffix: string }}
+ */
+function splitPath(path) {
+    const raw = path || "/";
+    const hashIndex = raw.indexOf("#");
+    const beforeHash = hashIndex === -1 ? raw : raw.slice(0, hashIndex);
+    const queryIndex = beforeHash.indexOf("?");
+    const pathnameRaw = queryIndex === -1 ? beforeHash : beforeHash.slice(0, queryIndex);
+    const suffix = raw.slice(pathnameRaw.length);
+    let pathname = pathnameRaw;
+    try {
+        pathname = decodeURIComponent(pathnameRaw);
+    } catch {
+        // malformed escape sequence — match against the raw path
+    }
+    return { pathname: normalizePath(pathname), suffix };
+}
+
+/**
+ * Build a regex for a template with optional full-segment placeholders in
+ * braces, e.g. "/news/{slug}" or "/news/{...rest}". Returns the regex and
+ * the placeholder names in order. Matches from the start and ends at a
+ * segment boundary.
  * @param {string} key
  * @returns {{ regex: RegExp, names: string[] }}
  */
 function buildKeyRegex(key) {
     const parts = normalizePath(key).split("/").slice(1);
+    /** @type {string[]} */
     const names = [];
     const pattern = parts
         .map((seg) => {
@@ -93,129 +118,171 @@ function applyTemplate(template, values) {
 }
 
 /**
- * From a mapping object, get sorted entries by descending canonical key length for longest-first matching.
- * @param {Record<string, string>} map
+ * Classify template segments for specificity ranking.
+ * @param {string} key
+ * @returns {number[]} 2 = static, 1 = {param}, 0 = {...rest}
  */
-function sortedEntries(map) {
-    return Object.entries(map).sort((a, b) => b[0].length - a[0].length);
+function segmentKinds(key) {
+    return normalizePath(key)
+        .split("/")
+        .slice(1)
+        .map((seg) => {
+            const m = seg.match(/^\{([^/}]+)\}$/);
+            if (!m) return 2;
+            return m[1].startsWith("...") ? 0 : 1;
+        });
 }
 
 /**
- * Resolve the best mapping for canonical -> localized for a given language.
- * Supports placeholders and prefix matches.
- * @param {string} canonicalPath
- * @param {string} lang
- * @returns {{ localizedBase: string, matchedLength: number } | null}
+ * Specificity comparator for route templates: most specific first.
+ * 1) per-position segment kind (static > {param} > {...rest}), left to right
+ * 2) more segments first when one template is a shape-prefix of the other
+ *    (so "/rest/{...rest}/last" outranks "/rest/{...rest}")
+ * 3) ascending raw-key comparison for determinism
+ * Sorting by raw string length is wrong: "/pages/{slug}" (13 chars) would
+ * shadow the more specific "/pages/query" (12 chars).
+ * @param {string} a
+ * @param {string} b
+ * @returns {number}
  */
-function matchCanonicalToLocalized(canonicalPath, lang) {
-    const p = normalizePath(canonicalPath);
-    const map = ROUTE_SLUGS[lang] || {};
-
-    // If key is provided as a placeholder pattern string itself, use direct lookup
-    if (/{[^}]+}/.test(p) && map[p]) {
-        return { localizedBase: map[p], matchedLength: p.length };
+export function compareRouteSpecificity(a, b) {
+    const ka = segmentKinds(a);
+    const kb = segmentKinds(b);
+    const n = Math.min(ka.length, kb.length);
+    for (let i = 0; i < n; i++) {
+        if (ka[i] !== kb[i]) return kb[i] - ka[i];
     }
-
-    for (const [key, localized] of sortedEntries(map)) {
-        const { regex, names } = buildKeyRegex(key);
-        const m = p.match(regex);
-        if (!m) continue;
-        const values = Object.fromEntries(names.map((n, i) => [n, m[i + 1]]));
-        const localizedBase = applyTemplate(localized, values);
-        return { localizedBase, matchedLength: m[0].length };
-    }
-    return null;
+    if (ka.length !== kb.length) return kb.length - ka.length;
+    return a < b ? -1 : a > b ? 1 : 0;
 }
 
 /**
- * Resolve best mapping for localized -> canonical for a given language.
- * Supports placeholders and prefix matches.
- * @param {string} localizedPath
- * @param {string} lang
- * @returns {{ canonicalBase: string, matchedLength: number } | null}
+ * @typedef {{ key: string, out: string, regex: RegExp, names: string[] }} CompiledEntry
  */
-function matchLocalizedToCanonical(localizedPath, lang) {
-    const p = normalizePath(localizedPath);
-    const map = ROUTE_SLUGS[lang] || {};
 
-    // Try exact placeholder template reverse match first by synthesizing a regex from the template
-    const entries = sortedEntries(map);
-    for (const [canonicalKey, localizedTemplate] of entries) {
-        // Build regex from localized template
-        const { regex, names } = buildKeyRegex(localizedTemplate);
+/**
+ * Per-language compiled matchers, built lazily and cached. ROUTE_SLUGS is
+ * immutable module data, so this is pure and safe to share across requests.
+ * Each direction is sorted by the shape of the side being MATCHED:
+ * - byCanonical: regex over the canonical key, emits the localized template
+ * - byLocalized: regex over the localized template, emits the canonical key
+ * @type {Map<string, { byCanonical: CompiledEntry[], byLocalized: CompiledEntry[] }>}
+ */
+const COMPILED = new Map();
+
+/** @param {string} lang */
+function compiledFor(lang) {
+    let c = COMPILED.get(lang);
+    if (!c) {
+        const entries = Object.entries(ROUTE_SLUGS[lang] || {});
+        /** @param {string} key @param {string} out @returns {CompiledEntry} */
+        const compile = (key, out) => ({ key, out, ...buildKeyRegex(key) });
+        c = {
+            byCanonical: entries
+                .map(([canonical, localized]) => compile(canonical, localized))
+                .sort((x, y) => compareRouteSpecificity(x.key, y.key)),
+            byLocalized: entries
+                .map(([canonical, localized]) => compile(localized, canonical))
+                .sort((x, y) => compareRouteSpecificity(x.key, y.key)),
+        };
+        COMPILED.set(lang, c);
+    }
+    return c;
+}
+
+/**
+ * First (most specific) entry whose regex matches wins.
+ * @param {CompiledEntry[]} list
+ * @param {string} p normalized pathname
+ * @returns {{ base: string, matchedLength: number } | null}
+ */
+function matchAgainst(list, p) {
+    for (const { regex, names, out } of list) {
         const m = p.match(regex);
         if (!m) continue;
         const values = Object.fromEntries(names.map((n, i) => [n, m[i + 1]]));
-        const canonicalBase = applyTemplate(canonicalKey, values);
-        return { canonicalBase, matchedLength: m[0].length };
+        return { base: applyTemplate(out, values), matchedLength: m[0].length };
     }
     return null;
 }
 
 /**
  * Convert a canonical (EN) path to a localized path for a language.
- * Preserves placeholder values and remainder segments.
+ * Preserves placeholder values, remainder segments and any query/hash.
  * @param {string} canonicalPath
  * @param {string} lang
  * @returns {string}
  */
 export function toLocalized(canonicalPath, lang) {
-    const p = normalizePath(canonicalPath);
-    const match = matchCanonicalToLocalized(p, lang || DEFAULT_LANG);
-    if (!match) return p; // no mapping -> canonical equals localized
+    const { pathname, suffix } = splitPath(canonicalPath);
+    const map = ROUTE_SLUGS[lang || DEFAULT_LANG] || {};
 
-    const rest = p.slice(match.matchedLength);
-    const localized = normalizePath(match.localizedBase) + rest;
-    return normalizePath(localized);
+    // A placeholder pattern string itself maps via direct lookup
+    if (/{[^}]+}/.test(pathname) && map[pathname]) {
+        return normalizePath(map[pathname]) + suffix;
+    }
+
+    const match = matchAgainst(compiledFor(lang || DEFAULT_LANG).byCanonical, pathname);
+    if (!match) return pathname + suffix; // no mapping -> canonical equals localized
+
+    const rest = pathname.slice(match.matchedLength);
+    return normalizePath(normalizePath(match.base) + rest) + suffix;
 }
 
 /**
  * Convert a localized path to its canonical (EN) path for a language.
- * Preserves placeholder values and remainder segments.
+ * Preserves placeholder values, remainder segments and any query/hash.
  * @param {string} localizedPath
  * @param {string} lang
  * @returns {string}
  */
 export function toCanonical(localizedPath, lang) {
-    const p = normalizePath(localizedPath);
-    const match = matchLocalizedToCanonical(p, lang || DEFAULT_LANG);
-    if (!match) return p; // no mapping -> already canonical
+    const { pathname, suffix } = splitPath(localizedPath);
 
-    const rest = p.slice(match.matchedLength);
-    const canonical = normalizePath(match.canonicalBase) + rest;
-    return normalizePath(canonical);
+    const match = matchAgainst(compiledFor(lang || DEFAULT_LANG).byLocalized, pathname);
+    if (!match) return pathname + suffix; // no mapping -> already canonical
+
+    const rest = pathname.slice(match.matchedLength);
+    return normalizePath(normalizePath(match.base) + rest) + suffix;
 }
 
 /**
- * Strictly validate that a localized path is valid for a given language.
- * It must be exactly the result of toLocalized(toCanonical(path, lang), lang).
+ * Validate that a localized path is valid for a given language:
+ * 1) paths claimed by this language's localized templates must round-trip
+ *    exactly (rejects half-translated shapes like "/strani/query"),
+ * 2) paths matching another language's non-identity localized template are
+ *    foreign and rejected (e.g. "/seiten/abfrage" under sl or en),
+ * 3) remaining paths must not have a localized home in this language
+ *    (rejects canonical "/pages/query" under sl, where "/strani/poizvedba"
+ *    is the real URL); unmapped paths pass and unknown routes still 404
+ *    at route matching.
  * @param {string} localizedPath
  * @param {string} lang
  * @returns {boolean}
  */
 export function isValidLocalizedPath(localizedPath, lang) {
-    const p = normalizePath(localizedPath);
+    const { pathname: p } = splitPath(localizedPath);
     if (p === "/") return true;
+    const l = lang || DEFAULT_LANG;
 
-    // When default language is NOT prefixed, allow canonical slugs but disallow
-    // foreign localized slugs that belong to other languages under default branch.
-    const strictForThisLang = PREFIX_DEFAULT || lang !== DEFAULT_LANG;
-    if (!strictForThisLang) {
-        for (const [otherLang, map] of Object.entries(ROUTE_SLUGS)) {
-            if (otherLang === lang) continue;
-            for (const [, localizedTemplate] of Object.entries(map || {})) {
-                if (!localizedTemplate) continue;
-                const { regex } = buildKeyRegex(localizedTemplate);
-                if (regex.test(p)) return false;
-            }
-        }
-        return true;
+    if (matchAgainst(compiledFor(l).byLocalized, p)) {
+        const roundTrip = toLocalized(toCanonical(p, l), l);
+        return normalizePath(roundTrip) === p;
     }
 
-    // Strict round-trip validation for prefixed default or any non-default language
-    const canonical = toCanonical(p, lang);
-    const roundTrip = toLocalized(canonical, lang);
-    return normalizePath(roundTrip) === p;
+    for (const otherLang of SUPPORTED_LANGS) {
+        if (otherLang === l) continue;
+        for (const entry of compiledFor(otherLang).byLocalized) {
+            // identity mappings (localized === canonical) carry no foreign
+            // signal and must not poison other languages
+            if (entry.key === entry.out) continue;
+            if (entry.regex.test(p)) return false;
+        }
+    }
+
+    // unclaimed by any localized template: valid only if this language
+    // would not localize it elsewhere
+    return normalizePath(toLocalized(p, l)) === p;
 }
 
 /**
