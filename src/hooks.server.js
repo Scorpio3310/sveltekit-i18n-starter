@@ -1,11 +1,11 @@
 import { error, redirect } from "@sveltejs/kit";
-import { SUPPORTED_LANGS } from "./i18n/languages.js";
+import { SUPPORTED_LANGS } from "$i18n/languages.js";
 import {
     DEFAULT_LANG,
     isValidLocalizedPath,
     PREFIX_DEFAULT,
-} from "./i18n/routing.js";
-import { makeT, localeForIntl } from "./i18n/i18n.js";
+} from "$i18n/routing.js";
+import { makeT, localeForIntl } from "$i18n/i18n.js";
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {

@@ -1,8 +1,8 @@
 // Reroute only for pages that exist under routes/[lang=lang].
 // Leave non-localized root-level endpoints and unrelated pages untouched.
 
-import { DEFAULT_LANG, toCanonical, toLocalized } from "./i18n/routing";
-import { SUPPORTED_LANGS } from "./i18n/languages";
+import { DEFAULT_LANG, toCanonical, toLocalized } from "$i18n/routing";
+import { SUPPORTED_LANGS } from "$i18n/languages";
 
 /** Build canonical regexes from the [lang=lang] pages on disk. */
 const pageFiles = import.meta.glob(

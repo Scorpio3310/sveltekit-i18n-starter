@@ -8,10 +8,8 @@ const config = {
         // See https://svelte.dev/docs/kit/adapters for more information about adapters.
         adapter: adapter(),
         alias: {
-            $components: "src/components",
-            $i18n: "src/i18n",
-            $src: "src",
-            $home: ".",
+            $components: "src/lib/components",
+            $i18n: "src/lib/i18n",
         },
     },
     vitePlugin: {
