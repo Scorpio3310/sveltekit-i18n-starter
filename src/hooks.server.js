@@ -21,31 +21,50 @@ function safeLocalPath(path) {
     return "/" + path.replace(/^\/+/, "");
 }
 
+/**
+ * The visitor's preferred language: an explicit earlier choice (cookie) wins,
+ * then the browser's Accept-Language. Returns null when neither yields a
+ * supported language.
+ * @param {import('@sveltejs/kit').RequestEvent} event
+ * @returns {string | null}
+ */
+function preferredLanguage(event) {
+    const cookieLang = event.cookies.get(LANG_COOKIE);
+    if (cookieLang && SUPPORTED_LANGS.includes(cookieLang)) return cookieLang;
+    return negotiateLanguage(
+        event.request.headers.get("accept-language"),
+        SUPPORTED_LANGS
+    );
+}
+
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
     const pathname = event.url.pathname;
     const search = event.url.search || "";
     const seg = pathname.split("/").filter(Boolean)[0];
     const isPrefixed = !!seg && SUPPORTED_LANGS.includes(seg);
+    const isKnownDefaultPage =
+        !isPrefixed &&
+        isKnownCanonicalPath(toCanonical(pathname, DEFAULT_LANG));
 
-    const lang = isPrefixed ? seg : DEFAULT_LANG;
+    // Language resolution:
+    // - "/<lang>/..."         -> the URL's language wins
+    // - known default page    -> DEFAULT_LANG (that IS the page's language)
+    // - anything else (a 404) -> the visitor's language, so error pages match
+    //   what they were browsing (e.g. /de1 stays German if they came from /de)
+    const lang = isPrefixed
+        ? seg
+        : isKnownDefaultPage
+          ? DEFAULT_LANG
+          : (preferredLanguage(event) ?? DEFAULT_LANG);
     const pathWithoutPrefix = isPrefixed
         ? pathname.slice((`/` + seg).length) || "/"
         : pathname;
 
     if (pathname === "/") {
         // Language detection happens ONLY here (deep URLs stay stable for
-        // SEO): an explicit earlier choice (cookie) wins, then the browser's
-        // Accept-Language. 302, not 308 — the target varies per visitor.
-        const cookieLang = event.cookies.get(LANG_COOKIE);
-        const preferred =
-            cookieLang && SUPPORTED_LANGS.includes(cookieLang)
-                ? cookieLang
-                : negotiateLanguage(
-                      event.request.headers.get("accept-language"),
-                      SUPPORTED_LANGS
-                  );
-
+        // SEO). 302, not 308 — the target varies per visitor.
+        const preferred = preferredLanguage(event);
         if (preferred && preferred !== DEFAULT_LANG) {
             redirect(302, `/${preferred}${search}`);
         }
@@ -70,10 +89,9 @@ export async function handle({ event, resolve }) {
     // Remember the visited language so the next visit to "/" honours it
     // (switching languages in the navbar lands on a localized URL, which
     // refreshes the cookie — an explicit choice). Only localized PAGES set
-    // the cookie: endpoints and assets (/robots.txt, /sitemap.xml, /external)
-    // resolve to DEFAULT_LANG and must not overwrite the visitor's choice.
-    const isLocalizedPage =
-        isPrefixed || isKnownCanonicalPath(toCanonical(pathname, lang));
+    // the cookie: endpoints/assets (/robots.txt, /sitemap.xml, /external) and
+    // 404s must not overwrite the visitor's choice.
+    const isLocalizedPage = isPrefixed || isKnownDefaultPage;
     if (isLocalizedPage && event.cookies.get(LANG_COOKIE) !== lang) {
         event.cookies.set(LANG_COOKIE, lang, {
             path: "/",

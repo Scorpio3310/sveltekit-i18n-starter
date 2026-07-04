@@ -292,6 +292,14 @@ you'll need to rethink the redirect/validation layer.
 - Language detection happens **only** on `/`; every other URL is stable
   and crawler-friendly. Delete the detection block in
   `src/hooks.server.js` if you want pure URL-driven language selection.
+- A URL with no valid language prefix that doesn't resolve to a page
+  (e.g. `/de1`) 404s in the **visitor's** language (cookie →
+  Accept-Language → default), so the error page matches what they were
+  browsing. Successful pages are always language-pinned by their URL.
+- `+error.svelte` is the localized error page for 404s and load errors;
+  `src/error.html` is SvelteKit's static fallback, shown only if the app
+  itself can't render (an error in the `handle` hook or root layout). It's
+  optional — delete it to fall back to SvelteKit's built-in default.
 - Links are built by the i18n helpers rather than SvelteKit's `resolve()`
   — this starter doesn't use a base path. Re-enable the
   `svelte/no-navigation-without-resolve` eslint rule if yours does.
