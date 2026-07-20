@@ -82,6 +82,11 @@ describe("reroute: blog", () => {
             "/sl/blog/ui-v-izobrazevanju"
         );
     });
+
+    it("serves the per-language RSS endpoint", () => {
+        expect(reroute("/rss.xml")).toBe("/en/rss.xml");
+        expect(reroute("/sl/rss.xml")).toBe("/sl/rss.xml");
+    });
 });
 
 describe("page discovery helpers", () => {
