@@ -16,8 +16,10 @@
     </a>
 
     <header>
-        <!-- text-left overrides the globally centered h1 (app.css) -->
-        <h1 class="text-left">{data.post.title}</h1>
+        <!-- The global h1 rule (app.css) is unlayered, so it beats plain
+             utilities regardless of specificity — the important modifier
+             is needed to left-align the post title. -->
+        <h1 class="text-left!">{data.post.title}</h1>
         <p class="text-sm opacity-70">
             {data.post.author} ·
             <time datetime={data.post.pubDate}>
