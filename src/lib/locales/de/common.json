@@ -25,7 +25,8 @@
             "restBetween": "REST zwischen Pfaden"
         },
         "toggle": "Menü umschalten",
-        "main": "Hauptnavigation"
+        "main": "Hauptnavigation",
+        "languages": "Sprachauswahl"
     },
     "actions": {
         "viewMore": "Mehr anzeigen"

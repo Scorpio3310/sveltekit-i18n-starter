@@ -111,12 +111,10 @@
                 <li class="nav-item lg:relative">
                     <a
                         href={target}
-                        class="nav-link block {isCurrentRoute(
-                            target,
-                            page.url?.pathname
-                        )
-                            ? 'text-blue-500'
-                            : ''}"
+                        class="nav-link block"
+                        aria-current={isCurrentRoute(target, page.url?.pathname)
+                            ? "page"
+                            : undefined}
                         onclick={closeMobileMenu}
                     >
                         {t(label)}
@@ -129,12 +127,13 @@
                                 <li>
                                     <a
                                         href={childTarget}
-                                        class="nav-dropdown-link {isCurrentRoute(
+                                        class="nav-dropdown-link"
+                                        aria-current={isCurrentRoute(
                                             childTarget,
                                             page.url?.pathname
                                         )
-                                            ? 'text-blue-500'
-                                            : ''}"
+                                            ? "page"
+                                            : undefined}
                                         onclick={closeMobileMenu}
                                     >
                                         {t(clabel)}
@@ -147,20 +146,26 @@
             {/each}
         </ul>
         <div class="nav-actions">
-            {#each languages as language (language)}
-                <div class="relative flex gap-x-2">
+            <div
+                class="flex flex-col items-center gap-4 lg:flex-row lg:gap-6"
+                role="group"
+                aria-label={t("menu.languages")}
+            >
+                {#each languages as language (language)}
                     <a
-                        class="uppercase hover:opacity-50 {language ===
-                        i18n.lang
-                            ? 'text-blue-400'
-                            : ''}"
+                        class="lang-link"
                         href={languageHref(language)}
+                        hreflang={language}
+                        lang={language}
+                        aria-current={language === i18n.lang
+                            ? "true"
+                            : undefined}
                         onclick={closeMobileMenu}
                     >
                         {language}
                     </a>
-                </div>
-            {/each}
+                {/each}
+            </div>
             <a
                 href="https://github.com/Scorpio3310/sveltekit-i18n-starter"
                 aria-label="GitHub SvelteKit i18n Starter"

@@ -25,7 +25,8 @@
             "restBetween": "REST Between Paths"
         },
         "toggle": "Toggle menu",
-        "main": "Main navigation"
+        "main": "Main navigation",
+        "languages": "Language selection"
     },
     "actions": {
         "viewMore": "View More"

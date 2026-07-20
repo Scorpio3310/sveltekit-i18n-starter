@@ -25,7 +25,8 @@
             "restBetween": "REST med potmi"
         },
         "toggle": "Preklopi meni",
-        "main": "Glavna navigacija"
+        "main": "Glavna navigacija",
+        "languages": "Izbira jezika"
     },
     "actions": {
         "viewMore": "Poglej več"

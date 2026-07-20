@@ -59,6 +59,20 @@ header {
         @apply block py-2 text-center whitespace-nowrap no-underline lg:p-2 lg:text-left lg:hover:bg-gray-100;
     }
 
+    /* Active page: color plus underline so state doesn't rely on color alone */
+    .nav-link[aria-current="page"],
+    .nav-dropdown-link[aria-current="page"] {
+        @apply text-blue-500 underline underline-offset-4;
+    }
+
+    .lang-link {
+        @apply uppercase no-underline hover:opacity-50;
+    }
+
+    .lang-link[aria-current] {
+        @apply text-blue-400 underline underline-offset-4;
+    }
+
     .nav-actions {
         @apply mt-4 flex flex-col items-center gap-4 lg:mt-0 lg:flex-row lg:gap-6;
     }
