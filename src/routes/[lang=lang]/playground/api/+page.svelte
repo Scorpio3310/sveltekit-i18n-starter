@@ -149,13 +149,13 @@
 </script>
 
 <section class="grid gap-4">
-    <h1 class="text-5xl font-bold my-5">🚀 API Sandbox (Server)</h1>
+    <h1 class="my-5 text-5xl font-bold">🚀 API Sandbox (Server)</h1>
     <div
-        class="bg-blue-50 text-blue-400 rounded-2xl font-semibold py-4 px-6 w-fit justify-self-center mb-4"
+        class="mb-4 w-fit justify-self-center rounded-2xl bg-blue-50 px-6 py-4 font-semibold text-blue-400"
     >
         {t("playground.notTranslated")}
     </div>
-    <div class="grid max-w-3xl mx-auto gap-4 w-full">
+    <div class="mx-auto grid w-full max-w-3xl gap-4">
         {@render card(
             "Simple Endpoint (GET)",
             "Canonical: <code>/server/simple</code> → localized via translatePath",
@@ -182,7 +182,7 @@
     /** @type {string} */ description,
     /** @type {import('svelte').Snippet} */ content
 )}
-    <div class="border border-black/10 p-5 rounded-4xl flex flex-col gap-2">
+    <div class="flex flex-col gap-2 rounded-4xl border border-black/10 p-5">
         <h2 class="text-xl font-bold">
             {title}
         </h2>
@@ -195,10 +195,10 @@
 {/snippet}
 
 {#snippet simpleContent()}
-    <label class="flex items-center sm:gap-3 flex-wrap">
+    <label class="flex flex-wrap items-center sm:gap-3">
         Query string (key=value&...):
         <input
-            class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit"
+            class="w-full rounded-lg border border-black/30 px-2 py-1.5 sm:w-fit"
             bind:value={appState.inputs.simpleQueryParams}
             placeholder="name=Nik"
         />
@@ -208,33 +208,33 @@
     >
 
     {#if appState.results.simple.url}
-        <div class="space-y-3 mt-2">
+        <div class="mt-2 space-y-3">
             <hr class="border-t border-black/10" />
             <div class="text-sm">
                 <span class="opacity-70">Requested URL:</span>
                 <code>{appState.results.simple.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="grid gap-0.5 overflow-auto rounded-2xl bg-gray-100 p-5 text-xs">{appState
                     .results.simple.response}</pre>
         </div>
     {/if}
 {/snippet}
 
 {#snippet restContent()}
-    <label class="flex items-center sm:gap-3 flex-wrap">
+    <label class="flex flex-wrap items-center sm:gap-3">
         Rest path (a/b/c):
         <input
-            class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit"
+            class="w-full rounded-lg border border-black/30 px-2 py-1.5 sm:w-fit"
             bind:value={appState.inputs.restPath}
             placeholder="a/b/c"
         />
     </label>
 
-    <label class="flex items-center sm:gap-3 flex-wrap">
+    <label class="flex flex-wrap items-center sm:gap-3">
         Query string (key=value&...):
         <input
-            class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit"
+            class="w-full rounded-lg border border-black/30 px-2 py-1.5 sm:w-fit"
             bind:value={appState.inputs.restQueryParams}
             placeholder="x=1&y=2"
         />
@@ -242,7 +242,7 @@
     <label class="block">
         JSON body for POST:
         <textarea
-            class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:mt-1"
+            class="w-full rounded-lg border border-black/30 px-2 py-1.5 sm:mt-1"
             rows="2"
             bind:value={appState.inputs.jsonBody}></textarea>
     </label>
@@ -257,27 +257,27 @@
     </div>
 
     {#if appState.results.echo.url}
-        <div class="space-y-3 mt-2">
+        <div class="mt-2 space-y-3">
             <hr class="border-t border-black/10" />
             <div class="text-sm">
                 <span class="opacity-70">GET Requested URL:</span>
                 <code>{appState.results.echo.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="grid gap-0.5 overflow-auto rounded-2xl bg-gray-100 p-5 text-xs">{appState
                     .results.echo.response}</pre>
         </div>
     {/if}
 
     {#if appState.results.post.url}
-        <div class="space-y-3 mt-2">
+        <div class="mt-2 space-y-3">
             <hr class="border-t border-black/10" />
             <div class="text-sm">
                 <span class="opacity-70">POST Requested URL:</span>
                 <code>{appState.results.post.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="grid gap-0.5 overflow-auto rounded-2xl bg-gray-100 p-5 text-xs">{appState
                     .results.post.response}</pre>
         </div>
     {/if}
@@ -289,14 +289,14 @@
     >
 
     {#if appState.results.translated.url}
-        <div class="space-y-3 mt-2">
+        <div class="mt-2 space-y-3">
             <hr class="border-t border-black/10" />
             <div class="text-sm">
                 <span class="opacity-70">Requested URL:</span>
                 <code>{appState.results.translated.url}</code>
             </div>
             <pre
-                class="text-xs bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">{appState
+                class="grid gap-0.5 overflow-auto rounded-2xl bg-gray-100 p-5 text-xs">{appState
                     .results.translated.response}</pre>
         </div>
     {/if}

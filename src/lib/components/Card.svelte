@@ -16,12 +16,12 @@
     const translatePath = useTranslatePath();
 </script>
 
-<div class="border border-black/10 p-5 rounded-4xl flex flex-col gap-2">
+<div class="flex flex-col gap-2 rounded-4xl border border-black/10 p-5">
     <h2 class="text-xl font-bold">
         {title}
     </h2>
     <p class="text-sm opacity-70">{description}</p>
-    <a href={external ? link : translatePath(link)} class="button w-fit mt-2">
+    <a href={external ? link : translatePath(link)} class="button mt-2 w-fit">
         {t("actions.viewMore")} →
     </a>
 </div>

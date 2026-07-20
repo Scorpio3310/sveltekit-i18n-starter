@@ -11,7 +11,7 @@
     const queryEntries = $derived([...page.url.searchParams.entries()]);
 </script>
 
-<div class="bg-gray-100 rounded-2xl p-5 grid gap-0.5 overflow-auto">
+<div class="grid gap-0.5 overflow-auto rounded-2xl bg-gray-100 p-5">
     {#if slug}
         <code><b>Slug:</b> {page.params.slug}</code>
     {/if}

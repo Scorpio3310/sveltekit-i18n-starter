@@ -57,11 +57,11 @@
     const prefixed = $derived(PREFIX_RULE.apply(localized, lang));
 </script>
 
-<section class="grid gap-5 max-w-4xl justify-self-center">
-    <h1 class="text-5xl font-bold my-5">🌐 I18n Playground</h1>
+<section class="grid max-w-4xl gap-5 justify-self-center">
+    <h1 class="my-5 text-5xl font-bold">🌐 I18n Playground</h1>
 
     <div
-        class="bg-blue-50 text-blue-400 rounded-2xl font-semibold py-4 px-6 w-fit justify-self-center"
+        class="w-fit justify-self-center rounded-2xl bg-blue-50 px-6 py-4 font-semibold text-blue-400"
     >
         {t("playground.notTranslated")}
     </div>
@@ -71,7 +71,7 @@
             This page shows the exact steps our router performs when handling
             localized URLs:
         </p>
-        <ul class="list-disc ml-6 mt-1 text-sm leading-6">
+        <ul class="mt-1 ml-6 list-disc text-sm leading-6">
             <li>
                 <b>normalizePath</b> ensures a leading <code>/</code> and trims trailing
                 slashes (except for root).
@@ -101,7 +101,7 @@
                 if configured.
             </li>
         </ul>
-        <p class="text-xs mt-2 opacity-80">
+        <p class="mt-2 text-xs opacity-80">
             Placeholders:
             <code>{`{slug}`}</code> matches a single path segment;
             <code>{`{...rest}`}</code> matches multiple segments (e.g.,
@@ -110,16 +110,16 @@
         </p>
     </div>
 
-    <div class="border border-black/10 p-5 rounded-2xl flex flex-col gap-2">
+    <div class="flex flex-col gap-2 rounded-2xl border border-black/10 p-5">
         <div class="text-sm text-blue-500">
             <p>
                 <span class="font-medium">DEFAULT_LANG:</span>
-                <code class="bg-blue-100 px-1 py-0.5 rounded"
+                <code class="rounded bg-blue-100 px-1 py-0.5"
                     >{DEFAULT_LANG}</code
                 >
                 ·
                 <span class="font-medium">PREFIX_DEFAULT:</span>
-                <code class="bg-blue-100 px-1 py-0.5 rounded"
+                <code class="rounded bg-blue-100 px-1 py-0.5"
                     >{String(PREFIX_DEFAULT)}</code
                 >
             </p>
@@ -129,20 +129,20 @@
                     : "has no prefix"} in URLs.
             </p>
         </div>
-        <hr class="border-t border-black/10 my-2" />
-        <div class="flex flex-wrap items-center gap-6 mb-2">
-            <label class="flex items-center sm:gap-3 flex-wrap">
+        <hr class="my-2 border-t border-black/10" />
+        <div class="mb-2 flex flex-wrap items-center gap-6">
+            <label class="flex flex-wrap items-center sm:gap-3">
                 Path:
                 <input
-                    class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit h-10"
+                    class="h-10 w-full rounded-lg border border-black/30 px-2 py-1.5 sm:w-fit"
                     bind:value={inputPath}
                     placeholder="/pages"
                 />
             </label>
-            <label class="flex items-center sm:gap-3 flex-wrap">
+            <label class="flex flex-wrap items-center sm:gap-3">
                 Language:
                 <select
-                    class="border border-black/30 px-2 py-1.5 rounded-lg w-full sm:w-fit h-10"
+                    class="h-10 w-full rounded-lg border border-black/30 px-2 py-1.5 sm:w-fit"
                     bind:value={lang}
                 >
                     {#each languages as l (l)}
@@ -151,7 +151,7 @@
                 </select>
             </label>
         </div>
-        <div class="text-sm space-y-1">
+        <div class="space-y-1 text-sm">
             <div class="font-medium">
                 📝 Tip: Enter the path <b>without</b> the language prefix. The final
                 card shows the fully prefixed URL.
@@ -163,7 +163,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {@render card(
             "normalizePath(input)",
             normalizePath(inputPath),
@@ -204,14 +204,14 @@
     /** @type {string} */ input,
     /** @type {string} */ description
 )}
-    <div class="border border-black/10 p-5 rounded-2xl flex flex-col gap-2">
+    <div class="flex flex-col gap-2 rounded-2xl border border-black/10 p-5">
         <h2 class="text-lg font-bold">
             {title}
         </h2>
-        <div class="bg-gray-100 p-3 rounded-xl font-mono text-sm">
+        <div class="rounded-xl bg-gray-100 p-3 font-mono text-sm">
             {input}
         </div>
-        <p class="text-sm opacity-70 italic">
+        <p class="text-sm italic opacity-70">
             <!-- eslint-disable-next-line svelte/no-at-html-tags -- static literals only -->
             {@html description}
         </p>

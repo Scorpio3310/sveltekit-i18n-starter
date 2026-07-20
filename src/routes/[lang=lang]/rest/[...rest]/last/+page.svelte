@@ -6,9 +6,9 @@
 </script>
 
 <section class="grid gap-4">
-    <h1 class="text-5xl font-bold my-5">{t("restBetween.h1")}</h1>
-    <div class="grid max-w-3xl mx-auto gap-10">
-        <p class="text-lg text-center">{t("restBetween.description")}</p>
+    <h1 class="my-5 text-5xl font-bold">{t("restBetween.h1")}</h1>
+    <div class="mx-auto grid max-w-3xl gap-10">
+        <p class="text-center text-lg">{t("restBetween.description")}</p>
         <RouteInfo rest queries />
     </div>
 </section>

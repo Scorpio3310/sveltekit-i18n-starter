@@ -9,7 +9,7 @@
 </script>
 
 <footer
-    class=" text-sm opacity-70 border-t border-t-black/10 w-full max-w-7xl mx-auto text-center py-4"
+    class=" mx-auto w-full max-w-7xl border-t border-t-black/10 py-4 text-center text-sm opacity-70"
 >
     <a href={translatePath("/")} class="mb-2 block hover:opacity-50">
         <p>{t("footer.description")}</p>

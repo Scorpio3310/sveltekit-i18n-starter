@@ -6,11 +6,11 @@
 </script>
 
 <section class="grid gap-4">
-    <h1 class="text-5xl font-bold my-5">{t("rest.h1")}</h1>
-    <div class="grid max-w-3xl mx-auto gap-10">
-        <p class="text-lg text-center">{t("rest.description")}</p>
+    <h1 class="my-5 text-5xl font-bold">{t("rest.h1")}</h1>
+    <div class="mx-auto grid max-w-3xl gap-10">
+        <p class="text-center text-lg">{t("rest.description")}</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
             <Card
                 title={t("rest.dynamic.title")}
                 description={t("rest.dynamic.description")}

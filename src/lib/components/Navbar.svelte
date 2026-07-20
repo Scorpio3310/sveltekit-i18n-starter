@@ -150,7 +150,7 @@
             {#each languages as language (language)}
                 <div class="relative flex gap-x-2">
                     <a
-                        class="hover:opacity-50 uppercase {language ===
+                        class="uppercase hover:opacity-50 {language ===
                         i18n.lang
                             ? 'text-blue-400'
                             : ''}"

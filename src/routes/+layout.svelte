@@ -109,7 +109,7 @@
 </svelte:head>
 
 <Navbar />
-<main class="max-w-7xl w-full self-center mt-20 md:mt-28 mb-10 py-4 flex-1">
+<main class="mt-20 mb-10 w-full max-w-7xl flex-1 self-center py-4 md:mt-28">
     {@render children?.()}
 </main>
 <Footer />
