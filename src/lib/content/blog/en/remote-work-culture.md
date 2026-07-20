@@ -5,7 +5,7 @@ linkedContent: "remote-work-culture"
 description: "An in-depth look at how remote and hybrid work models are shaping organizational culture and employee well-being."
 
 author: "Nik Klemenc"
-pubDate: "2025-05-10"
+pubDate: "2026-05-10"
 isDraft: false
 ---
 
@@ -43,7 +43,7 @@ Practical solutions include:
 
 ### Future of Work
 
-In 2025 and beyond, successful organizations will:
+In 2026 and beyond, successful organizations will:
 
 - Invest in asynchronous tools
 - Prioritize employee well-being as much as output

@@ -1,11 +1,11 @@
 ---
-title: "Glavni varnostni trendi za leto 2025"
-linkedContent: "security-trends-2025"
+title: "Glavni varnostni trendi za leto 2026"
+linkedContent: "security-trends-2026"
 
-description: "Poglobljeno raziskovanje kibernetskih varnostnih izzivov in rešitev, ki opredeljujejo digitalno pokrajino leta 2025."
+description: "Poglobljeno raziskovanje kibernetskih varnostnih izzivov in rešitev, ki opredeljujejo digitalno pokrajino leta 2026."
 
 author: "Nik Klemenc"
-pubDate: "2025-03-05"
+pubDate: "2026-03-05"
 isDraft: false
 ---
 
@@ -31,7 +31,7 @@ Lorem markdownum: Fera vident; me que adfixa ama mota venabula fertur pectore to
 
 Z več podjetji, ki se premikajo v oblačno-nativno infrastrukturo, se ranljivosti množijo. Napačno konfigurirani vedri za shranjevanje in izpostavljeni API-ji ostajajo glavni cilji napadalcev.
 
-> _Do leta 2025 bo 80 % organizacij doživelo vsaj en pomemben incident kibernetske varnosti v oblaku._
+> _Do leta 2026 bo 80 % organizacij doživelo vsaj en pomemben incident kibernetske varnosti v oblaku._
 
 ### Človeški faktor
 

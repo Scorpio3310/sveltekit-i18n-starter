@@ -5,13 +5,13 @@ linkedContent: "ai-in-education"
 description: "Wie Künstliche Intelligenz die Art verändert, wie wir lehren, lernen und Wissen bewerten – im Klassenzimmer und darüber hinaus."
 
 author: "Nik Klemenc"
-pubDate: "2025-07-22"
+pubDate: "2026-07-12"
 isDraft: false
 ---
 
 ## Einleitung
 
-Bildung hat sich schon immer mit der Technologie weiterentwickelt – von der Kreidetafel zum Smartboard, von der Bibliothek zum Internet. Im Jahr 2025 ist Künstliche Intelligenz der nächste große Umbruch, der **neu definiert, wie Lernende lernen und Lehrende lehren**.
+Bildung hat sich schon immer mit der Technologie weiterentwickelt – von der Kreidetafel zum Smartboard, von der Bibliothek zum Internet. Im Jahr 2026 ist Künstliche Intelligenz der nächste große Umbruch, der **neu definiert, wie Lernende lernen und Lehrende lehren**.
 
 ### Personalisierte Lernpfade
 

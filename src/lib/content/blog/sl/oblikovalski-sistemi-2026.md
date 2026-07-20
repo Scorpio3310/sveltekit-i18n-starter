@@ -1,17 +1,17 @@
 ---
-title: "Oblikovalski sistemi leta 2025: onkraj skladnosti"
-linkedContent: "design-systems-2025"
+title: "Oblikovalski sistemi leta 2026: onkraj skladnosti"
+linkedContent: "design-systems-2026"
 
 description: "Kako se oblikovalski sistemi razvijajo iz statičnih smernic v dinamične, z UI podprte ekosisteme, ki spodbujajo inovacije izdelkov."
 
 author: "Nik Klemenc"
-pubDate: "2025-04-02"
+pubDate: "2026-04-02"
 isDraft: false
 ---
 
 ## Uvod
 
-Oblikovalski sistemi so bili nekoč preproste zbirke smernic, komponent in dokumentacije. Leta 2025 so dozoreli v žive ekosisteme, ki jih poganja UI in so neposredno povezani s produkcijskimi cevovodi.
+Oblikovalski sistemi so bili nekoč preproste zbirke smernic, komponent in dokumentacije. Leta 2026 so dozoreli v žive ekosisteme, ki jih poganja UI in so neposredno povezani s produkcijskimi cevovodi.
 
 Podjetja ne vzdržujejo več le skladnosti oblikovanja—**gradijo sisteme, ki razmišljajo, se prilagajajo in razvijajo** z izdelkom.
 

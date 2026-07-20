@@ -1,17 +1,17 @@
 ---
-title: "Design Systems in 2025: Beyond Consistency"
-linkedContent: "design-systems-2025"
+title: "Design Systems in 2026: Beyond Consistency"
+linkedContent: "design-systems-2026"
 
 description: "How design systems are evolving from static guidelines into dynamic, AI-powered ecosystems that drive product innovation."
 
 author: "Nik Klemenc"
-pubDate: "2025-04-02"
+pubDate: "2026-04-02"
 isDraft: false
 ---
 
 ## Introduction
 
-Design systems used to be simple collections of guidelines, components, and documentation. In 2025, they have matured into living ecosystems, powered by AI and connected directly to production pipelines.
+Design systems used to be simple collections of guidelines, components, and documentation. In 2026, they have matured into living ecosystems, powered by AI and connected directly to production pipelines.
 
 Companies are no longer just maintaining design consistency—they are **building systems that think, adapt, and evolve** with the product.
 

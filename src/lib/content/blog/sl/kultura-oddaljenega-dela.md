@@ -5,7 +5,7 @@ linkedContent: "remote-work-culture"
 description: "Poglobljen pogled na to, kako oddaljeni in hibridni delovni modeli oblikujejo organizacijsko kulturo in dobro počutje zaposlenih."
 
 author: "Nik Klemenc"
-pubDate: "2025-05-10"
+pubDate: "2026-05-10"
 isDraft: false
 ---
 
@@ -43,7 +43,7 @@ Praktične rešitve vključujejo:
 
 ### Prihodnost dela
 
-Leta 2025 in naprej bodo uspešne organizacije:
+Leta 2026 in naprej bodo uspešne organizacije:
 
 - Investirale v asinhronska orodja
 - Dajle prednost dobremu počutju zaposlenih enako kot izhodu

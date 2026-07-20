@@ -5,13 +5,13 @@ linkedContent: "ai-in-education"
 description: "How Artificial Intelligence is changing the way we teach, learn, and evaluate knowledge in classrooms and beyond."
 
 author: "Nik Klemenc"
-pubDate: "2025-07-22"
+pubDate: "2026-07-12"
 isDraft: false
 ---
 
 ## Introduction
 
-Education has always evolved with technology—from chalkboards to smartboards, from libraries to the internet. In 2025, Artificial Intelligence is the next great shift, **redefining how students learn and teachers teach**.
+Education has always evolved with technology—from chalkboards to smartboards, from libraries to the internet. In 2026, Artificial Intelligence is the next great shift, **redefining how students learn and teachers teach**.
 
 ### Personalized Learning Paths
 

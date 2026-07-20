@@ -1,11 +1,11 @@
 ---
-title: "Top Security Trends for 2025"
-linkedContent: "security-trends-2025"
+title: "Top Security Trends for 2026"
+linkedContent: "security-trends-2026"
 
-description: "A deep dive into the cybersecurity challenges and solutions defining the digital landscape in 2025."
+description: "A deep dive into the cybersecurity challenges and solutions defining the digital landscape in 2026."
 
 author: "Nik Klemenc"
-pubDate: "2025-03-05"
+pubDate: "2026-03-05"
 isDraft: false
 ---
 
@@ -35,7 +35,7 @@ Lorem markdownum: Fera vident; me que adfixa ama mota venabula fertur pectore to
 With more companies shifting to cloud-native infrastructure, vulnerabilities multiply. Misconfigured storage buckets and exposed APIs remain top targets for
 attackers.
 
-> _By 2025, 80% of organizations will experience at least one significant cloud security incident._
+> _By 2026, 80% of organizations will experience at least one significant cloud security incident._
 
 ### Human Factor
 

@@ -5,7 +5,7 @@ linkedContent: "future-of-ux-design"
 description: "Raziskovanje trendov in inovacij, ki oblikujejo prihodnost UX oblikovanja, od potopljivih vmesnikov do personalizacije, ki jo poganja UI."
 
 author: "Nik Klemenc"
-pubDate: "2025-02-12"
+pubDate: "2026-02-12"
 isDraft: false
 ---
 

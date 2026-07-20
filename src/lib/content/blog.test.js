@@ -129,11 +129,11 @@ describe("alternatesFor", () => {
     it("omits languages without a translation", async () => {
         const alternates = await blog.alternatesFor(
             "en",
-            "design-systems-2025"
+            "design-systems-2026"
         );
         expect(alternates).toEqual({
-            en: "/blog/design-systems-2025",
-            sl: "/sl/blog/oblikovalski-sistemi-2025",
+            en: "/blog/design-systems-2026",
+            sl: "/sl/blog/oblikovalski-sistemi-2026",
         });
         expect(alternates?.de).toBeUndefined();
     });

@@ -5,7 +5,7 @@ linkedContent: "future-of-ux-design"
 description: "Ein Blick auf die Trends und Innovationen, die die Zukunft des UX-Designs prägen – von immersiven Interfaces bis zu KI-gestützter Personalisierung."
 
 author: "Nik Klemenc"
-pubDate: "2025-02-12"
+pubDate: "2026-02-12"
 isDraft: false
 ---
 

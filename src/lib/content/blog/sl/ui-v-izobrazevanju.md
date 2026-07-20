@@ -5,13 +5,13 @@ linkedContent: "ai-in-education"
 description: "Kako umetna inteligenca spreminja način poučevanja, učenja in vrednotenja znanja v učilnicah in zunaj njih."
 
 author: "Nik Klemenc"
-pubDate: "2025-07-22"
+pubDate: "2026-07-12"
 isDraft: false
 ---
 
 ## Uvod
 
-Izobraževanje se je vedno razvijalo z tehnologijo—od krede do pametnih tabel, iz knjižnic na internet. Leta 2025 je umetna inteligenca naslednji veliki premik, ki **na novo opredeljuje, kako se študenti učijo in kako učitelji poučujejo**.
+Izobraževanje se je vedno razvijalo z tehnologijo—od krede do pametnih tabel, iz knjižnic na internet. Leta 2026 je umetna inteligenca naslednji veliki premik, ki **na novo opredeljuje, kako se študenti učijo in kako učitelji poučujejo**.
 
 ### Prilagojene učne poti
 

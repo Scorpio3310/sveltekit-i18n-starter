@@ -5,7 +5,7 @@ linkedContent: "remote-work-culture"
 description: "Ein vertiefter Blick darauf, wie Remote- und Hybridmodelle die Unternehmenskultur und das Wohlbefinden der Mitarbeitenden prägen."
 
 author: "Nik Klemenc"
-pubDate: "2025-05-10"
+pubDate: "2026-05-10"
 isDraft: false
 ---
 
@@ -43,7 +43,7 @@ Praktische Lösungen sind:
 
 ### Die Zukunft der Arbeit
 
-2025 und darüber hinaus werden erfolgreiche Organisationen:
+2026 und darüber hinaus werden erfolgreiche Organisationen:
 
 - In asynchrone Werkzeuge investieren
 - Wohlbefinden genauso priorisieren wie Ergebnisse

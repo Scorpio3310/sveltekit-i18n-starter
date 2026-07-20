@@ -295,7 +295,7 @@ title: "AI in Education: Transforming Learning Experiences"
 linkedContent: "ai-in-education"
 description: "How AI is changing the way we teach and learn."
 author: "Nik Klemenc"
-pubDate: "2025-07-22"
+pubDate: "2026-07-12"
 isDraft: false
 ---
 
@@ -312,7 +312,7 @@ it:
   `langAlternates` (each language's real URL); the layout emits hreflang
   only for languages the post exists in, and the navbar switcher prefers
   the alternate, falling back to that language's `/blog` index for
-  missing translations. Try it: `design-systems-2025` is deliberately
+  missing translations. Try it: `design-systems-2026` is deliberately
   untranslated in German.
 - **404s** — a slug that doesn't exist in the URL's language (including
   another language's slug, e.g. `/sl/blog/ai-in-education`) renders the

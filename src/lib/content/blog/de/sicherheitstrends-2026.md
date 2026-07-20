@@ -1,11 +1,11 @@
 ---
-title: "Die wichtigsten Sicherheitstrends für 2025"
-linkedContent: "security-trends-2025"
+title: "Die wichtigsten Sicherheitstrends für 2026"
+linkedContent: "security-trends-2026"
 
-description: "Ein tiefer Einblick in die Cybersecurity-Herausforderungen und -Lösungen, die die digitale Landschaft im Jahr 2025 bestimmen."
+description: "Ein tiefer Einblick in die Cybersecurity-Herausforderungen und -Lösungen, die die digitale Landschaft im Jahr 2026 bestimmen."
 
 author: "Nik Klemenc"
-pubDate: "2025-03-05"
+pubDate: "2026-03-05"
 isDraft: false
 ---
 
@@ -31,7 +31,7 @@ Lorem markdownum: Fera vident; me que adfixa ama mota venabula fertur pectore to
 
 Je mehr Unternehmen auf Cloud-native Infrastruktur setzen, desto mehr Schwachstellen entstehen. Falsch konfigurierte Storage-Buckets und offene APIs bleiben Hauptziele von Angreifern.
 
-> _Bis 2025 werden 80 % der Organisationen mindestens einen schwerwiegenden Cloud-Sicherheitsvorfall erleben._
+> _Bis 2026 werden 80 % der Organisationen mindestens einen schwerwiegenden Cloud-Sicherheitsvorfall erleben._
 
 ### Der Faktor Mensch
 
