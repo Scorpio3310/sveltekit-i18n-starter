@@ -6,8 +6,6 @@
 const navigationData = [
     { label: "menu.home", href: "/", children: [] },
 
-    { label: "menu.blog", href: "/blog", children: [] },
-
     {
         label: "menu.pages",
         href: "/pages",
@@ -37,6 +35,8 @@ const navigationData = [
             },
         ],
     },
+
+    { label: "menu.blog", href: "/blog", children: [] },
 
     {
         label: "menu.rest",
