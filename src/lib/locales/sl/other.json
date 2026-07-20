@@ -6,7 +6,33 @@
         },
         "h1": "🏡 Domača stran",
         "description": "To je robusten primer i18n internacionalizacije s SvelteKit-om. Primer prikazuje različne vzorce lokalizacije in pristope usmerjanja.",
-        "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊"
+        "featuresTitle": "Kaj je notri",
+        "features": {
+            "slugs": {
+                "title": "🔗 Lokalizirani slugi",
+                "description": "Preslikava kanoničnih ↔ lokaliziranih URL-jev (/pages/query ↔ /strani/poizvedba) s {slug} in {...rest} ogradami"
+            },
+            "blog": {
+                "title": "📝 Blog s prevedenimi slugi",
+                "description": "Markdown objave z jezikovno različnimi slugi, povezanimi prek skupnega linkedContent ključa — delni prevodi, paginacija, RSS"
+            },
+            "reactive": {
+                "title": "⚡ Reaktivni prevodi",
+                "description": "Svelte 5 context vzorec: preklop jezika posodobi stran brez osveževanja; slovarji se nalagajo leno po jezikih"
+            },
+            "detection": {
+                "title": "🧭 Pametna detekcija jezika",
+                "description": "Samo na /: piškotek → Accept-Language → privzeti jezik; globoki URL-ji se nikoli ne preusmerjajo in ostanejo stabilni"
+            },
+            "seo": {
+                "title": "🔍 Vgrajen SEO",
+                "description": "hreflang + x-default, kanonični URL-ji, sitemap na jezik, prevedene 404 strani"
+            },
+            "endpoints": {
+                "title": "🔧 Lokalizirani endpointi",
+                "description": "Strežniški endpointi znotraj jezikovnega drevesa, vključno z RSS virom na jezik"
+            }
+        }
     },
     "blog": {
         "head": {

@@ -1,16 +1,52 @@
 <script>
     import { useT } from "$i18n/i18n";
+    import Card from "$components/Card.svelte";
+
     const t = useT();
 </script>
 
 <div class="grid gap-4">
     <h1 class="my-5 text-5xl font-bold">{t("home.h1")}</h1>
-    <div class="mx-auto grid max-w-2xl gap-4 text-center">
-        <p class="text-lg">{t("home.description")}</p>
-        <div
-            class="w-fit justify-self-center rounded-2xl bg-neutral-100 px-6 py-4 font-medium text-neutral-500"
-        >
-            {t("home.warning")}
+    <div class="mx-auto grid max-w-3xl gap-10">
+        <p class="text-center text-lg">{t("home.description")}</p>
+
+        <h2 class="text-center text-2xl font-bold">
+            {t("home.featuresTitle")}
+        </h2>
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <Card
+                title={t("home.features.slugs.title")}
+                description={t("home.features.slugs.description")}
+                link="/pages"
+            />
+            <Card
+                title={t("home.features.blog.title")}
+                description={t("home.features.blog.description")}
+                link="/blog"
+            />
+            <Card
+                title={t("home.features.reactive.title")}
+                description={t("home.features.reactive.description")}
+                link="/playground/i18n"
+            />
+            <Card
+                title={t("home.features.detection.title")}
+                description={t("home.features.detection.description")}
+                link="/playground/i18n"
+            />
+            <!-- sitemap.xml is a root endpoint shared by all languages,
+                 so the link must bypass translatePath (external) -->
+            <Card
+                title={t("home.features.seo.title")}
+                description={t("home.features.seo.description")}
+                link="/sitemap.xml"
+                external
+            />
+            <Card
+                title={t("home.features.endpoints.title")}
+                description={t("home.features.endpoints.description")}
+                link="/server"
+            />
         </div>
     </div>
 </div>

@@ -6,7 +6,33 @@
         },
         "h1": "🏡 Home Page",
         "description": "SvelteKit i18n starter with URL localization and SEO optimization. This example demonstrates various internationalization patterns and routing approaches.",
-        "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊"
+        "featuresTitle": "What's inside",
+        "features": {
+            "slugs": {
+                "title": "🔗 Localized slugs",
+                "description": "Canonical ↔ localized URL mapping (/pages/query ↔ /strani/poizvedba) with {slug} and {...rest} placeholders"
+            },
+            "blog": {
+                "title": "📝 Blog with translated slugs",
+                "description": "Markdown posts whose slug differs per language, linked by a shared linkedContent key — partial translations, pagination, RSS"
+            },
+            "reactive": {
+                "title": "⚡ Reactive translations",
+                "description": "Svelte 5 context pattern: switching language updates the page without a reload; dictionaries load lazily per language"
+            },
+            "detection": {
+                "title": "🧭 Smart language detection",
+                "description": "On / only: cookie → Accept-Language → default; deep URLs never redirect, so localized URLs stay stable"
+            },
+            "seo": {
+                "title": "🔍 SEO built in",
+                "description": "hreflang + x-default, canonical URLs, per-language sitemap, translated 404 pages"
+            },
+            "endpoints": {
+                "title": "🔧 Localized endpoints",
+                "description": "Server endpoints under the language tree, including a per-language RSS feed"
+            }
+        }
     },
     "blog": {
         "head": {

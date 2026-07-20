@@ -6,7 +6,33 @@
         },
         "h1": "🏡 Startseite",
         "description": "Dies ist ein robustes Beispiel für i18n‑Internationalisierung mit SvelteKit. Dieses Beispiel demonstriert verschiedene Internationalisierungsmuster und Routing‑Ansätze.",
-        "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊"
+        "featuresTitle": "Was steckt drin",
+        "features": {
+            "slugs": {
+                "title": "🔗 Lokalisierte Slugs",
+                "description": "Kanonische ↔ lokalisierte URL-Zuordnung (/pages/query ↔ /seiten/abfrage) mit {slug}- und {...rest}-Platzhaltern"
+            },
+            "blog": {
+                "title": "📝 Blog mit übersetzten Slugs",
+                "description": "Markdown-Beiträge mit sprachspezifischen Slugs, verknüpft über einen gemeinsamen linkedContent-Schlüssel — partielle Übersetzungen, Pagination, RSS"
+            },
+            "reactive": {
+                "title": "⚡ Reaktive Übersetzungen",
+                "description": "Svelte-5-Context-Muster: Der Sprachwechsel aktualisiert die Seite ohne Neuladen; Wörterbücher laden lazy pro Sprache"
+            },
+            "detection": {
+                "title": "🧭 Intelligente Spracherkennung",
+                "description": "Nur auf /: Cookie → Accept-Language → Standardsprache; tiefe URLs werden nie umgeleitet und bleiben stabil"
+            },
+            "seo": {
+                "title": "🔍 SEO eingebaut",
+                "description": "hreflang + x-default, kanonische URLs, Sitemap pro Sprache, übersetzte 404-Seiten"
+            },
+            "endpoints": {
+                "title": "🔧 Lokalisierte Endpunkte",
+                "description": "Server-Endpunkte im Sprachbaum, inklusive RSS-Feed pro Sprache"
+            }
+        }
     },
     "blog": {
         "head": {
