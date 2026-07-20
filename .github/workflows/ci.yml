@@ -8,6 +8,10 @@ on:
 jobs:
     ci:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                # Oldest supported (engines.node) and current LTS
+                node-version: ["20.19", "22"]
         steps:
             - uses: actions/checkout@v4
 
@@ -15,7 +19,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
-                  node-version: 22
+                  node-version: ${{ matrix.node-version }}
                   cache: pnpm
 
             - name: Install dependencies

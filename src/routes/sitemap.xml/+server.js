@@ -1,10 +1,8 @@
 import { STATIC_CANONICAL_PAGES } from "../../hooks.js";
+import { NOINDEXED_PAGES } from "$lib/seo";
 import { translatePathFor } from "$i18n/i18n";
 import { SUPPORTED_LANGS } from "$i18n/languages";
 import { DEFAULT_LANG } from "$i18n/routing";
-
-// Pages marked `noindex: true` in their +page.js — keep the two lists in sync.
-const NOINDEXED = new Set(["/playground/api", "/playground/i18n"]);
 
 /**
  * Per-language sitemap with hreflang alternates for every static
@@ -13,7 +11,7 @@ const NOINDEXED = new Set(["/playground/api", "/playground/i18n"]);
  * @type {import('./$types').RequestHandler}
  */
 export function GET({ url }) {
-    const pages = STATIC_CANONICAL_PAGES.filter((p) => !NOINDEXED.has(p));
+    const pages = STATIC_CANONICAL_PAGES.filter((p) => !NOINDEXED_PAGES.has(p));
 
     const urls = pages
         .flatMap((canonical) => {
