@@ -19,6 +19,13 @@ no i18n runtime dependency.
   (`/pages/query` ↔ `/strani/poizvedba` ↔ `/seiten/abfrage`), with
   `{slug}` and multi-segment `{...rest}` placeholders and
   specificity-aware matching (unit-tested)
+- **Blog with translated content slugs** — markdown posts (mdsvex) whose
+  URL slug differs per language (`/blog/ai-in-education` ↔
+  `/sl/blog/ui-v-izobrazevanju`), linked by a shared `linkedContent`
+  frontmatter key — the same model as
+  [astro-i18n-starter](https://github.com/Scorpio3310/astro-i18n-starter).
+  Correct hreflang + language switching for those slugs, partial
+  translations, localized pagination, per-language RSS
 - **Reactive translations** — the documented Svelte 5 context-getter
   pattern: language switches update the whole page client-side, no reload
 - **Lazy dictionaries** — each language's JSON is its own chunk; visitors
@@ -31,8 +38,8 @@ no i18n runtime dependency.
   redirects, translated 404 pages
 - **Accessible navigation** — keyboard-operable mobile menu
   (`aria-expanded`), focus-visible dropdowns, semantic markup
-- **Tooling** — vitest unit tests (routing, negotiation), eslint,
-  prettier, GitHub Actions CI
+- **Tooling** — vitest unit tests (routing, negotiation, hooks, blog
+  content consistency), eslint, prettier, GitHub Actions CI
 - Playground pages: `/playground/api` and `/playground/i18n`
 
 ![Overview](static/img_github.jpg)
@@ -128,8 +135,14 @@ languages in the navbar is remembered on the next visit to `/`.
   (a 404 here renders the translated `+error.svelte`, unlike errors
   thrown in `handle`)
 - `src/routes/sitemap.xml/+server.js` — per-language sitemap with
-  hreflang alternates; `src/routes/robots.txt/+server.js` — serves the
-  allow-all file only on the exact `PRODUCTION_DOMAIN` host
+  hreflang alternates (static pages + blog posts);
+  `src/routes/robots.txt/+server.js` — serves the allow-all file only on
+  the exact `PRODUCTION_DOMAIN` host
+- `src/lib/content/blog.js` + `src/lib/content/blog/<lang>/*.md` — the
+  blog content collection (see the Blog section below)
+- `src/routes/[lang=lang]/blog/…` — blog index, localized pagination
+  (`/blog/page/{n}`) and post pages;
+  `src/routes/[lang=lang]/rss.xml/+server.js` — per-language RSS feed
 
 ## 🧭 Route Mapping Rules
 
@@ -227,6 +240,11 @@ alternates (`en`/`sl`/`de` + `x-default`), OG and Twitter tags.
 and `robots.txt` only allows crawling on the configured production host —
 previews and staging stay unindexed.
 
+Content pages can override the dictionary lookup: a load may return
+`seoTitle`/`seoDescription` (per-document copy) and `langAlternates`
+(real per-language URLs when the dynamic segment differs per language) —
+blog posts use both, see the Blog section.
+
 ## ➕ Add a Language
 
 1. Add the code, label and locales in `src/lib/i18n/languages.js`.
@@ -253,6 +271,69 @@ export const ROUTE_SLUGS = {
 
 3. Link it with `translatePath("/pages")` — prefixes and localized slugs
    are applied automatically.
+
+## 📝 Blog: Translated Content Slugs
+
+`ROUTE_SLUGS` translates route _structure_; a `{slug}` value passes
+through verbatim. Blog posts need more: the slug itself is content and
+differs per language. The blog demo solves that with the same model as
+[astro-i18n-starter](https://github.com/Scorpio3310/astro-i18n-starter) —
+one folder per language, the **file name is that language's slug**, and
+translations declare a shared `linkedContent` frontmatter key:
+
+```
+src/lib/content/blog/
+├── en/ai-in-education.md        linkedContent: "ai-in-education"
+├── sl/ui-v-izobrazevanju.md     linkedContent: "ai-in-education"
+└── de/ki-in-der-bildung.md      linkedContent: "ai-in-education"
+```
+
+```md
+---
+title: "AI in Education: Transforming Learning Experiences"
+linkedContent: "ai-in-education"
+description: "How AI is changing the way we teach and learn."
+author: "Nik Klemenc"
+pubDate: "2025-07-22"
+isDraft: false
+---
+
+## Introduction
+
+…
+```
+
+`src/lib/content/blog.js` derives the `linkedContent → { lang: slug }`
+map from the collection (lazily, cached) and everything else flows from
+it:
+
+- **Language switching & hreflang** — the post's server load returns
+  `langAlternates` (each language's real URL); the layout emits hreflang
+  only for languages the post exists in, and the navbar switcher prefers
+  the alternate, falling back to that language's `/blog` index for
+  missing translations. Try it: `design-systems-2025` is deliberately
+  untranslated in German.
+- **404s** — a slug that doesn't exist in the URL's language (including
+  another language's slug, e.g. `/sl/blog/ai-in-education`) renders the
+  translated 404 page.
+- **Pagination** — `/blog` is page 1; deeper pages live at
+  `/blog/page/2` with the segment localized via `ROUTE_SLUGS`
+  (`/sl/blog/stran/2`, `/de/blog/seite/2`); `/blog/page/1` 308-redirects
+  to `/blog`.
+- **Sitemap & RSS** — posts appear in `sitemap.xml` with real
+  per-language slugs and partial hreflang sets; each language has a feed
+  at `/rss.xml` (default) / `/<lang>/rss.xml`.
+
+**Add a post:** drop a `.md` file into each language folder (file name =
+that language's slug) with the same `linkedContent` key. A typo in the
+key doesn't break the build — it silently unlinks the translation — so
+`src/lib/content/blog.test.js` fails the test suite for unknown keys,
+duplicates and missing frontmatter.
+
+The posts are compiled by [mdsvex](https://mdsvex.pngwn.io) — the only
+dependency the blog demo adds (a dev dependency; the i18n core remains
+dependency-free). Delete `src/lib/content` and the `blog`/`rss.xml`
+routes to drop the demo.
 
 ## 🧪 Tests, Lint & Playgrounds
 
