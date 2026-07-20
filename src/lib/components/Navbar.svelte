@@ -80,7 +80,7 @@
 
 <svelte:window onkeydown={handleWindowKeydown} onclick={handleWindowClick} />
 
-<header bind:this={headerEl}>
+<header bind:this={headerEl} class="site-header">
     <div class="flex items-center justify-between">
         <a
             href={translatePath("/")}

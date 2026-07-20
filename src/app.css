@@ -4,7 +4,9 @@ body {
     @apply flex min-h-dvh flex-col px-4;
 }
 
-header {
+/* Scoped to the navbar — a bare `header` selector would also hit
+   semantic <header> elements inside pages (e.g. blog post headers). */
+.site-header {
     @apply fixed top-0 right-0 left-0 z-10 flex max-w-7xl flex-col border-b border-b-black/10 bg-white/60 px-4 py-6 backdrop-blur-xl lg:sticky lg:mx-auto lg:w-full lg:flex-row lg:justify-between lg:px-0;
 
     /* Mobile menu button (real <button> with aria-expanded, keyboard accessible) */
