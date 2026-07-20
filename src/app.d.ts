@@ -26,6 +26,23 @@ declare global {
             seoKey?: string;
             /** Render a robots noindex meta tag for this page */
             noindex?: boolean;
+            /** Per-document <title> override (content pages, e.g. blog posts) */
+            seoTitle?: string;
+            /** Per-document meta description override */
+            seoDescription?: string;
+            /**
+             * Real per-language URLs for content whose slug differs per
+             * language (localized path incl. prefix, keyed by language).
+             * Languages the content doesn't exist in are absent. Consumed
+             * by the hreflang tags in +layout.svelte and the Navbar
+             * language switcher.
+             */
+            langAlternates?: Record<string, string>;
+            /**
+             * Canonical path the language switcher falls back to for
+             * languages missing from langAlternates (e.g. "/blog").
+             */
+            alternatesFallbackPath?: string;
         }
         // interface PageState {}
         // interface Platform {}

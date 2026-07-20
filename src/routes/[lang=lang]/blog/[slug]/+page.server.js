@@ -16,7 +16,8 @@ export async function load({ params }) {
 
     return {
         post: post.metadata,
-        langAlternates: await alternatesFor(params.lang, params.slug),
+        langAlternates:
+            (await alternatesFor(params.lang, params.slug)) ?? undefined,
         alternatesFallbackPath: "/blog",
         seoTitle: post.metadata.title,
         seoDescription: post.metadata.description,

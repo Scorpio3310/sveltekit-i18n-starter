@@ -30,15 +30,19 @@
 
     // Pages declare their SEO metadata via `seoKey` (and optional `noindex`)
     // in +page.js; the layout renders a single set of head tags from it.
+    // Content pages (blog posts) override the dictionary lookup with their
+    // own per-document `seoTitle`/`seoDescription`.
     const seoKey = $derived(page.data.seoKey ?? "home");
     const title = $derived(
         page.error
             ? page.status === 404
                 ? t("errors.title")
                 : t("errors.error")
-            : t(`${seoKey}.head.title`)
+            : (page.data.seoTitle ?? t(`${seoKey}.head.title`))
     );
-    const description = $derived(t(`${seoKey}.head.description`));
+    const description = $derived(
+        page.data.seoDescription ?? t(`${seoKey}.head.description`)
+    );
 
     // Canonical: current origin + normalized pathname, no query/hash.
     const canonicalUrl = $derived(
@@ -49,16 +53,29 @@
     const isLocalized = $derived(
         page.route.id?.includes("[lang=lang]") ?? false
     );
-    const alternates = $derived(
-        isLocalized && !page.error
-            ? SUPPORTED_LANGS.map((lang) => ({
-                  lang,
-                  href:
-                      page.url.origin +
-                      switchLanguageUrl(page.url.pathname, undefined, lang),
-              }))
-            : []
-    );
+    // switchLanguageUrl only translates route structure, so pages whose
+    // dynamic segment differs per language (blog posts with translated
+    // slugs) provide the real URLs via `langAlternates` in their load.
+    // Only the languages the content actually exists in are listed —
+    // partially translated posts emit a partial hreflang set.
+    const alternates = $derived.by(() => {
+        if (!isLocalized || page.error) return [];
+        const override = page.data.langAlternates;
+        if (override) {
+            return SUPPORTED_LANGS.filter((lang) => override[lang]).map(
+                (lang) => ({
+                    lang,
+                    href: page.url.origin + override[lang],
+                })
+            );
+        }
+        return SUPPORTED_LANGS.map((lang) => ({
+            lang,
+            href:
+                page.url.origin +
+                switchLanguageUrl(page.url.pathname, undefined, lang),
+        }));
+    });
     const xDefaultHref = $derived(
         alternates.find((a) => a.lang === DEFAULT_LANG)?.href
     );

@@ -21,9 +21,21 @@
 
     /**
      * Target URL when switching to `language` from the current page.
+     *
+     * Content pages whose slug differs per language (blog posts) provide
+     * the real URLs via `langAlternates`; a language the content doesn't
+     * exist in falls back to `alternatesFallbackPath` (e.g. the blog
+     * index) in that language. Everything else goes through the structural
+     * switchLanguageUrl transform.
      * @param {string} language
      */
     function languageHref(language) {
+        const alternates = page.data.langAlternates;
+        if (alternates) {
+            if (alternates[language]) return alternates[language];
+            const fallback = page.data.alternatesFallbackPath;
+            if (fallback) return translatePathFor(fallback, language);
+        }
         const current = `${page.url.pathname}${page.url.search}${page.url.hash}`;
         return isLocalizedRoute
             ? switchLanguageUrl(current, undefined, language)
