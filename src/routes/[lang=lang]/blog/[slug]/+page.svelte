@@ -16,8 +16,9 @@
     </a>
 
     <header>
-        <h1>{data.post.title}</h1>
-        <p class="text-center text-sm opacity-70">
+        <!-- text-left overrides the globally centered h1 (app.css) -->
+        <h1 class="text-left">{data.post.title}</h1>
+        <p class="text-sm opacity-70">
             {data.post.author} ·
             <time datetime={data.post.pubDate}>
                 {formatDate(data.post.pubDate, data.intlLocale)}
