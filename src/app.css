@@ -12,7 +12,7 @@ header {
         @apply flex h-8 w-8 cursor-pointer flex-col items-center justify-center space-y-1 border-0 bg-transparent p-0 lg:hidden;
 
         span {
-            @apply block h-0.5 w-6 bg-current transition-all duration-300;
+            @apply block h-0.5 w-6 bg-current motion-safe:transition-all motion-safe:duration-300;
         }
     }
 

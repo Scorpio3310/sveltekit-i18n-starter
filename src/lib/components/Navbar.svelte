@@ -33,13 +33,42 @@
     // Mobile menu state
     let mobileMenuOpen = $state(false);
 
+    /** @type {HTMLElement | undefined} */
+    let headerEl = $state();
+
+    /** @type {HTMLButtonElement | undefined} */
+    let toggleButton = $state();
+
     // Function to close mobile menu
     function closeMobileMenu() {
         mobileMenuOpen = false;
     }
+
+    /**
+     * Escape closes the open menu and returns focus to the toggle button.
+     * @param {KeyboardEvent} event
+     */
+    function handleWindowKeydown(event) {
+        if (!mobileMenuOpen || event.key !== "Escape") return;
+        mobileMenuOpen = false;
+        toggleButton?.focus();
+    }
+
+    /**
+     * A click or tap outside the header closes the open menu.
+     * @param {MouseEvent} event
+     */
+    function handleWindowClick(event) {
+        if (!mobileMenuOpen) return;
+        if (event.target instanceof Node && headerEl?.contains(event.target))
+            return;
+        mobileMenuOpen = false;
+    }
 </script>
 
-<header>
+<svelte:window onkeydown={handleWindowKeydown} onclick={handleWindowClick} />
+
+<header bind:this={headerEl}>
     <div class="flex items-center justify-between">
         <a
             href={translatePath("/")}
@@ -86,6 +115,7 @@
         </a>
 
         <button
+            bind:this={toggleButton}
             type="button"
             class="mobile-menu-toggle"
             aria-expanded={mobileMenuOpen}
