@@ -95,3 +95,35 @@ h1 {
         @apply cursor-not-allowed opacity-30 hover:opacity-30;
     }
 }
+
+/* Minimal typography for the mdsvex-rendered blog post body */
+.post-content {
+    h2 {
+        @apply mt-8 mb-3 text-2xl font-bold;
+    }
+
+    h3 {
+        @apply mt-6 mb-2 text-xl font-semibold;
+    }
+
+    p {
+        @apply my-3 leading-relaxed;
+    }
+
+    ul,
+    ol {
+        @apply my-3 list-disc space-y-1 pl-6;
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+    blockquote {
+        @apply my-4 border-l-4 border-black/20 pl-4 italic opacity-80;
+    }
+
+    a {
+        @apply underline hover:opacity-50;
+    }
+}

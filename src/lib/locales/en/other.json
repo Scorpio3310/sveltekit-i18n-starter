@@ -8,6 +8,18 @@
         "description": "SvelteKit i18n starter with URL localization and SEO optimization. This example demonstrates various internationalization patterns and routing approaches.",
         "warning": "Work in progress: But I cover most of the cases. If you found some improvement, feel free to open PR 😊"
     },
+    "blog": {
+        "head": {
+            "title": "Blog",
+            "description": "Markdown blog posts with per-language slugs linked by a shared linkedContent key."
+        },
+        "h1": "📝 Blog",
+        "description": "Each post's URL slug is translated per language and the translations are linked by a shared linkedContent frontmatter key — switch the language on a post to see it. One post is deliberately untranslated in German to demonstrate partial translations.",
+        "backToBlog": "Back to blog",
+        "newer": "Newer",
+        "older": "Older",
+        "paginationLabel": "Blog pages"
+    },
     "pages": {
         "head": {
             "title": "Pages",

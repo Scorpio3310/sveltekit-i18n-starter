@@ -8,6 +8,18 @@
         "description": "To je robusten primer i18n internacionalizacije s SvelteKit-om. Primer prikazuje različne vzorce lokalizacije in pristope usmerjanja.",
         "warning": "Delo je v teku: večina primerov je pokrita. Če najdeš izboljšavo, odpri PR 😊"
     },
+    "blog": {
+        "head": {
+            "title": "Blog",
+            "description": "Markdown blog objave z jezikovno prevedenimi slugi, povezanimi prek skupnega linkedContent ključa."
+        },
+        "h1": "📝 Blog",
+        "description": "URL slug vsake objave je preveden za vsak jezik, prevodi pa so povezani prek skupnega linkedContent ključa v frontmatterju — preklopi jezik na objavi in poglej. Ena objava namenoma ni prevedena v nemščino, da prikaže delne prevode.",
+        "backToBlog": "Nazaj na blog",
+        "newer": "Novejše",
+        "older": "Starejše",
+        "paginationLabel": "Strani bloga"
+    },
     "pages": {
         "head": {
             "title": "Strani",

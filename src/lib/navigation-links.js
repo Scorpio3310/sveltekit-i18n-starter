@@ -6,6 +6,8 @@
 const navigationData = [
     { label: "menu.home", href: "/", children: [] },
 
+    { label: "menu.blog", href: "/blog", children: [] },
+
     {
         label: "menu.pages",
         href: "/pages",

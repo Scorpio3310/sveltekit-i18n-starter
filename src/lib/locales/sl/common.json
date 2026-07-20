@@ -1,6 +1,7 @@
 {
     "menu": {
         "home": "Domov",
+        "blog": "Blog",
         "pages": "Strani",
         "pagesChildren": {
             "simple": "Preprosta stran",

@@ -8,6 +8,18 @@
         "description": "Dies ist ein robustes Beispiel für i18n‑Internationalisierung mit SvelteKit. Dieses Beispiel demonstriert verschiedene Internationalisierungsmuster und Routing‑Ansätze.",
         "warning": "In Arbeit: Die meisten Fälle sind abgedeckt. Wenn du Verbesserungen findest, eröffne gern einen PR 😊"
     },
+    "blog": {
+        "head": {
+            "title": "Blog",
+            "description": "Markdown-Blogbeiträge mit sprachspezifischen Slugs, verknüpft über einen gemeinsamen linkedContent-Schlüssel."
+        },
+        "h1": "📝 Blog",
+        "description": "Der URL-Slug jedes Beitrags ist pro Sprache übersetzt; die Übersetzungen sind über einen gemeinsamen linkedContent-Schlüssel im Frontmatter verknüpft — wechseln Sie die Sprache auf einem Beitrag. Ein Beitrag ist absichtlich nicht ins Deutsche übersetzt, um partielle Übersetzungen zu zeigen.",
+        "backToBlog": "Zurück zum Blog",
+        "newer": "Neuere",
+        "older": "Ältere",
+        "paginationLabel": "Blogseiten"
+    },
     "pages": {
         "head": {
             "title": "Seiten",

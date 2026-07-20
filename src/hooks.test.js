@@ -70,6 +70,20 @@ describe("reroute: unprefixed (default language) URLs", () => {
     });
 });
 
+describe("reroute: blog", () => {
+    it("maps the index, localized pagination and post slugs", () => {
+        expect(reroute("/blog")).toBe("/en/blog");
+        expect(reroute("/blog/page/2")).toBe("/en/blog/page/2");
+        expect(reroute("/sl/blog/stran/2")).toBe("/sl/blog/page/2");
+        expect(reroute("/de/blog/seite/2")).toBe("/de/blog/page/2");
+        // Post slugs are content data, not route structure: they pass
+        // through verbatim and the post's load decides existence (404).
+        expect(reroute("/sl/blog/ui-v-izobrazevanju")).toBe(
+            "/sl/blog/ui-v-izobrazevanju"
+        );
+    });
+});
+
 describe("page discovery helpers", () => {
     it("isKnownCanonicalPath knows [lang=lang] pages and endpoints", () => {
         expect(hooks.isKnownCanonicalPath("/")).toBe(true);

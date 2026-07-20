@@ -34,6 +34,10 @@ export const ROUTE_SLUGS = {
         "/playground": "/igrisce",
         "/playground/api": "/igrisce/api",
         "/playground/i18n": "/igrisce/i18n",
+
+        // Blog section ("/blog" itself is identical in every language; post
+        // slugs are translated per-post via linkedContent, not here)
+        "/blog/page/{n}": "/blog/stran/{n}",
     },
     de: {
         // Rest section
@@ -59,5 +63,8 @@ export const ROUTE_SLUGS = {
         "/playground": "/spielwiese",
         "/playground/api": "/spielwiese/api",
         "/playground/i18n": "/spielwiese/i18n",
+
+        // Blog section (see the note in the sl block)
+        "/blog/page/{n}": "/blog/seite/{n}",
     },
 };

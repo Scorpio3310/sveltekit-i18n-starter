@@ -1,6 +1,7 @@
 {
     "menu": {
         "home": "Home",
+        "blog": "Blog",
         "pages": "Pages",
         "pagesChildren": {
             "simple": "Simple page",

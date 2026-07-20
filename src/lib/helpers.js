@@ -41,3 +41,17 @@ export function isCurrentRoute(targetPath, currentPath, exactMatch = true) {
     const aWithSlash = a.endsWith("/") ? a : a + "/";
     return b.startsWith(aWithSlash);
 }
+
+/**
+ * Format an ISO date in the visitor's locale (e.g. "July 22, 2025",
+ * "22. julij 2025", "22. Juli 2025"). Pass `page.data.intlLocale`.
+ *
+ * @param {string} isoDate
+ * @param {string} intlLocale BCP-47 locale, see localeForIntl in $i18n/i18n
+ * @returns {string}
+ */
+export function formatDate(isoDate, intlLocale) {
+    return new Intl.DateTimeFormat(intlLocale, { dateStyle: "long" }).format(
+        new Date(isoDate)
+    );
+}
