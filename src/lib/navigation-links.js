@@ -33,6 +33,7 @@ const navigationData = [
                 label: "menu.serverChildren.translated",
                 href: "/server/translated",
             },
+            { label: "menu.serverChildren.rss", href: "/rss.xml" },
         ],
     },
 

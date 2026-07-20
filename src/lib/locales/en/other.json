@@ -99,6 +99,10 @@
             "title": "Translated",
             "description": "Example of returning localized content based on selected language",
             "translated": "This is a translated string based on the current language"
+        },
+        "rss": {
+            "title": "RSS Feed",
+            "description": "Per-language RSS 2.0 feed generated from the blog posts — /rss.xml, /sl/rss.xml, /de/rss.xml"
         }
     },
     "rest": {

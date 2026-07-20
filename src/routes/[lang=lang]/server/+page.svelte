@@ -26,6 +26,11 @@
                 description={t("server.translated.description")}
                 link="/server/translated"
             />
+            <Card
+                title={t("server.rss.title")}
+                description={t("server.rss.description")}
+                link="/rss.xml"
+            />
         </div>
     </div>
 </section>

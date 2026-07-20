@@ -13,7 +13,8 @@
         "serverChildren": {
             "simple": "Simple Endpoint",
             "rest": "REST Endpoint",
-            "translated": "Translated Endpoint"
+            "translated": "Translated Endpoint",
+            "rss": "RSS Feed"
         },
         "playground": "Playground",
         "playgroundChildren": {

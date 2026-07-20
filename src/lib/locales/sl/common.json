@@ -13,7 +13,8 @@
         "serverChildren": {
             "simple": "Preprost endpoint",
             "rest": "REST endpoint",
-            "translated": "Preveden endpoint"
+            "translated": "Preveden endpoint",
+            "rss": "RSS vir"
         },
         "playground": "Igrišče",
         "playgroundChildren": {

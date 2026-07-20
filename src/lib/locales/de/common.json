@@ -13,7 +13,8 @@
         "serverChildren": {
             "simple": "Einfacher Endpunkt",
             "rest": "REST-Endpunkt",
-            "translated": "Übersetzter Endpunkt"
+            "translated": "Übersetzter Endpunkt",
+            "rss": "RSS-Feed"
         },
         "playground": "Spielwiese",
         "playgroundChildren": {

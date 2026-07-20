@@ -99,6 +99,10 @@
             "title": "Prevedeno",
             "description": "Primer vračanja lokalizirane vsebine glede na izbrani jezik",
             "translated": "To je prevedeno besedilo glede na trenutni jezik"
+        },
+        "rss": {
+            "title": "RSS vir",
+            "description": "RSS 2.0 vir na jezik, generiran iz blog objav — /rss.xml, /sl/rss.xml, /de/rss.xml"
         }
     },
     "rest": {

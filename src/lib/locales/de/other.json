@@ -99,6 +99,10 @@
             "title": "Übersetzt",
             "description": "Beispiel für die Rückgabe lokalisierter Inhalte basierend auf der gewählten Sprache",
             "translated": "Dies ist ein übersetzter Text basierend auf der aktuellen Sprache"
+        },
+        "rss": {
+            "title": "RSS-Feed",
+            "description": "RSS-2.0-Feed pro Sprache, generiert aus den Blogbeiträgen — /rss.xml, /sl/rss.xml, /de/rss.xml"
         }
     },
     "rest": {
