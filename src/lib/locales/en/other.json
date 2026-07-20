@@ -20,9 +20,9 @@
                 "title": "⚡ Reactive translations",
                 "description": "Svelte 5 context pattern: switching language updates the page without a reload; dictionaries load lazily per language"
             },
-            "detection": {
-                "title": "🧭 Smart language detection",
-                "description": "On / only: cookie → Accept-Language → default; deep URLs never redirect, so localized URLs stay stable"
+            "rest": {
+                "title": "🧩 Catch-all & dynamic routes",
+                "description": "Multi-segment {...rest} and dynamic params with localized segments even mid-path (/rest/a/b/last ↔ /poljubno/a/b/zadnje)"
             },
             "seo": {
                 "title": "🔍 SEO built in",
@@ -32,7 +32,8 @@
                 "title": "🔧 Localized endpoints",
                 "description": "Server endpoints under the language tree, including a per-language RSS feed"
             }
-        }
+        },
+        "detectionNote": "Language detection happens only on / (cookie → Accept-Language → default) — deep URLs never redirect, so localized URLs stay stable."
     },
     "blog": {
         "head": {

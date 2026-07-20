@@ -20,9 +20,9 @@
                 "title": "⚡ Reaktivni prevodi",
                 "description": "Svelte 5 context vzorec: preklop jezika posodobi stran brez osveževanja; slovarji se nalagajo leno po jezikih"
             },
-            "detection": {
-                "title": "🧭 Pametna detekcija jezika",
-                "description": "Samo na /: piškotek → Accept-Language → privzeti jezik; globoki URL-ji se nikoli ne preusmerjajo in ostanejo stabilni"
+            "rest": {
+                "title": "🧩 Catch-all in dinamične poti",
+                "description": "Večsegmentni {...rest} in dinamični parametri z lokaliziranimi segmenti tudi sredi poti (/rest/a/b/last ↔ /poljubno/a/b/zadnje)"
             },
             "seo": {
                 "title": "🔍 Vgrajen SEO",
@@ -32,7 +32,8 @@
                 "title": "🔧 Lokalizirani endpointi",
                 "description": "Strežniški endpointi znotraj jezikovnega drevesa, vključno z RSS virom na jezik"
             }
-        }
+        },
+        "detectionNote": "Detekcija jezika se zgodi samo na / (piškotek → Accept-Language → privzeti jezik) — globoki URL-ji se nikoli ne preusmerjajo, zato lokalizirani URL-ji ostanejo stabilni."
     },
     "blog": {
         "head": {

@@ -20,9 +20,9 @@
                 "title": "⚡ Reaktive Übersetzungen",
                 "description": "Svelte-5-Context-Muster: Der Sprachwechsel aktualisiert die Seite ohne Neuladen; Wörterbücher laden lazy pro Sprache"
             },
-            "detection": {
-                "title": "🧭 Intelligente Spracherkennung",
-                "description": "Nur auf /: Cookie → Accept-Language → Standardsprache; tiefe URLs werden nie umgeleitet und bleiben stabil"
+            "rest": {
+                "title": "🧩 Catch-all- und dynamische Routen",
+                "description": "Mehrsegmentige {...rest} und dynamische Parameter mit lokalisierten Segmenten auch mitten im Pfad (/rest/a/b/last ↔ /beliebig/a/b/letzte)"
             },
             "seo": {
                 "title": "🔍 SEO eingebaut",
@@ -32,7 +32,8 @@
                 "title": "🔧 Lokalisierte Endpunkte",
                 "description": "Server-Endpunkte im Sprachbaum, inklusive RSS-Feed pro Sprache"
             }
-        }
+        },
+        "detectionNote": "Die Spracherkennung passiert nur auf / (Cookie → Accept-Language → Standardsprache) — tiefe URLs werden nie umgeleitet, lokalisierte URLs bleiben stabil."
     },
     "blog": {
         "head": {
