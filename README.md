@@ -80,13 +80,14 @@ cp .env.example .env
 
 Redirects & detection:
 
-| Request                         | Behavior                                                             |
-| ------------------------------- | -------------------------------------------------------------------- |
-| `/` (first visit)               | 302 to the negotiated language (`lang` cookie → `Accept-Language`)   |
-| `/en/pages` (prefix mode OFF)   | 308 to `/pages` (query preserved)                                    |
-| `/pages` (prefix mode ON)       | 308 to `/en/pages`                                                   |
-| `/sl/pages/query`               | 404 — canonical slugs are invalid where a localized mapping exists   |
-| `/strani/poizvedba` (under `/`) | 404 — foreign localized slugs are invalid under the default language |
+| Request                         | Behavior                                                                                                                                              |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/` (external entry)            | 302 to the negotiated language (`lang` cookie → `Accept-Language`)                                                                                    |
+| `/` (in-app navigation)         | serves the default language and updates the cookie — clicking the default language in the switcher is an explicit choice, not a case for re-detection |
+| `/en/pages` (prefix mode OFF)   | 308 to `/pages` (query preserved)                                                                                                                     |
+| `/pages` (prefix mode ON)       | 308 to `/en/pages`                                                                                                                                    |
+| `/sl/pages/query`               | 404 — canonical slugs are invalid where a localized mapping exists                                                                                    |
+| `/strani/poizvedba` (under `/`) | 404 — foreign localized slugs are invalid under the default language                                                                                  |
 
 The `lang` cookie is refreshed on every localized page view, so switching
 languages in the navbar is remembered on the next visit to `/`.

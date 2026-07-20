@@ -20,15 +20,19 @@ beforeAll(async () => {
 /**
  * Build a minimal RequestEvent double for handle().
  * @param {string} path pathname plus optional search, e.g. "/sl?x=1"
- * @param {{ cookies?: Record<string, string>, acceptLanguage?: string }} [opts]
+ * @param {{ cookies?: Record<string, string>, acceptLanguage?: string, headers?: Record<string, string>, isDataRequest?: boolean }} [opts]
  */
-function makeEvent(path, { cookies = {}, acceptLanguage } = {}) {
+function makeEvent(
+    path,
+    { cookies = {}, acceptLanguage, headers: extraHeaders, isDataRequest } = {}
+) {
     const jar = new Map(Object.entries(cookies));
     /** @type {{ name: string, value: string, opts: any }[]} */
     const setCookies = [];
-    const headers = new Headers();
+    const headers = new Headers(extraHeaders);
     if (acceptLanguage) headers.set("accept-language", acceptLanguage);
     return {
+        isDataRequest: isDataRequest ?? false,
         url: new URL(`http://localhost${path}`),
         request: { headers },
         cookies: {
@@ -121,6 +125,50 @@ describe("root '/' language detection", () => {
         );
         expect(response.status).toBe(200);
         expect(event.locals.lang).toBe("en");
+    });
+
+    // Regression: clicking EN in the switcher on a non-default home page
+    // navigates to "/" — that must serve the default language and update
+    // the cookie, not bounce back to the cookie language forever.
+    it("client-side navigation to '/' overrides the cookie (explicit choice)", async () => {
+        const { event, response } = await runHandle(
+            makeEvent("/", { cookies: { lang: "de" }, isDataRequest: true })
+        );
+        expect(response.status).toBe(200);
+        expect(event.locals.lang).toBe("en");
+        expect(event.setCookies).toMatchObject([{ name: "lang", value: "en" }]);
+    });
+
+    it("same-origin document requests to '/' skip the redirect (no-JS switcher)", async () => {
+        const { event, response } = await runHandle(
+            makeEvent("/", {
+                cookies: { lang: "de" },
+                headers: { "sec-fetch-site": "same-origin" },
+            })
+        );
+        expect(response.status).toBe(200);
+        expect(event.locals.lang).toBe("en");
+    });
+
+    it("internal navigation also ignores Accept-Language", async () => {
+        const { response } = await runHandle(
+            makeEvent("/", {
+                acceptLanguage: "sl;q=0.9",
+                headers: { "sec-fetch-site": "same-origin" },
+            })
+        );
+        expect(response.status).toBe(200);
+    });
+
+    it("external entries still get the preference redirect", async () => {
+        await expectRedirect(
+            makeEvent("/", {
+                cookies: { lang: "de" },
+                headers: { "sec-fetch-site": "none" },
+            }),
+            302,
+            "/de"
+        );
     });
 });
 

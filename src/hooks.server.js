@@ -61,14 +61,29 @@ export async function handle({ event, resolve }) {
         ? pathname.slice((`/` + seg).length) || "/"
         : pathname;
 
+    // Navigation from inside the app (the language switcher linking to "/")
+    // is an explicit choice of the default language — only external entries
+    // (typed URL, bookmark, external link) get the preference redirect.
+    // Without this, a visitor with a non-default lang cookie could never
+    // switch back to the default language from the home page: the redirect
+    // fires before the cookie-update logic below, so "/" always bounced
+    // straight back to the cookie language. isDataRequest covers client-side
+    // navigation; Sec-Fetch-Site covers no-JS document requests.
+    const isInternalNavigation =
+        event.isDataRequest ||
+        event.request.headers.get("sec-fetch-site") === "same-origin";
+
     if (pathname === "/") {
         // Language detection happens ONLY here (deep URLs stay stable for
         // SEO). 302, not 308 — the target varies per visitor.
-        const preferred = preferredLanguage(event);
-        if (preferred && preferred !== DEFAULT_LANG) {
-            redirect(302, `/${preferred}${search}`);
+        if (!isInternalNavigation) {
+            const preferred = preferredLanguage(event);
+            if (preferred && preferred !== DEFAULT_LANG) {
+                redirect(302, `/${preferred}${search}`);
+            }
         }
         if (PREFIX_DEFAULT) {
+            // In prefix mode "/" has no page of its own — always canonicalize.
             redirect(302, `/${DEFAULT_LANG}${search}`);
         }
     } else if (!isPrefixed && PREFIX_DEFAULT) {
